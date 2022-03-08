@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name="categories")
-public class Categories {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,10 +21,10 @@ public class Categories {
     @ManyToMany(mappedBy = "categories")
     private List<ForumPost> posts;
 
-    public Categories() {
+    public Category() {
     }
 
-    public Categories(long id, String category, List<ForumPost> posts) {
+    public Category(long id, String category, List<ForumPost> posts) {
         this.id = id;
         this.category = category;
         this.posts = posts;
