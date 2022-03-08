@@ -1,9 +1,15 @@
 package com.example.investbeacon.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import javax.swing.*;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
 public class User {
     @Id
@@ -30,15 +36,21 @@ public class User {
 
     @Lob
     @Column(name = "photo", columnDefinition = "BLOB")
-    private Byte profile_img;
+    private byte[] profile_img;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "followers",
+            joinColumns = {@JoinColumn (name = "user_id")},
+            inverseJoinColumns ={@JoinColumn(name = "follow_id")})
+    private List<User> users;
+
+
     public User() {}
 
-    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, Byte profile_img, List<ForumPost> forumPosts) {
-        this.id = id;
+    public User(Boolean isAdmin, String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts, List<User> users) {
         this.isAdmin = isAdmin;
         this.username = username;
         this.first_name = first_name;
@@ -47,29 +59,10 @@ public class User {
         this.password = password;
         this.profile_img = profile_img;
         this.forumPosts = forumPosts;
+        this.users = users;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Boolean getAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts, List<User> users) {
         this.username = username;
     }
 
@@ -105,11 +98,11 @@ public class User {
         this.password = password;
     }
 
-    public Byte getProfile_img(Byte profile_img) {
+    public ImageIcon getProfile_img() {
         return profile_img;
     }
 
-    public void setProfile_img(Byte profile_img) {
+    public void setProfile_img(ImageIcon profile_img) {
         this.profile_img = profile_img;
     }
 
@@ -120,7 +113,6 @@ public class User {
 
     public void setForum_posts(List<ForumPost> forumPosts) {
         this.forumPosts = forumPosts;
-
+        this.users = users;
     }
-
 }
