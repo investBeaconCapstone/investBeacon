@@ -29,15 +29,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column
-    private ImageIcon profile_img;
+    @Lob
+    @Column(name = "photo", columnDefinition = "BLOB")
+    private byte[] profile_img;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
 
     public User() {}
 
-    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, ImageIcon profile_img, List<ForumPost> forumPosts) {
+    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts) {
         this.id = id;
         this.isAdmin = isAdmin;
         this.username = username;
@@ -105,11 +106,11 @@ public class User {
         this.password = password;
     }
 
-    public ImageIcon getProfile_img() {
+    public byte[] getProfile_img() {
         return profile_img;
     }
 
-    public void setProfile_img(ImageIcon profile_img) {
+    public void setProfile_img(byte[] profile_img) {
         this.profile_img = profile_img;
     }
 
@@ -118,8 +119,9 @@ public class User {
         return forumPosts;
     }
 
-    public void setForum_posts(List<ForumPost> forumPosts) {
-        this.forumPosts = forumPosts;
 
+    public void setForumPosts(List<ForumPost> forumPosts) {
+        this.forumPosts = forumPosts;
     }
+
 }
