@@ -2,7 +2,6 @@ package com.example.investbeacon.models;
 
 import javax.persistence.*;
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 @Entity

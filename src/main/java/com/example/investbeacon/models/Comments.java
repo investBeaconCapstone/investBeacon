@@ -1,6 +1,8 @@
 package com.example.investbeacon.models;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.Date;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "comments")
 public class Comments {
     @Id
@@ -31,5 +35,13 @@ public class Comments {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Comments() {
+    }
 
+    public Comments(String content, ForumPost post, Date createDate, User user) {
+        this.content = content;
+        this.post = post;
+        this.createDate = createDate;
+        this.user = user;
+    }
 }
