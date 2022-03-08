@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
+import java.util.Date; @Lob
 import java.util.List;
 
 @Entity
