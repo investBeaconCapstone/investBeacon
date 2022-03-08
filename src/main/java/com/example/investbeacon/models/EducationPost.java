@@ -26,9 +26,12 @@ public class EducationPost {
     @Column(nullable = false, name = "created_date")
     private Timestamp createdDate;
 
-    @Lob
-    @Column(name = "content", columnDefinition = "BLOB")
-    private byte[] content;
+    @Column(name = "content")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn (name = "cat_id")
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -45,7 +48,7 @@ public class EducationPost {
     public EducationPost() {
     }
 
-    public EducationPost(String title, String description, Timestamp createdDate, byte[] content, User user) {
+    public EducationPost(String title, String description, Timestamp createdDate, String content, User user) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
@@ -53,7 +56,7 @@ public class EducationPost {
         this.user = user;
     }
 
-    public EducationPost(String title, String description, Timestamp createdDate, byte[] content, User user, List<User> users) {
+    public EducationPost(String title, String description, Timestamp createdDate, String content, User user, List<User> users) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
@@ -62,7 +65,7 @@ public class EducationPost {
         this.users = users;
     }
 
-    public EducationPost(long id, String title, String description, Timestamp createdDate, byte[] content, User user, List<User> users) {
+    public EducationPost(long id, String title, String description, Timestamp createdDate, String content, User user, List<User> users) {
         this.id = id;
         this.title = title;
         this.description = description;

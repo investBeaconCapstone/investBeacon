@@ -33,7 +33,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Lob
+
     @Column(name = "photo")
     private String profile_img;
 
@@ -59,5 +59,9 @@ public class User {
         this.profile_img = profile_img;
         this.forumPosts = forumPosts;
         this.users = users;
+    }
+
+    public User(String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
+        this.username = username;
     }
 }
