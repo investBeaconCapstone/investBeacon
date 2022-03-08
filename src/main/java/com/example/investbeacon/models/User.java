@@ -33,12 +33,12 @@ public class User {
     @Column(name = "photo", columnDefinition = "BLOB")
     private byte[] profile_img;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private List<ForumPost> forum_posts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ForumPost> forumPosts;
 
     public User() {}
 
-    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forum_posts) {
+    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts) {
         this.id = id;
         this.isAdmin = isAdmin;
         this.username = username;
@@ -47,7 +47,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.profile_img = profile_img;
-        this.forum_posts = forum_posts;
+        this.forumPosts = forumPosts;
     }
 
     public long getId() {
@@ -116,12 +116,12 @@ public class User {
 
 
     public List<ForumPost> getForumPosts() {
-        return forum_posts;
+        return forumPosts;
     }
 
 
-    public void setForumPosts(List<ForumPost> forum_posts) {
-        this.forum_posts = forum_posts;
+    public void setForumPosts(List<ForumPost> forumPosts) {
+        this.forumPosts = forumPosts;
     }
 
 }
