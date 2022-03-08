@@ -6,5 +6,15 @@
 </head>
 <body>
 
+
+
+<div th:each="post : ${allForumPosts}">
+    <h2 th:text="${ForumPost.title}">Title:</h2>
+    <p th:text="${ForumPost.description}">Content:</p>
+    <div>Created by: <span th:text="${allForumPost.user.username}"></span></div>
+</div>
+
+
+
 </body>
 </html>
