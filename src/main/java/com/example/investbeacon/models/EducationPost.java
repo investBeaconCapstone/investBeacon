@@ -1,6 +1,7 @@
 package com.example.investbeacon.models;
 
-import com.example.investbeacon.models.User;
+import lombok.Getter;
+import lombok.Setter;
 
 
 
@@ -9,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class EducationPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +45,6 @@ public class EducationPost {
     public EducationPost() {
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public EducationPost(String title, String description, Timestamp createdDate, byte[] content, User user) {
         this.title = title;
         this.description = description;
@@ -77,51 +72,4 @@ public class EducationPost {
         this.users = users;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

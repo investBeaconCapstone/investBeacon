@@ -1,9 +1,14 @@
 package com.example.investbeacon.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name="categories")
 public class Categories {
     @Id
@@ -22,30 +27,6 @@ public class Categories {
     public Categories(long id, String category, List<ForumPost> posts) {
         this.id = id;
         this.category = category;
-        this.posts = posts;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<ForumPost> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<ForumPost> posts) {
         this.posts = posts;
     }
 }
