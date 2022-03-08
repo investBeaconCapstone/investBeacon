@@ -33,5 +33,58 @@ public class Comments {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Comments() {
 
+    }
+
+
+    public Comments(int id, String content, ForumPost post, Date createDate, User user) {
+        this.id = id;
+        this.content = content;
+        this.post = post;
+        this.createDate = createDate;
+        this.user = user;
+    }
+
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public ForumPost getPost() {
+        return post;
+    }
+
+    public void setPost(ForumPost post) {
+        this.post = post;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
