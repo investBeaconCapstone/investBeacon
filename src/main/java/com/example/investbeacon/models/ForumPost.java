@@ -45,4 +45,18 @@ public class ForumPost {
     private List<Category> categories;
 
 
+    public ForumPost() {
+    }
+
+    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories) {
+        this.isEducational = isEducational;
+        this.title = title;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.contentImageUrl = contentImageUrl;
+        this.user = user;
+        this.categories = categories;
+    }
+
+
 }
