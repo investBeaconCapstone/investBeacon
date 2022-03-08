@@ -49,4 +49,3 @@ public class Categories {
         this.posts = posts;
     }
 }
-

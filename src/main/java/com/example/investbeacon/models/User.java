@@ -2,7 +2,6 @@ package com.example.investbeacon.models;
 
 import javax.persistence.*;
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -115,9 +114,11 @@ public class User {
         this.profile_img = profile_img;
     }
 
+
     public List<ForumPost> getForumPosts() {
         return forum_posts;
     }
+
 
     public void setForumPosts(List<ForumPost> forum_posts) {
         this.forum_posts = forum_posts;

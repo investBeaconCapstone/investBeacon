@@ -3,6 +3,7 @@ package com.example.investbeacon.models;
 import com.example.investbeacon.models.User;
 
 
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -34,7 +35,7 @@ public class EducationPost {
     @JoinTable(
             name = "education_posts_likes",
             joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+            inverseJoinColumns = {@JoinColumn(name = "user")}
     )
     private List<User> users;
 
