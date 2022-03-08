@@ -54,10 +54,10 @@ public class ForumPost {
     private List<User> users;
 
 
-    public ForumPost() {
+    public ForumPost(long id) {
     }
 
-    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<User> users) {
+    public ForumPost() {
         this.isEducational = isEducational;
         this.title = title;
         this.description = description;

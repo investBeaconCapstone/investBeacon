@@ -1,12 +1,8 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.ForumPost;
-import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.ForumPostRepository;
-
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,53 +20,50 @@ public class ForumPostController {
 //        this.userDao = userDao;
     }
 
-    @GetMapping("/index")
-    @ResponseBody
-    public String forumPosts() {
-        return "All the Forum Posts";
-    }
     @GetMapping("/forum-posts")
-    @ResponseBody
-    public String post(Model model) {
+    public String forumPosts(Model model) {
+        List<ForumPost> allForumPosts = forumPostDao.findAll();
+        model.addAttribute("allForumPost", allForumPosts);
         return "/forum-posts/index";
     }
 
     @GetMapping("/forum-posts/{id}")
-    @ResponseBody
     public String singleForumPost(@PathVariable long id, Model model) {
-        ForumPost oneForumPost = forumPostDao.findPostById(id);
-        model.addAttribute("singlePost", oneForumPost);
-        return "/posts/single-post";
+        ForumPost singleForumPost = forumPostDao.findPostById(id);
+        model.addAttribute("singlePost", singleForumPost);
+        return "/forum-posts/single-post";
     }
 
     @GetMapping("/forum-posts/create")
-    @ResponseBody
     public String createForumPostForm(Model model) {
-        return "View form for creating posts";
+        model.addAttribute("post", new ForumPost());
+        return "/forum-posts/create";
     }
 
-    @PostMapping("/posts/create")
-    @ResponseBody
-    public String createForumPost() {
-        return "Create the forum post";
+    @PostMapping("/forum-posts/create")
+    public String createForumPost(@ModelAttribute ForumPost post) {
+        forumPostDao.save(post);
+        return "redirect:/forum-posts";
     }
 
-    @GetMapping("/posts/{id}/edit")
-    @ResponseBody
-    public String viewEdit() {
-        return "Edit post view";
+    @GetMapping("/forum-posts/{id}/edit")
+    public String viewEdit(@PathVariable long id, Model model) {
+        ForumPost editPost = forumPostDao.getById(id);
+        model.addAttribute("post", editPost);
+        return "/posts/edit";
     }
 
-    @PostMapping("/posts/{id}/edit")
-    @ResponseBody
-    public String editForumPosts() {
-        return "form to edit post";
+    @PostMapping("/forum-posts/{id}/edit")
+       public String editForumPosts(@PathVariable long id) {
+        ForumPost editedPost = new ForumPost(id);
+        forumPostDao.save(editedPost);
+        return "redirect:/forum-posts";
     }
 
     @GetMapping("/forum-posts/{id}/delete")
-    @ResponseBody
-    public String deleteForumPosts() {
-        return "Delete the post";
+       public String deleteForumPosts(@PathVariable long id) {
+        forumPostDao.deleteById(id);
+        return "redirect:/forum-posts";
     }
 
 
