@@ -21,9 +21,24 @@ public class UserController {
         return "users/register";
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public String saveUser(@ModelAttribute User user) {
         userDao.save(user);
         return "redirect:/login";
     }
+
+    @GetMapping("/profile")
+    @ResponseBody
+    public String showProfile() {
+        return "view profile";
+    }
+
+    @GetMapping("/profile/{id}/edit")
+    @ResponseBody
+    public String editProfile() { //@PathVariable long id, Model model (will go into parenthesis)
+//        User userToEdit = userDao.getById(id);
+//        model.addAttribute("postToEdit", userToEdit);
+        return "Edit profile view";
+    }
+
 }
