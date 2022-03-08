@@ -1,4 +1,4 @@
-package com.example.investbeacon;
+package com.example.investbeacon.models;
 
 import com.example.investbeacon.models.User;
 
