@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "comments")
-public class Comments {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,10 +36,10 @@ public class Comments {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Comments() {
+    public Comment() {
     }
 
-    public Comments(int id, String content, ForumPost post, Date createDate, User user) {
+    public Comment(int id, String content, ForumPost post, Date createDate, User user) {
         this.id = id;
 
         this.content = content;

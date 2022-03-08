@@ -114,4 +114,5 @@ public class User {
         this.forumPosts = forumPosts;
         this.users = users;
     }
+
 }

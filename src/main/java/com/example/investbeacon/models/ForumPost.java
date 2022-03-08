@@ -43,7 +43,7 @@ public class ForumPost {
     @JoinTable(name = "forum_categories",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
-    private List<Categories> categories;
+    private List<Category> categories;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -57,7 +57,7 @@ public class ForumPost {
     public ForumPost() {
     }
 
-    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Categories> categories, List<User> users) {
+    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<User> users) {
         this.isEducational = isEducational;
         this.title = title;
         this.description = description;
