@@ -2,6 +2,7 @@ package com.example.investbeacon.models;
 
 import com.example.investbeacon.models.User;
 
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;

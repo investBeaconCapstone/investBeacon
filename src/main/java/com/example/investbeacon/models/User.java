@@ -122,4 +122,5 @@ public class User {
     public void setForumPosts(List<ForumPost> forum_posts) {
         this.forum_posts = forum_posts;
     }
+
 }
