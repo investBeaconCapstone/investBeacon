@@ -29,8 +29,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column
-    private ImageIcon profile_img;
+    @Lob
+    @Column(name = "photo", columnDefinition = "BLOB")
+    private byte[] profile_img;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
