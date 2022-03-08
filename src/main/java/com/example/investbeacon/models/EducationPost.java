@@ -29,7 +29,7 @@ public class EducationPost {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "education_posts_likes",
             joinColumns = {@JoinColumn(name="post_id")},
