@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.util.List;
 
 @Entity
@@ -98,11 +97,11 @@ public class User {
         this.password = password;
     }
 
-    public ImageIcon getProfile_img() {
+    public byte[] getProfile_img() {
         return profile_img;
     }
 
-    public void setProfile_img(ImageIcon profile_img) {
+    public void setProfile_img(byte[] profile_img) {
         this.profile_img = profile_img;
     }
 
