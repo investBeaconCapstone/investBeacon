@@ -75,23 +75,4 @@ public class User {
 
     }
 
-    public byte[] getProfile_img() {
-        return profile_img;
-    }
-
-    public void setProfile_img(byte[] profile_img) {
-        this.profile_img = profile_img;
-    }
-
-
-    public List<ForumPost> getForumPosts() {
-        return forumPosts;
-    }
-
-
-    public void setForumPosts(List<ForumPost> forumPosts) {
-
-        this.forumPosts = forumPosts;
-    }
-
 }
