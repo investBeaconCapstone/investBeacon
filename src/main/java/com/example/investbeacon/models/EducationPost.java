@@ -1,7 +1,8 @@
-package com.example.investbeacon;
+package com.example.investbeacon.models;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class EducationPost {

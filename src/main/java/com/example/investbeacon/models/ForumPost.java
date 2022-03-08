@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,13 +43,13 @@ public class ForumPost {
     @JoinTable(name = "forum_categories",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
-    private List<Category> categories;
+    private List<Categories> categories;
 
 
     public ForumPost() {
     }
 
-    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories) {
+    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Categories> categories) {
         this.isEducational = isEducational;
         this.title = title;
         this.description = description;
