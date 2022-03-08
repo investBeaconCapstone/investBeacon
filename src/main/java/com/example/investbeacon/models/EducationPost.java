@@ -33,7 +33,7 @@ public class EducationPost {
     @JoinTable(
             name = "education_posts_likes",
             joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+            inverseJoinColumns = {@JoinColumn(name = "user")}
     )
     private List<User> users;
 

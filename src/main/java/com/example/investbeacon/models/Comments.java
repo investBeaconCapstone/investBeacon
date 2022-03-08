@@ -1,15 +1,17 @@
 package com.example.investbeacon.models;
 
 
-import org.apache.catalina.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Date;
-import java.util.List;
+
 
 @Entity
+@Getter
+@Setter
 @Table(name = "comments")
 public class Comments {
     @Id
@@ -37,14 +39,21 @@ public class Comments {
 
     }
 
+    public Comments(String content, ForumPost post, Date createDate, User user) {
+
+
+    }
+
 
     public Comments(int id, String content, ForumPost post, Date createDate, User user) {
         this.id = id;
+
         this.content = content;
         this.post = post;
         this.createDate = createDate;
         this.user = user;
     }
+
 
 
 
@@ -87,4 +96,5 @@ public class Comments {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
