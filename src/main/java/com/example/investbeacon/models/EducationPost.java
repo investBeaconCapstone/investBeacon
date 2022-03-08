@@ -1,7 +1,8 @@
-package com.example.investbeacon;
+package com.example.investbeacon.models;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class EducationPost {
@@ -30,7 +31,7 @@ public class EducationPost {
     @JoinTable(
             name = "education_posts_likes",
             joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+            inverseJoinColumns = {@JoinColumn(name = "user")}
     )
     private List<User> users;
 

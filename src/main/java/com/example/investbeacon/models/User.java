@@ -34,11 +34,11 @@ public class User {
     private ImageIcon profile_img;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private List<forum_post> forum_posts;
+    private List<ForumPost> forum_posts;
 
     public User() {}
 
-    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, ImageIcon profile_img, List<forum_post>) {
+    public User(long id, Boolean isAdmin, String username, String first_name, String last_name, String email, String password, ImageIcon profile_img, List<ForumPost> forum_posts) {
         this.id = id;
         this.isAdmin = isAdmin;
         this.username = username;
@@ -114,11 +114,11 @@ public class User {
         this.profile_img = profile_img;
     }
 
-    public List<forum_post> getForum_posts() {
+    public List<ForumPost> getForum_posts() {
         return forum_posts;
     }
 
-    public void setForum_posts(List<forum_post> forum_posts) {
+    public void setForum_posts(List<ForumPost> forum_posts) {
         this.forum_posts = forum_posts;
     }
 }
