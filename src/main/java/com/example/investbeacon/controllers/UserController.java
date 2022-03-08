@@ -21,7 +21,7 @@ public class UserController {
         return "users/register";
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public String saveUser(@ModelAttribute User user) {
         userDao.save(user);
         return "redirect:/login";
