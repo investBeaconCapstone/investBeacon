@@ -33,9 +33,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Lob
-    @Column(name = "photo", columnDefinition = "BLOB")
-    private byte[] profile_img;
+    @Column(name = "photo")
+    private String profile_img;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
@@ -49,7 +48,7 @@ public class User {
 
     public User() {}
 
-    public User(Boolean isAdmin, String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts, List<User> users) {
+    public User(Boolean isAdmin, String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
         this.isAdmin = isAdmin;
         this.username = username;
         this.first_name = first_name;
@@ -61,7 +60,7 @@ public class User {
         this.users = users;
     }
 
-    public User(String username, String first_name, String last_name, String email, String password, byte[] profile_img, List<ForumPost> forumPosts, List<User> users) {
+    public User(String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
         this.username = username;
     }
 
@@ -97,11 +96,11 @@ public class User {
         this.password = password;
     }
 
-    public byte[] getProfile_img() {
+    public String getProfile_img() {
         return profile_img;
     }
 
-    public void setProfile_img(byte[] profile_img) {
+    public void setProfile_img(String profile_img) {
         this.profile_img = profile_img;
     }
 

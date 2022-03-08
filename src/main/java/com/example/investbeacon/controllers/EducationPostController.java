@@ -1,7 +1,9 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.EducationPost;
+import com.example.investbeacon.repositories.CategoryRepository;
 import com.example.investbeacon.repositories.EducationPostRepository;
+import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +17,13 @@ import java.util.List;
 @Controller
 public class EducationPostController {
     private final EducationPostRepository postDao;
+    private final UserRepository userDoa;
+    private final CategoryRepository catDao;
 
-    public EducationPostController(EducationPostRepository postDao) {
+    public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao) {
         this.postDao = postDao;
+        this.userDoa = userDoa;
+        this.catDao = catDao;
     }
 
     @GetMapping("/education/posts")
@@ -29,10 +35,10 @@ public class EducationPostController {
         return "/education/education_posts";
     }
 
-    @GetMapping("/education/posts/{id}")
-    public String postCatId(@PathVariable long id, Model model) {
-        //Need the category repo set to be able to get the category id
-        //This is to show all education posts under one category
+    @GetMapping("/education/posts/{category}")
+    public String postCatId(@PathVariable String category, Model model) {
+//       List<EducationPost> post = catDao.findCategoryByCategory(category).getPosts();
+
         return "/education/show_category";
     }
 
