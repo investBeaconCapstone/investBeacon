@@ -1,12 +1,11 @@
 package com.example.investbeacon.models;
 
 
-import org.apache.catalina.User;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date; @Lob
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,7 +21,7 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post;
+    private ForumPost post;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
