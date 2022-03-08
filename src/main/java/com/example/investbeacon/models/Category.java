@@ -18,6 +18,9 @@ public class Category {
     @Column(nullable = false)
     private String category;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<EducationPost> educationPosts;
+
     @ManyToMany(mappedBy = "categories")
     private List<ForumPost> posts;
 
