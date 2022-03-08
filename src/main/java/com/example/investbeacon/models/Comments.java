@@ -1,11 +1,9 @@
 package com.example.investbeacon.models;
 
 
-<<<<<<< HEAD
-=======
+
 import lombok.Getter;
 import lombok.Setter;
->>>>>>> 4213095e2a51da246d1f2bcfe15868972bf47d16
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
