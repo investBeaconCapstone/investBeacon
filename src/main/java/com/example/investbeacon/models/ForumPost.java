@@ -45,11 +45,19 @@ public class ForumPost {
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private List<Categories> categories;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "forum_posts_likes",
+            joinColumns = {@JoinColumn(name="post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user")}
+    )
+    private List<User> users;
+
 
     public ForumPost() {
     }
 
-    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Categories> categories) {
+    public ForumPost(boolean isEducational, String title, String description, Date createdDate, String contentImageUrl, User user, List<Categories> categories, List<User> users) {
         this.isEducational = isEducational;
         this.title = title;
         this.description = description;
@@ -57,6 +65,7 @@ public class ForumPost {
         this.contentImageUrl = contentImageUrl;
         this.user = user;
         this.categories = categories;
+        this.users = users;
     }
 
 
