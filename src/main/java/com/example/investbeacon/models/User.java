@@ -64,4 +64,12 @@ public class User {
     public User(String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
         this.username = username;
     }
+
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+        forumPosts = copy.forumPosts;
+    }
 }
