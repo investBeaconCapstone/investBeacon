@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
     private UserRepository userDao;
+    private PasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userDao) {
         this.userDao = userDao;
@@ -23,6 +25,8 @@ public class UserController {
 
     @PostMapping("/register")
     public String saveUser(@ModelAttribute User user) {
+        String hash = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";
     }
@@ -35,9 +39,9 @@ public class UserController {
 
     @GetMapping("/profile/{id}/edit")
     @ResponseBody
-    public String editProfile() { //@PathVariable long id, Model model (will go into parenthesis)
-//        User userToEdit = userDao.getById(id);
-//        model.addAttribute("postToEdit", userToEdit);
+    public String editProfile(@PathVariable long id, Model model) {
+        User userToEdit = userDao.getById(id);
+        model.addAttribute("postToEdit", userToEdit);
         return "Edit profile view";
     }
 
