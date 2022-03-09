@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>InvestBeacon | Register an account</title>
 </head>
 <body>
 <h1>Register Account</h1>
@@ -22,11 +22,13 @@
     <label for="password">Password</label>
     <input id="password" type="password" th:field="*{password}" />
 
-    <label for="profileImage">Upload Your Image
-    <input id="profileImage" type="file" th:field="*{profile_img}" />
-    </label>
+    <label for="profileImage">Upload Your Image</label>
+    <input id="profileImage" type="hidden" th:field="*{profile_img}" />
+    <button type="button" id="open">Choose image to upload</button>
 
     <input value="Sign me up!" type="submit" />
 </form>
+<th:block th:include="partials/scripts.html :: script"></th:block>
+<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
 </body>
 </html>
