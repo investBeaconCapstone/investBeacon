@@ -67,9 +67,14 @@ public class User {
 
     public User(User copy) {
         id = copy.id; // This line is SUPER important! Many things won't work if it's absent
-        email = copy.email;
+        isAdmin = copy.isAdmin;
         username = copy.username;
+        first_name = copy.first_name;
+        last_name = copy.last_name;
+        email = copy.email;
         password = copy.password;
+        profile_img = copy.profile_img;
         forumPosts = copy.forumPosts;
+        users = copy.users;
     }
 }
