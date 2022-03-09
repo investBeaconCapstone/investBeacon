@@ -6,24 +6,24 @@
 </head>
 <body>
 <h1>Register Account</h1>
-<form th:action="@{/register}" method="POST" th:object="">
+<form th:action="@{/register}" method="POST" th:object="${user}">
     <label for="firstName">First Name</label>
-    <input id="firstName" th:field="" />
+    <input id="firstName" th:field="*{first_name}" />
 
     <label for="lastName">Last Name</label>
-    <input id="lastName" th:field="" />
+    <input id="lastName" th:field="*{last_name}" />
 
     <label for="email">Email</label>
-    <input id="email" th:field="" />
+    <input id="email" th:field="*{email}" />
 
     <label for="username">Username</label>
-    <input id="username" th:field="" />
+    <input id="username" th:field="*{username}" />
 
     <label for="password">Password</label>
-    <input id="password" type="password" th:field="" />
+    <input id="password" type="password" th:field="*{password}" />
 
     <label for="profileImage">Upload Your Image
-    <input id="profileImage" type="file" name="profile_image" />
+    <input id="profileImage" type="file" th:field="*{profile_img}" />
     </label>
 
     <input value="Sign me up!" type="submit" />
