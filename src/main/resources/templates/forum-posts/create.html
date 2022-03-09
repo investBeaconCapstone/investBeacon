@@ -1,46 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th=http://www.thymeleaf.org">
+    <meta charset="UTF-8" >
     <title>create forum post</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
-<form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
-<div class="form-group">
-    <label for="title">Is Educational</label>
-    <input type="checkbox" class="form-control" id="education" th:field="*{isEducational}"  th:value="${createForumPost.isEducational}">
-</div>
-<div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" class="form-control" id="title" th:field="*{title}"  th:value="${createForumPost.title}">
-</div>
-<div class="form-group">
-    <label for="Body">description</label>
-    <input type="text" class="form-control"  id="Body" th:field="*{description}" th:value="${createForumPost.decription}">
-</div>
-<div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" id="Image" name="Image" accept="image/png, image/jpeg" th:field="*{contentImageUrl}"  th:value="${contentImageUrl}">
-</div>
-<div class="form-group">
-    <label >Category</label>
-    <input type="checkbox" class="form-control" id="category1" th:field="*{categories}" th:value="${}">
-    <label for="category1">1</label>
-    <input type="checkbox" class="form-control" id="category2" th:field="*{categories}" th:value="${}">
-    <label for="category2">2</label>
-    <input type="checkbox" class="form-control" id="category3" th:field="*{categories}" th:value="${}">
-    <label for="category3">3</label>
-    <input type="checkbox" class="form-control" id="category4" th:field="*{categories}" th:value="${}">
-    <label for="category4">4</label>
-    <input type="checkbox" class="form-control" id="category5" th:field="*{categories}" th:value="${}">
-    <label for="category5">5</label>
+
+<div class="container-fluid">
+    <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
+        <div class="form-group">
+            <label for="title">Is Educational</label>
+            <input type="checkbox" class="form-check-input" id="education" th:field="*{isEducational}"  >
+        </div>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" >
+        </div>
+        <div class="form-group">
+            <label for="Body">description</label>
+            <input type="text" class="form-control"  id="Body">
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" id="Image" name="Image" accept="image/png, image/jpeg">
+        </div>
+
+            <label >Category</label>
+        <div class="form-check">
+            <label for="category1">1</label>
+            <input type="checkbox" class="form-check-input" id="category1" >
+        </div>
+        <div class="form-check">
+            <label for="category2">2</label>
+            <input type="checkbox" class="form-check-input" id="category2" >
+        </div>
+        <div class="form-check">
+            <label for="category3">3</label>
+            <input type="checkbox" class="form-check-input" id="category3" >
+        </div>
+        <div class="form-check">
+            <label for="category4">4</label>
+            <input type="checkbox" class="form-check-input" id="category4" >
+        </div>
+        <div class="form-check">
+            <label for="category5">5</label>
+            <input type="checkbox" class="form-check-input" id="category5" >
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
 </div>
 
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
 
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
 

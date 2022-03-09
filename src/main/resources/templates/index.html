@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
 <h1>This is the main page</h1>
 
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
