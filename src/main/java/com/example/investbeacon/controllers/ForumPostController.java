@@ -22,8 +22,7 @@ public class ForumPostController {
 
     @GetMapping("/forum-posts")
     public String forumPosts(Model model) {
-        List<ForumPost> allForumPosts = forumPostDao.findAll();
-        model.addAttribute("allForumPost", allForumPosts);
+        model.addAttribute("allForumPosts", forumPostDao.findAll());
         return "/forum-posts/index";
     }
 
