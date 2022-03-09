@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codeup</groupId>
-    <artifactId>springblog</artifactId>
+    <artifactId>investbeacon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springblog</name>
-    <description>springblog</description>
+    <name>investbeacon</name>
+    <description>investbeacon</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -73,6 +73,7 @@
             <version>1.18.22</version>
 
         </dependency>
+
     </dependencies>
 
 
