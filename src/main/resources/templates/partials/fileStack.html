@@ -1,0 +1,30 @@
+<th:block th:fragment="fileStackScript">
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            const client = filestack.init(FILESTACK_API_KEY);
+            const options = {
+                container: 'modal',
+                maxFiles: 1,
+                uploadInBackground: false,
+                fromSources: ["local_file_system", "instagram", "facebook", "googlephotos"],
+                transformations: {
+                    crop: true,
+                    rotate: true,
+                    circle: true
+                },
+                onUploadDone: uploadImage,
+            };
+            const picker = client.picker(options);
+            const openBtn = document.getElementById('open');
+            openBtn.addEventListener('click', () => picker.open());
+
+            function uploadImage(result) {
+                const image = result.filesUploaded[0];
+                $('#profileImage').val(image.url);
+            }
+        });
+
+
+    </script>
+</th:block>
+
