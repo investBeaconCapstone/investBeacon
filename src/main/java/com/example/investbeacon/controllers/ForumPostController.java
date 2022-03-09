@@ -1,7 +1,10 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.ForumPost;
+import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.ForumPostRepository;
+import com.example.investbeacon.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +15,12 @@ import java.util.List;
 @Controller
 public class ForumPostController {
     private final ForumPostRepository forumPostDao;
-//    private final UserRepository userDao;
+    private final UserRepository userDao;
 
 
-    public ForumPostController(ForumPostRepository forumPostDao) {
+    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao) {
         this.forumPostDao = forumPostDao;
-//        this.userDao = userDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/forum-posts")
@@ -42,6 +45,7 @@ public class ForumPostController {
 
     @PostMapping("/forum-posts/create")
     public String createForumPost(@ModelAttribute ForumPost post) {
+        post.setUser( (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         forumPostDao.save(post);
         return "redirect:/forum-posts";
     }
@@ -50,7 +54,8 @@ public class ForumPostController {
     public String viewEdit(@PathVariable long id, Model model) {
         ForumPost editPost = forumPostDao.getById(id);
         model.addAttribute("post", editPost);
-        return "/posts/edit";
+        return "/forum-posts/edit";
+
     }
 
     @PostMapping("/forum-posts/{id}/edit")

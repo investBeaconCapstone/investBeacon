@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th=http://www.thymeleaf.org">
+    <meta charset="UTF-8" >
     <title>create forum post</title>
 </head>
 <body>
 
 <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
 <div class="form-group">
-    <label for="title">Is Educational</label>
-    <input type="checkbox" class="form-control" id="education" th:field="*{isEducational}"  th:value="${createForumPost.isEducational}">
+    <label for="education">Is Educational</label>
+    <input type="checkbox" class="form-control" id="education" >
 </div>
 <div class="form-group">
     <label for="title">Title</label>
-    <input type="text" class="form-control" id="title" th:field="*{title}"  th:value="${createForumPost.title}">
+    <input type="text" class="form-control" id="title" >
 </div>
 <div class="form-group">
-    <label for="Body">description</label>
-    <input type="text" class="form-control"  id="Body" th:field="*{description}" th:value="${createForumPost.decription}">
+    <label for="Body">Content</label>
+    <input type="text" class="form-control"  id="Body">
 </div>
 <div class="form-group">
-    <label for="image">Image</label>
-    <input type="image" class="form-control" id="image" th:field="*{contentImageUrl}"  th:value="${contentImageUrl}">
+    <label for="Image">Image</label>
+    <input type="file" id="Image" name="Image" accept="image/png, image/jpeg">
 </div>
 <div class="form-group">
-    <label for="categories">Categories</label>
-    <input type="checkbox" class="form-control" id="categories" th:field="*{categories}"  th:value="${categoriesl}">
+    <label>Category:</label>
+    <label for="category1">1</label>
+    <input type="checkbox" class="form-control" id="category1" >
+    <label for="category2">2</label>
+    <input type="checkbox" class="form-control" id="category2" >
+    <label for="category3">3</label>
+    <input type="checkbox" class="form-control" id="category3" >
+    <label for="category4">4</label>
+    <input type="checkbox" class="form-control" id="category4" >
+    <label for="category5">5</label>
+    <input type="checkbox" class="form-control" id="category5" >
 </div>
 
 <button type="submit" class="btn btn-primary">Submit</button>

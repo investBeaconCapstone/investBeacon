@@ -8,10 +8,10 @@
 
 
 
-<div th:each="post : ${allForumPosts}">
-    <h2 th:text="${ForumPost.title}">Title:</h2>
-    <p th:text="${ForumPost.description}">Content:</p>
-    <div>Created by: <span th:text="${allForumPost.user.username}"></span></div>
+<div th:each="forum-post : ${allForumPosts}">
+    <h2 th:text="${ForumPost.getTitle()}">Title:</h2>
+    <p th:text="${ForumPost.getDescription()}">Content:</p>
+    <div>Created by: <span th:text="${post.user.username}"></span></div>
 </div>
 
 
