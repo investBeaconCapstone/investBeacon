@@ -8,6 +8,7 @@
 
 
 
+
 <div th:each="forum-post : ${allForumPosts}">
     <h2 th:text="${ForumPost.getTitle()}">Title:</h2>
     <p th:text="${ForumPost.getDescription()}">Content:</p>

@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codeup</groupId>
-    <artifactId>investbeacon</artifactId>
+    <artifactId>investBeacon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>investbeacon</name>
-    <description>investbeacon</description>
+    <name>investBeacon</name>
+    <description>investBeacon</description>
     <properties>
         <java.version>11</java.version>
     </properties>
