@@ -27,9 +27,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(long id, String category, List<ForumPost> posts) {
-        this.id = id;
+    public Category(String category, List<EducationPost> educationPosts, List<ForumPost> posts) {
         this.category = category;
+        this.educationPosts = educationPosts;
         this.posts = posts;
     }
 }
