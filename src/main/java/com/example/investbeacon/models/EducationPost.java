@@ -43,7 +43,7 @@ public class EducationPost {
             joinColumns = {@JoinColumn(name="post_id")},
             inverseJoinColumns = {@JoinColumn(name = "user")}
     )
-    private List<User> users;
+    private List<User> userLikes;
 
     public EducationPost() {
     }
@@ -56,23 +56,14 @@ public class EducationPost {
         this.user = user;
     }
 
-    public EducationPost(String title, String description, Timestamp createdDate, String content, User user, List<User> users) {
+
+    public EducationPost(String title, String description, Timestamp createdDate, String content, Category category, User user, List<User> users) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
         this.content = content;
+        this.category = category;
         this.user = user;
-        this.users = users;
+        this.userLikes = users;
     }
-
-    public EducationPost(long id, String title, String description, Timestamp createdDate, String content, User user, List<User> users) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.content = content;
-        this.user = user;
-        this.users = users;
-    }
-
 }

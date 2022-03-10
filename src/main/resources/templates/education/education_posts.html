@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8" >
     <title>Education Post</title>
 </head>
 <body>
-<div>
-    <p></p>
-</div>
-
+<main role="main" class="card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+    <div class="blog-post" th:each="onePost: ${allPosts}">
+        <h2 class="blog-post-title" th:text="${onePost.getTitle()}"></h2>
+        <p th:text="${onePost.getContent()}"></p>
+        <p >created by: <span th:text=" ${onePost.getUser().getUsername()}"></span></p>
+    </div>
+</main>
 </body>
 </html>

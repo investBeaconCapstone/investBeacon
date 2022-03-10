@@ -1,8 +1,10 @@
+# Run first three lines of code.
 DROP DATABASE IF EXISTS investbeacon_db;
 CREATE DATABASE investBeacon_db;
 
 USE investBeacon_db;
 
+# Start application then run the rest of the code.
 INSERT INTO users (email, first_name, last_name, is_admin, password, username, photo)
 VALUES ('noreply@investBeacon.net',
         'admin',
@@ -28,7 +30,7 @@ VALUES ('noreply@investBeacon.net',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
         'aida-gutierrez', ''),
-       ('joes@codeup.com',
+       ('jose@codeup.com',
         'jose',
         'diaz',
         true,
@@ -43,15 +45,15 @@ VALUES ('Crypto'),
        ('Platforms');
 
 INSERT INTO forum_posts(content_img_url, create_date, description, is_educational, title, user_id)
-VALUES ('static/image/crypto-exchange.jpeg', NOW(), 'This is a crypto example description', false,
+VALUES ('/image/crypto-exchange.jpeg', NOW(), 'This is a crypto example description', false,
         'Sample Crypto Title', 1),
-       ('static/image/stocks-example.jpeg', NOW(), 'This is a stock example description', false, 'Sample Stock Title',
+       ('/image/stocks-example.jpeg', NOW(), 'This is a stock example description', false, 'Sample Stock Title',
         1),
-       ('static/image/finance-example.jpeg', NOW(), 'This is a finance example description', false,
+       ('/image/finance-example.jpeg', NOW(), 'This is a finance example description', false,
         'Sample Finance Title', 1),
-       ('static/image/strategies-example.jpeg', NOW(), 'This is a strategies example description', false,
+       ('/image/strategies-example.jpeg', NOW(), 'This is a strategies example description', false,
         'Sample Strategies Title', 1),
-       ('static/image/platforms-example.jpeg', NOW(), 'This is a platforms example description', false,
+       ('/image/platforms-example.jpeg', NOW(), 'This is a platforms example description', false,
         'Sample Platforms Title', 1);
 
 INSERT INTO forum_categories(post_id, category_id)
