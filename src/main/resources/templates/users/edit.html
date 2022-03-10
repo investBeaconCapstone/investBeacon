@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -25,5 +26,9 @@
     <input value="Sign me up!" type="submit" />
 </form>
 
+
+
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
