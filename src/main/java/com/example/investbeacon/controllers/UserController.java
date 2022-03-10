@@ -26,11 +26,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String saveUser(@ModelAttribute User user) {
-        String unhash = user.getPassword();
-        System.out.println(unhash);
-        System.out.println(passwordEncoder.encode(unhash));
         String hash = passwordEncoder.encode(user.getPassword());
-        System.out.println(hash);
         user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";

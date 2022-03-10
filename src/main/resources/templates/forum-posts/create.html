@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" >
-    <title>create forum post</title>
+    <meta charset="UTF-8">
+    <title>InvestBeacon | Create a post</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
@@ -12,42 +12,26 @@
 <div class="container-fluid">
     <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">
-            <label for="title">Is Educational</label>
-            <input type="checkbox" class="form-check-input" id="education"   >
-        </div>
-        <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" >
+            <input type="text" class="form-control" id="title" th:field="*{title}">
         </div>
         <div class="form-group">
-            <label for="Body">description</label>
-            <input type="text" class="form-control"  id="Body">
+            <label for="description">description</label>
+            <input type="text" class="form-control" id="description" th:field="*{description}">
         </div>
         <div class="form-group">
             <label for="image">Image</label>
-            <input type="file" id="Image" name="Image" accept="image/png, image/jpeg">
+            <input id="image" type="hidden" th:field="*{contentImageUrl}">
+            <button type="button" id="open">Choose image to upload</button>
         </div>
-
-            <label >Category</label>
-        <div class="form-check">
-            <label for="category1">1</label>
-            <input type="checkbox" class="form-check-input" id="category1" >
-        </div>
-        <div class="form-check">
-            <label for="category2">2</label>
-            <input type="checkbox" class="form-check-input" id="category2" >
-        </div>
-        <div class="form-check">
-            <label for="category3">3</label>
-            <input type="checkbox" class="form-check-input" id="category3" >
-        </div>
-        <div class="form-check">
-            <label for="category4">4</label>
-            <input type="checkbox" class="form-check-input" id="category4" >
-        </div>
-        <div class="form-check">
-            <label for="category5">5</label>
-            <input type="checkbox" class="form-check-input" id="category5" >
+        <div>
+            <div> Pick categories:</div>
+            <span th:each="category : ${categoryList}">
+                <div class="form-check form-check-inline m-2">
+                    <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
+                        <input class="form-check-input checkbox" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}">
+                </div>
+            </span>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -56,8 +40,9 @@
 </div>
 
 
+<th:block th:include="partials/scripts.html :: script"></th:block>
+<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
 
-<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
 
