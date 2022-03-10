@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.ForumPost;
 import com.example.investbeacon.models.User;
+import com.example.investbeacon.repositories.CategoryRepository;
 import com.example.investbeacon.repositories.ForumPostRepository;
 import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,18 +11,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
+import java.util.Date;
 
 
 @Controller
 public class ForumPostController {
     private final ForumPostRepository forumPostDao;
     private final UserRepository userDao;
+    private final CategoryRepository categoryDao;
 
 
-    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao) {
+    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao) {
         this.forumPostDao = forumPostDao;
         this.userDao = userDao;
+        this.categoryDao = categoryDao;
     }
 
     @GetMapping("/forum-posts")
@@ -35,12 +39,18 @@ public class ForumPostController {
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
         model.addAttribute("post", new ForumPost());
+        model.addAttribute("categoryList", categoryDao.findAll());
         return "/forum-posts/create";
     }
 
     @PostMapping("/forum-posts/create")
     public String createForumPost(@ModelAttribute ForumPost post) {
-        post.setUser( (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.getById(user.getId());
+
+        post.setUser(currentUser);
+        post.setCreatedDate(new Date());
+
         forumPostDao.save(post);
         return "redirect:/forum-posts";
     }

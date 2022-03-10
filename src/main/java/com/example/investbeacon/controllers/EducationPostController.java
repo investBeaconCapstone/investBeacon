@@ -1,9 +1,11 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.EducationPost;
+import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
 import com.example.investbeacon.repositories.EducationPostRepository;
 import com.example.investbeacon.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,9 @@ public class EducationPostController {
 
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
-//       List<EducationPost> post = catDao.findCategoryByCategory(category).getPosts();
+       List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
+
+       model.addAttribute("posts", post);
 
         return "/education/show_category";
     }
@@ -45,37 +49,41 @@ public class EducationPostController {
     @GetMapping("/education/posts/create")
     public String viewCreate(Model model) {
         model.addAttribute("post", new EducationPost());
+        model.addAttribute("cat", catDao.findAll());
 
         return "/education/create";
     }
 
     @PostMapping("/education/posts/create")
     public String postCreate(@ModelAttribute EducationPost post) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setUser(user);
 
-        //add verication
         postDao.save(post);
 
-        return "redirect:/posts";
+        return "redirect:/index";
     }
 
     @GetMapping("/education/posts/{id}/edit")
     public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
-        model.addAttribute("post", editPost);
-            return "/posts/edit";
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (editPost.getUser().getId() == loggedInUser.getId()) {
 
-
-
-
-
+            model.addAttribute("post", editPost);
+            return "/education/edit";
+        } else {
+            return "redirect: /index";
+        }
     }
 
     @PostMapping("/education/posts/{id}/edit")
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
-        //will add authentication later
+        if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
+            post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             postDao.save(post);
-
+        }
 
 
         return "redirect:/education/posts";
@@ -83,9 +91,10 @@ public class EducationPostController {
 
     @PostMapping("/education/posts/{id}/delete")
     public String postDelete(@PathVariable long id) {
+        if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
 
-        //will add authentication later
             postDao.deleteById(id);
+        }
 
 
         return "redirect:/education/posts";
