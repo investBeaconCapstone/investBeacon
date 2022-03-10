@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>InvestBeacon | Register an account</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Register Account</h1>
 <form th:action="@{/register}" method="POST" th:object="${user}">
     <label for="firstName">First Name</label>
-    <input id="firstName" th:field="*{first_name}" />
+    <input id="firstName" th:field="*{firstname}" />
 
     <label for="lastName">Last Name</label>
-    <input id="lastName" th:field="*{last_name}" />
+    <input id="lastName" th:field="*{lastname}" />
 
     <label for="email">Email</label>
     <input id="email" th:field="*{email}" />
@@ -23,7 +25,7 @@
     <input id="password" type="password" th:field="*{password}" />
 
     <label for="image">Upload Your Image</label>
-    <input id="image" type="hidden" th:field="*{profile_img}" />
+    <input id="image" type="hidden" th:field="*{profileImg}" />
     <button type="button" id="open">Choose image to upload</button>
 
     <input value="Sign me up!" type="submit" />

@@ -22,10 +22,10 @@ public class User {
     private String username;
 
     @Column(nullable = false, length = 50)
-    private String first_name;
+    private String firstname;
 
     @Column(nullable = false, length = 50)
-    private String last_name;
+    private String lastname;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -35,7 +35,7 @@ public class User {
 
 
     @Column(name = "photo")
-    private String profile_img;
+    private String profileImg;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
@@ -49,19 +49,19 @@ public class User {
 
     public User() {}
 
-    public User(boolean isAdmin, String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
+    public User(boolean isAdmin, String username, String firstname, String lastname, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
         this.isAdmin = isAdmin;
         this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.profile_img = profile_img;
+        this.profileImg = profileImg;
         this.forumPosts = forumPosts;
         this.users = users;
     }
 
-    public User(String username, String first_name, String last_name, String email, String password, String profile_img, List<ForumPost> forumPosts, List<User> users) {
+    public User(String username, String firstname, String lastname, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
         this.username = username;
     }
 
@@ -69,11 +69,11 @@ public class User {
         id = copy.id; // This line is SUPER important! Many things won't work if it's absent
         isAdmin = copy.isAdmin;
         username = copy.username;
-        first_name = copy.first_name;
-        last_name = copy.last_name;
+        firstname = copy.firstname;
+        lastname = copy.lastname;
         email = copy.email;
         password = copy.password;
-        profile_img = copy.profile_img;
+        profileImg = copy.profileImg;
         forumPosts = copy.forumPosts;
         users = copy.users;
     }

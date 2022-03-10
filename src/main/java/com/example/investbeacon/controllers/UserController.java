@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,18 +33,36 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/profile")
-    @ResponseBody
-    public String showProfile() {
-        return "view profile";
+    @GetMapping("/users/{id}")
+    public String viewProfile(@PathVariable long id, Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedInUser = userDao.getById(id);
+        if (user.getId() == loggedInUser.getId()) {
+            model.addAttribute("singleUser", loggedInUser);
+            return "/users/profile";
+        } else {
+            return "redirect:/login";
+        }
     }
 
-    @GetMapping("/profile/{id}/edit")
-    @ResponseBody
-    public String editProfile(@PathVariable long id, Model model) {
+    @GetMapping("/users/{id}/edit")
+    public String viewEditProfile(@PathVariable long id, Model model) {
         User userToEdit = userDao.getById(id);
-        model.addAttribute("postToEdit", userToEdit);
-        return "Edit profile view";
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userToEdit.getId() == loggedInUser.getId()) {
+            model.addAttribute("postToEdit", userToEdit);
+            return "/users/edit";
+        }else {
+            return "redirect:/index";
+        }
     }
 
+//    @PostMapping("/users/{id}/edit")
+//    public String editProfile(@ModelAttribute User userToEdit, @PathVariable long id) {
+//        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+//            userToEdit.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//            userDao.save(userToEdit);
+//        }
+//        return "redirect:/users/profile";
+//    }
 }

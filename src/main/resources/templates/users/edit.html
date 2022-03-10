@@ -1,11 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Profile</h1>
+<form th:action="@{/users/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
 
+    <label for="email">Email</label>
+    <input id="email" th:field="*{email}" th:value="${userToEdit.email}" />
+
+    <label for="username">Username</label>
+    <input id="username" th:field="*{username}" th:value="${userToEdit.username}" />
+
+    <label for="password">Password</label>
+    <input id="password" type="password" th:field="*{password}" th:value="${userToEdit.password}"/>
+
+    <label for="image">Upload Your Image</label>
+    <input id="image" type="hidden" th:field="*{profileImg}" th:value="${userToEdit.profileImg}" />
+    <button type="button" id="open">Choose image to upload</button>
+
+    <input value="Sign me up!" type="submit" />
+</form>
+
+
+
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
