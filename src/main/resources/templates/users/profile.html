@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
+
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h1>Here is Your Profile</h1>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col d-flex flex-row justify-around" th:object="${singleUser}">
+            <img th:src="${singleUser.profileImg}" alt="profile-avatar" class="col-4 avatar">
+            <h2 th:text="${singleUser.username}"class="col-4"></h2>
+            <button class="col-4 text-end settingsButton">Edit Profile</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<th:block th:include="partials/scripts.html :: script"></th:block>
+<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.investbeacon.controllers;
 
+import com.example.investbeacon.models.Category;
 import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
@@ -28,14 +29,6 @@ public class EducationPostController {
         this.catDao = catDao;
     }
 
-    @GetMapping("/education/posts")
-    public String posts(Model model) {
-        List<EducationPost> allPosts = postDao.findAll();
-        model.addAttribute("allPosts", allPosts);
-
-
-        return "/education/education_posts";
-    }
 
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
@@ -57,7 +50,11 @@ public class EducationPostController {
     @PostMapping("/education/posts/create")
     public String postCreate(@ModelAttribute EducationPost post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setUser(user);
+
+        if(user.isAdmin() == true){
+            post.setUser(user);
+        }
+
 
         postDao.save(post);
 

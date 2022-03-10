@@ -20,14 +20,14 @@ public class EducationPost {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false,  length = 1000)
+    @Column(nullable = false,  length = 3500)
     private String description;
 
     @Column(nullable = false, name = "created_date")
     private Timestamp createdDate;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name ="content_img_url", length = 500)
+    private String contentImageUrl;
 
     @ManyToOne
     @JoinColumn (name = "cat_id")
@@ -52,7 +52,7 @@ public class EducationPost {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
-        this.content = content;
+        this.contentImageUrl = content;
         this.user = user;
     }
 
@@ -61,7 +61,7 @@ public class EducationPost {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
-        this.content = content;
+        this.contentImageUrl = content;
         this.category = category;
         this.user = user;
         this.userLikes = users;

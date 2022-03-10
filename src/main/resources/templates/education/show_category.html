@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" >
-    <title>Title</title>
+    <title th:text="${posts.get(0).getCategory()}"></title>
 </head>
 <body>
 <main role="main" class="card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
@@ -12,11 +12,11 @@
         <p >created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
     </div>
     <div class="row d-flex justify-content-around" sec:Authorize="isAuthenticated()" th:each="post: ${posts}">
-        <form th:action="@{/posts/{id}/edit (id= ${post.getId()})}" th:method="get" >
+        <form th:action="@{/education/posts/{id}/edit (id= ${post.getId()})}" th:method="get" >
             <button type="submit" class="btn btn-sm btn-warning" >Edit</button>
         </form>
 
-        <form th:action="@{/posts/{id}/delete (id= ${post.getId()})}" th:method="post" >
+        <form th:action="@{/education/posts/{id}/delete (id= ${post.getId()})}" th:method="post" >
             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
         </form>
     </div>
