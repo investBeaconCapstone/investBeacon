@@ -18,9 +18,6 @@ public class ForumPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    private boolean isEducational;
-
     @Column(nullable = false, length = 100)
     private String title;
 
@@ -54,11 +51,10 @@ public class ForumPost {
     private List<User> users;
 
 
-    public ForumPost(long id) {
+    public ForumPost() {
     }
 
-    public ForumPost() {
-        this.isEducational = isEducational;
+    public ForumPost(String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<User> users) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
@@ -68,5 +64,14 @@ public class ForumPost {
         this.users = users;
     }
 
-
+    public ForumPost(ForumPost copy){
+        id =  copy.id;
+        title = copy.title;
+        description = copy.description;
+        createdDate = copy.createdDate;
+        contentImageUrl = copy.contentImageUrl;
+        user = copy.user;
+        categories = copy.categories;
+        users = copy.users;
+    }
 }
