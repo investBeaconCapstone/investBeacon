@@ -50,6 +50,8 @@ public class ForumPost {
     )
     private List<User> users;
 
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     public ForumPost() {
     }

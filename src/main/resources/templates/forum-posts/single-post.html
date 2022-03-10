@@ -3,15 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>Single-post</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
+
 </head>
 <body>
+<div class="container">
 
-<div>
-<!--    <h2 th:text="${singleForumPost.title}"></h2>-->
-<!--    <h3 th:text="${singleForumPost.description}"></h3>-->
 
+    <!-- link -->
+    <div class="row link">
+<!--        This is for up and down votes IF we plan on integrating this function.-->
+
+<!--        <div class="col-1">-->
+<!--            <div><a href="#" class="upvote"><i class="fas fa-arrow-up"></i></a></div>-->
+<!--            <div><span class="votecount">3</span></div>-->
+<!--            <div><a href="#" class="downvote"><i class="fas fa-arrow-down"></i></a></div>-->
+<!--        </div>-->
+
+        <div class="col-11">
+            <p class="title">
+                <a class="title " th:text="${singleForumPost.title}" target="_blank">
+                </a>
+            </p>
+            <img th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
+            <p th:text="${singleForumPost.description}">Content:</p>
+            <p class="tagline ">submitted
+                <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}" class="live-timestamp" th:text="${singleForumPost.getCreatedDate()}"></time> by
+                <a th:href="@{'/u/' + ${singleForumPost.getUser().getUsername()}}" class="author" th:text="${singleForumPost.getUser().getUsername()}"></a>
+                <span class="userattrs"></span>
+            </p>
+            <p>
+                <a class="comments" th:text="|${singleForumPost.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Forum Post comments -->
+    <div id="comments" class="comments">
+        <div class="row header">
+            <div class="col-1"> </div>
+            <div class="col-11 title" th:text="|all ${singleForumPost.getComments().size()} comments|"></div>
+        </div>
+<!--        ADD COMMENT-->
+        <div class="row addcomment" >
+            <div class="col-1">&nbsp;</div>
+            <div class="col-11">
+                <form id="frmAddComment" method="POST" th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})/comment}" th:object="${comment}">
+                    <input type="hidden" th:field="*{post}"/>
+                    <div class="form-group">
+                        <textarea class="form-control" id="comment" rows="3" th:field="*{content}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+        </div>
+        <!-- single comment -->
+        <div class="row comment" th:each="comment : ${singleForumPost.getComments()}">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-11">
+<!--                <span><a href="#" th:text="${comment.getCreatedBy()}"><i class="far fa-user"></i> therealdanvega</a></span>-->
+                <span th:text="${comment.getCreateDate()}"><i class="far fa-clock"></i> 4 hours ago</span>
+                <p class="body" th:text="${comment.getContent()}">It’s one thing I never care about, new releases of maven. Yet I do for most other things.. I really should take a look at any features released in the last while! Pull my dependencies, run my tests and upload to nexus. I don’t care for much else, I wonder what if any I’m missing.</p>
+                <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+            </div>
+        </div>
+
+    </div>
 
 </div>
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 
 </body>
 </html>
