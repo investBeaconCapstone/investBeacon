@@ -23,12 +23,22 @@
     <input id="image" type="hidden" th:field="*{profileImg}" th:value="${userToEdit.profileImg}" />
     <button type="button" id="open">Choose image to upload</button>
 
-    <input value="Sign me up!" type="submit" />
-</form>
+    <input value="Submit Changes" type="submit" />
+    <form th:action="@{/users/{id}/delete}" method="post" th:object="${userToEdit}">
+        <input type="hidden" th:field="*{id}">
+        <input value="Delete Profile" type="submit">
+    </form>
 
+
+<<<<<<< HEAD
+</form>
+<th:block th:include="partials/scripts.html :: script"></th:block>
+<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
+=======
 
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+>>>>>>> main
 </body>
 </html>
