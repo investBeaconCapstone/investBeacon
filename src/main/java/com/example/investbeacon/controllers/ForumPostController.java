@@ -113,7 +113,6 @@ public class ForumPostController {
 
     @GetMapping("/forum-posts/{id}/comment/{commentId}/edit")
     public String viewComment(@PathVariable long id, @PathVariable long commentId, Model model) {
-//        ForumPost editPost = forumPostDao.getById(id);
         Comment oldComment = commentDao.getById(commentId);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (oldComment.getUser().getId() == loggedInUser.getId()) {
@@ -143,5 +142,10 @@ public class ForumPostController {
         }
     }
 
+    @PostMapping("/forum-posts/{id}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable long commentId, @PathVariable long id) {
+        commentDao.deleteById(commentId);
+        return "redirect:/forum-posts/" + id;
+    }
 
 }
