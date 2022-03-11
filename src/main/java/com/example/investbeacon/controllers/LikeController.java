@@ -1,4 +1,4 @@
-package com.example.investbeacon.controllers;
+//package com.example.investbeacon.controllers;
 //
 //
 //import com.example.investbeacon.repositories.ForumPostRepository;
@@ -11,15 +11,15 @@ package com.example.investbeacon.controllers;
 //@Controller
 //public class LikeController {
 //
-////    private final ForumPostRepository forumPostDao;
-////    private final UserRepository userDao;
+//    private final ForumPostRepository forumPostDao;
+//    private final UserRepository userDao;
 ////    private final LikeRepository likeDao;
-////
-////    public LikeController(ForumPostRepository forumPostDao, UserRepository userDao, LikeRepository likeDao) {
-////        this.forumPostDao = forumPostDao;
-////        this.userDao = userDao;
-////        this.likeDao = likeDao;
-////    }
+//
+//    public LikeController(ForumPostRepository forumPostDao, UserRepository userDao, LikeRepository likeDao) {
+//        this.forumPostDao = forumPostDao;
+//        this.userDao = userDao;
+//        this.likeDao = likeDao;
+//    }
 //
 //
 ////    @GetMapping
@@ -30,12 +30,12 @@ package com.example.investbeacon.controllers;
 ////
 ////        return new ResponseEntity<>(HttpStatus.OK);
 ////    }
-
-
-
-
-
-
-
-
+//
+//
+//
+//
+//
+//
+//
+//
 //}

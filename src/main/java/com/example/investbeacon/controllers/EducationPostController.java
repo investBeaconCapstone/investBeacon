@@ -1,5 +1,6 @@
 package com.example.investbeacon.controllers;
 
+import com.example.investbeacon.models.Category;
 import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,20 +29,12 @@ public class EducationPostController {
         this.catDao = catDao;
     }
 
-    @GetMapping("/education/posts")
-    public String posts(Model model) {
-        List<EducationPost> allPosts = postDao.findAll();
-        model.addAttribute("allPosts", allPosts);
-
-
-        return "/education/education_posts";
-    }
 
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
-       List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
+        List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
 
-       model.addAttribute("posts", post);
+        model.addAttribute("posts", post);
 
         return "/education/show_category";
     }
@@ -59,9 +52,23 @@ public class EducationPostController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
 
+        post.setCreatedDate(new Date());
+        System.out.println(post.getCategory().getCategory());
         postDao.save(post);
 
-        return "redirect:/index";
+        switch (post.getCategory().getCategory()){
+            case "Crypto":
+                return "redirect:/education/posts/Crypto";
+            case "Stocks":
+                return "redirect:/education/posts/Stocks";
+            case "Finance":
+                return "redirect:/education/posts/Finance";
+            case "Strategies":
+                return "redirect:/education/posts/Strategies";
+            default:
+                return "redirect:/education/posts/Platforms";
+        }
+
     }
 
     @GetMapping("/education/posts/{id}/edit")
@@ -73,7 +80,7 @@ public class EducationPostController {
             model.addAttribute("post", editPost);
             return "/education/edit";
         } else {
-            return "redirect: /index";
+            return "redirect:/";
         }
     }
 
@@ -84,21 +91,30 @@ public class EducationPostController {
             post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             postDao.save(post);
         }
+        switch (post.getCategory().getCategory()){
+            case "Crypto":
+                return "redirect:/education/posts/Crypto";
+            case "Stocks":
+                return "redirect:/education/posts/Stocks";
+            case "Finance":
+                return "redirect:/education/posts/Finance";
+            case "Strategies":
+                return "redirect:/education/posts/Strategies";
+            default:
+                return "redirect:/education/posts/Platforms";
+        }
 
-
-        return "redirect:/education/posts";
     }
 
     @PostMapping("/education/posts/{id}/delete")
     public String postDelete(@PathVariable long id) {
         if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
-
             postDao.deleteById(id);
         }
-
-
-        return "redirect:/education/posts";
+        return "redirect:/";
     }
+
+
 
 
 }
