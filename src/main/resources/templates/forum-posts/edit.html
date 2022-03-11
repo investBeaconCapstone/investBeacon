@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit forum post</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 
+    <h3> Update Your Post</h3>
 <form th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}"  >
 
     <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title">
-    </div>
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp"
+                   th:value="${editPost.title}">
+        </div>
+
+        <div class="form-group">
+            <label for="Body">Body</label>
+            <textarea type="text" class="form-control" id="Body" th:field="*{description}" th:value="${description}" rows 7></textarea>
+        </div>
     <div class="form-group">
-        <label for="Body">description</label>
-        <input type="text" class="form-control"  id="Body" >
+        <label for="category">Select Category</label>
+        <select multiple class="form-control" id="category" th:field="*{categories}"  >
+            <option th:each="category : ${categories}" th:value="${categories}" th:text="${categories}" th:selected="${post.categories.categories}"> </option>
+
+        </select>
     </div>
-    <div class="form-group">
-        <label for="image">Image</label>
-        <input type="image" class="form-control" id="image" >
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     </div>
-    <div class="form-group">
-        <label for="categories">Categories</label>
-        <input type="checkbox" class="form-control" id="categories" >
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+
+
 </body>
 </html>

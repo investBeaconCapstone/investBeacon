@@ -1,5 +1,5 @@
 # Run first three lines of code.
-DROP DATABASE IF EXISTS investbeacon_db;
+DROP DATABASE IF EXISTS investBeacon_db;
 CREATE DATABASE investBeacon_db;
 
 USE investBeacon_db;
