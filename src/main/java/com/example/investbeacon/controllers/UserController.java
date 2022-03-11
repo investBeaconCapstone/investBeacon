@@ -35,14 +35,17 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
-        //User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User loggedInUser = userDao.getById(id);
-       // if (user.getId() == loggedInUser.getId()) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedInUser = userDao.getById(user.getId());
             model.addAttribute("loggedInUser", loggedInUser);
-            return "users/profile";
-//        } else {
-//            return "redirect:/login";
-//        }
+        }
+        User user = userDao.getById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("thisUsersPosts", user.getForumPosts());
+//        model.addAttribute("following", user.getUsers());
+//        model.addAttribute("followedBy", user.getUsers());
+        return "users/profile";
     }
 
     @GetMapping("/profile/{id}/edit")
@@ -52,7 +55,7 @@ public class UserController {
         if (userToEdit.getId() == loggedInUser.getId()) {
             model.addAttribute("userToEdit", userToEdit);
             return "/users/edit";
-        }else {
+        } else {
             return "redirect:/profile";
         }
     }
