@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,8 +24,9 @@ public class EducationPost {
     @Column(nullable = false,  length = 3500)
     private String description;
 
-    @Column(nullable = false, name = "created_date")
-    private Timestamp createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date createdDate;
 
     @Column(name ="content_img_url", length = 500)
     private String contentImageUrl;
