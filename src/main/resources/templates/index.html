@@ -6,9 +6,26 @@
     <th:block th:include="partials/header.html :: styling"></th:block>
 </head>
 <body>
+<div class="container-fluid mx-auto">
+    <img src="/static/image/logo.png" alt="InvestBeacon">
+</div>
+
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <h1>This is the main page</h1>
+<div class="container-fluid mx-auto"> Stock ticker</div>
+<div class="container-fluid mx-auto">crypto ticker</div>
+
+<div>
+    Something goes here
+</div>
+
+<div>Something else here</div>
+
+
+
+
+<footer> footer with link</footer>
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
