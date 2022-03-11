@@ -6,6 +6,8 @@
 </head>
 <body>
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+
+    <h3> Update Your Post</h3>
 <form th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}"  >
     <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
     <div class="form-group">
@@ -18,6 +20,13 @@
             <label for="Body">Body</label>
             <textarea type="text" class="form-control" id="Body" th:field="*{description}" th:value="${post.description}" rows 7></textarea>
         </div>
+    <div class="form-group">
+        <label for="category">Select Category</label>
+        <select multiple class="form-control" id="category" th:field="*{category}"  >
+            <option th:each="cat : ${category}" th:value="${category.getId()}" th:text="${category.getCategory()}" th:selected="${post.getCategory().getCategory()}"> </option>
+
+        </select>
+    </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     </div>

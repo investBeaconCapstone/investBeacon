@@ -7,28 +7,34 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 <h1>Edit Profile</h1>
 <form th:action="@{/profile/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
-
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" name="firstName" th:value="${userToEdit.firstName}" readonly>
-
-    <label for="lastName">Last Name</label>
-    <input type="text" id="lastName" name="lastName" th:value="${userToEdit.lastName}" readonly>
-
-    <label for="email">Email</label>
-    <input id="email" th:field="*{email}" th:value="${userToEdit.email}" />
-
-    <label for="username">Username</label>
-    <input id="username" th:field="*{username}" th:value="${userToEdit.username}" />
-
-    <label for="password">Password</label>
-    <input id="password" type="password" th:field="*{password}" th:value="${userToEdit.password}"/>
-
-    <label for="image">Upload Your Image</label>
-    <input id="image" type="hidden" th:field="*{profileImg}" th:value="${userToEdit.profileImg}" />
-    <button type="button" id="open">Choose image to upload</button>
-
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" th:value="${userToEdit.firstName}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" th:value="${userToEdit.lastName}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" th:field="*{email}" th:value="${userToEdit.email}" />
+    </div>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" th:field="*{username}" th:value="${userToEdit.username}" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" th:field="*{password}" th:value="${userToEdit.password}"/>
+    </div>
+    <div class="form-group">
+        <label for="image">Upload Your Image</label>
+        <input id="image" type="hidden" th:field="*{profileImg}" th:value="${userToEdit.profileImg}" />
+        <button type="button" id="open">Choose image to upload</button>
+    </div>
     <input value="Submit Changes" type="submit" />
 </form>
 
@@ -36,6 +42,7 @@
     <input type="hidden" th:field="*{id}">
     <input value="Delete Profile" type="submit">
 </form>
+</div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
 

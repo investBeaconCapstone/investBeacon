@@ -3,3 +3,11 @@
     height: 90px;
     border: #e5e5e5;
 }
+
+
+.icon{
+    width: 45px;
+    height: 35px;
+    border: #e5e5e5;
+    border-radius: 50%;
+}
