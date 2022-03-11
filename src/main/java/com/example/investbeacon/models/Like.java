@@ -3,7 +3,7 @@ package com.example.investbeacon.models;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public enum Like {
+//public enum Like {
 
 //    UPLIKE(1), DOWNLIKE(-1),
 //    ;
@@ -21,4 +21,4 @@ public enum Like {
 //    public Integer getDirection() {
 //        return direction;
 //    }
-}
+//}
