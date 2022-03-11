@@ -24,6 +24,12 @@
                         </button>
                     </form>
                 </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="/forum-posts">Forum Posts</a>
+                </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Learn</a>
@@ -42,7 +48,7 @@
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
             <form th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
-                <button class="btn-link btn nav-link" style="display:inline-block;color:white">Logout</button>
+                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
             </form>
         </div>
     </div>
