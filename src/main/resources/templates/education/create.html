@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>InvestBeacon | Create a post</title>
-    <th:block th:include="partials/header.html :: styling"></th:block>
+    <title>Create Education Post</title>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 
 <div class="container-fluid">
-    <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
+    <form th:action="@{/education/posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" th:field="*{title}">
@@ -26,7 +25,7 @@
         </div>
         <div>
             <div> Pick categories:</div>
-            <span th:each="category : ${categoryList}">
+            <span th:each="category : ${cat}">
                 <div class="form-check form-check-inline m-2">
                     <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
                         <input class="form-check-input checkbox" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}">
@@ -39,10 +38,5 @@
 
 </div>
 
-
-<th:block th:include="partials/footer.html :: scripts"></th:block>
-<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
-
 </body>
 </html>
-
