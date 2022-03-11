@@ -30,7 +30,7 @@ public class UserController {
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
         userDao.save(user);
-        return "redirect:/login";
+        return "redirect:users/login";
     }
 
     @GetMapping("/users/{id}")
