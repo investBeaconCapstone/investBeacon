@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,6 @@ public class EducationPostController {
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
-
         model.addAttribute("posts", post);
 
         return "/education/show_category";
@@ -41,6 +41,7 @@ public class EducationPostController {
 
     @GetMapping("/education/posts/create")
     public String viewCreate(Model model) {
+
         model.addAttribute("post", new EducationPost());
         model.addAttribute("cat", catDao.findAll());
 
@@ -53,7 +54,6 @@ public class EducationPostController {
         post.setUser(user);
 
         post.setCreatedDate(new Date());
-        System.out.println(post.getCategory().getCategory());
         postDao.save(post);
 
         switch (post.getCategory().getCategory()){
@@ -76,20 +76,24 @@ public class EducationPostController {
         EducationPost editPost = postDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (editPost.getUser().getId() == loggedInUser.getId()) {
-
+            model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
             return "/education/edit";
         } else {
-            return "redirect:/";
+            return "redirect:/login";
         }
     }
 
     @PostMapping("/education/posts/{id}/edit")
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
+
+
         if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
             post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            post.setCreatedDate(new Date());
             postDao.save(post);
+
         }
         switch (post.getCategory().getCategory()){
             case "Crypto":
