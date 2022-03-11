@@ -5,7 +5,7 @@ CREATE DATABASE investBeacon_db;
 USE investBeacon_db;
 
 # Start application then run the rest of the code.
-INSERT INTO users (email, firstname, lastname, is_admin, password, username, photo)
+INSERT INTO users (email, first_name, last_name, is_admin, password, username, photo)
 VALUES ('noreply@investBeacon.net',
         'admin',
         'admin',
