@@ -40,6 +40,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ForumPost> forumPosts;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<EducationPostLikes> likes;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "followers",
             joinColumns = {@JoinColumn (name = "user_id")},

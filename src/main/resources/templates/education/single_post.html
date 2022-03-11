@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InvestBeacon</title>
+    <th:block th:include="partials/header :: styling"></th:block>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<main role="main" class="card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+    <div class="blog-post" >
+        <h2 class="blog-post-title" th:text="${onePost.getTitle()}"></h2>
+        <p th:text="${onePost.getBody()}"></p>
+        <p >created by: <span th:text=" ${onePost.getUser().getUsername()}"></span></p>
+    </div>
+    <div class="row d-flex justify-content-around" sec:Authorize="isAuthenticated()">
+        <form th:action="@{/posts/{id}/edit (id= ${onePost.getId()})}" th:method="get" >
+            <button type="submit" class="btn btn-sm btn-warning" >Edit</button>
+        </form>
+
+        <form th:action="@{/posts/{id}/delete (id= ${onePost.getId()})}" th:method="post" >
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+    </div>
+
+
+
+</main>
+
+
+<th:block th:include="partials/footer :: scripts"></th:block>
+</body>
+</html>

@@ -1,11 +1,13 @@
 package com.example.investbeacon.controllers;
 
-import com.example.investbeacon.models.Category;
 import com.example.investbeacon.models.EducationPost;
+import com.example.investbeacon.models.EducationPostLikes;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
+import com.example.investbeacon.repositories.EducationLikesRepository;
 import com.example.investbeacon.repositories.EducationPostRepository;
 import com.example.investbeacon.repositories.UserRepository;
+import com.example.investbeacon.services.EmailService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,20 +25,37 @@ public class EducationPostController {
     private final EducationPostRepository postDao;
     private final UserRepository userDoa;
     private final CategoryRepository catDao;
+    private final EducationLikesRepository likesDao;
+    private final EmailService emailService;
 
-    public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao) {
+    public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao, EmailService emailService, EducationLikesRepository likesDao) {
         this.postDao = postDao;
         this.userDoa = userDoa;
         this.catDao = catDao;
+        this.emailService= emailService;
+        this.likesDao = likesDao;
     }
 
 
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
+
         model.addAttribute("posts", post);
 
         return "/education/show_category";
+    }
+
+    @GetMapping("/education/posts/{id}")
+    public String singleEdPost(@PathVariable Long id, Model model){
+        Integer likes = postDao.getById(id).getUserLikes().size();
+        if(likes == null){
+            likes = 0;
+        }
+        model.addAttribute("likes", likes);
+        model.addAttribute("post", postDao.getById(id));
+
+        return "/education/single_post";
     }
 
     @GetMapping("/education/posts/create")
@@ -55,6 +74,9 @@ public class EducationPostController {
 
         post.setCreatedDate(new Date());
         postDao.save(post);
+        String subject = "New Post!";
+        String body = "A new post was created by " + user.getUsername();
+        emailService.prepareAndSendEdPost(post, subject, body);
 
         switch (post.getCategory().getCategory()){
             case "Crypto":
@@ -119,6 +141,7 @@ public class EducationPostController {
     }
 
 
+    }
 
 
 }

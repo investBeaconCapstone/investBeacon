@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -28,14 +30,15 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class="card text-center" th:each="post: ${posts}" style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center" >
+<div class="card text-center" th:each="post: ${posts}" style="margin: 5em auto; padding: 1em; width: 60%; display: flex; justify-content: center" >
     <div class="blog-post" >
         <h2 class="blog-post-title" th:text="${post.getTitle()}"></h2>
         <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
     </div>
-    <div class="row d-flex justify-content-around" sec:Authorize="isAuthenticated()" >
-        <form th:action="@{/education/posts/{id}/edit (id= ${post.getId()})}" th:method="get">
+
+    <div class="column d-flex flex-wrap"  >
+        <form th:action="@{/education/posts/{id}/edit (id= ${post.getId()})}" th:method="get" style="margin-right: 1em">
             <button type="submit" class="btn btn-sm btn-warning">Edit</button>
         </form>
 
@@ -44,6 +47,13 @@
         </form>
     </div>
 
+    <div id="likes">
+        <p><span th:text="${users.size()}"></span></p>
+        <form th:action="@{/education/posts/{id}/upvote (id=${post.getId()})}" th:method="post">
+            <button type="submit">upvote</button>
+        </form>
+    </div>
+    <!--    sec:Authorize="isAuthenticated()"-->
 
 </div>
 <th:block th:include="partials/footer :: scripts"></th:block>
