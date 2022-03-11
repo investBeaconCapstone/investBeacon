@@ -41,9 +41,7 @@ INSERT INTO categories (category)
 VALUES ('Crypto'),
        ('Stocks'),
        ('Finance'),
-       ('Stra
-
-tegies'),
+       ('Strategies'),
        ('Platforms');
 
 INSERT INTO forum_posts(content_img_url, create_date, description, title, user_id)
