@@ -34,7 +34,6 @@ public class EducationPostController {
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
-
         model.addAttribute("posts", post);
 
         return "/education/show_category";
