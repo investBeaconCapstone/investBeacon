@@ -5,27 +5,24 @@
     <title>Edit forum post</title>
 </head>
 <body>
-
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 <form th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}"  >
+    <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
+    <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp"
+                   th:value="${post.title}">
+        </div>
 
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title">
+        <div class="form-group">
+            <label for="Body">Body</label>
+            <textarea type="text" class="form-control" id="Body" th:field="*{description}" th:value="${post.description}" rows 7></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     </div>
-    <div class="form-group">
-        <label for="Body">description</label>
-        <input type="text" class="form-control"  id="Body" >
-    </div>
-    <div class="form-group">
-        <label for="image">Image</label>
-        <input type="image" class="form-control" id="image" >
-    </div>
-    <div class="form-group">
-        <label for="categories">Categories</label>
-        <input type="checkbox" class="form-control" id="categories" >
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+
+
 </body>
 </html>

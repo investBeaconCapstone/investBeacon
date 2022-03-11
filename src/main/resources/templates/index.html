@@ -4,28 +4,77 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+
 </head>
 <body>
-<div class="container-fluid mx-auto">
-    <img src="/static/image/logo.png" alt="InvestBeacon">
+<div class="container-fluid mx-auto first-div">
+    <img class="logo img-thumbnail mx-auto d-block" src="/image/logo.png" alt="InvestBeacon">
 </div>
 
 <nav th:replace="partials/navbar :: navbar"></nav>
-
-<h1>This is the main page</h1>
-<div class="container-fluid mx-auto"> Stock ticker</div>
-<div class="container-fluid mx-auto">crypto ticker</div>
-
-<div>
-    Something goes here
+<div class="container-fluid">
+    <h1 class="text-align-center">This is the main page</h1>
 </div>
 
-<div>Something else here</div>
+
+
+<div class="container-fluid mx-auto text-align-center"> Stock ticker</div>
+<div class="container-fluid mx-auto text-align-center">crypto ticker
+<div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-3">
+               <div>
+                   <h1> Some News here</h1>
+                   <img alt="Picture">
+                   <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro. Nec ne meis natum eripuit, eu cum stet virtute detraxit, lorem labores civibus eu vis. Sed ne amet tacimates pertinacia. Quo ceteros propriae mandamus an. Cu vel cibo omnis, omnium quaerendum nec cu. Novum persius alterum eam et.
+                   </p>
+                   <a href="#" class="nav-link px-2 text-muted">Continue...</a>
+            </div>
+                </div>
+
+            <div class="col-6">
+                <div>
+                    <h1> Some Article</h1>
+                    <img alt="Picture">
+                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro. Nec ne meis natum eripuit, eu cum stet virtute detraxit, lorem labores civibus eu vis. Sed ne amet tacimates pertinacia. Quo ceteros propriae mandamus an. Cu vel cibo omnis, omnium quaerendum nec cu. Novum persius alterum eam et.
+
+                        Has accusam dolores aliquando cu, eam feugiat patrioque ne, eros philosophia cum cu. Est unum omnis inciderint te. Nam ut probo platonem, antiopam democritum ne quo. Case commodo suscipiantur te eum, facer admodum deleniti ad has. Quo causae prompta iracundia cu, elit nostro fastidii ad eam.
+                    </p>
+                    <a href="#" class="nav-link px-2 text-muted">Continue...</a>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <h3> Something else </h3>
+                     <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
+                    <h3> Something else </h3>
+                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
+                    <h3> Something else </h3>
+                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
+                </div>
+            </div>
+        </div>
+</div>
 
 
 
+<div class="container-fluid">
+     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <p class="col-md-4 mb-0 text-muted">&copy; 2022 InvestBeacon</p>
 
-<footer> footer with link</footer>
+            <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+               <img src=""alt="logo">
+            </a>
+
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            </ul>
+        </footer>
+    </div>
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>

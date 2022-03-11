@@ -8,8 +8,7 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-
-<div class="container-fluid">
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
     <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">
             <label for="title">Title</label>
@@ -31,6 +30,7 @@
                     <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
                         <input class="form-check-input checkbox" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}">
                 </div>
+
             </span>
         </div>
 
