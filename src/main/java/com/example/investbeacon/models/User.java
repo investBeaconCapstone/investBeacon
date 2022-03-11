@@ -22,10 +22,10 @@ public class User {
     private String username;
 
     @Column(nullable = false, length = 50)
-    private String firstname;
+    private String firstName;
 
     @Column(nullable = false, length = 50)
-    private String lastname;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -49,11 +49,11 @@ public class User {
 
     public User() {}
 
-    public User(boolean isAdmin, String username, String firstname, String lastname, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
+    public User(boolean isAdmin, String username, String firstName, String lastName, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
         this.isAdmin = isAdmin;
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.profileImg = profileImg;
@@ -61,7 +61,7 @@ public class User {
         this.users = users;
     }
 
-    public User(String username, String firstname, String lastname, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
+    public User(String username, String firstName, String lastName, String email, String password, String profileImg, List<ForumPost> forumPosts, List<User> users) {
         this.username = username;
     }
 
@@ -69,8 +69,8 @@ public class User {
         id = copy.id; // This line is SUPER important! Many things won't work if it's absent
         isAdmin = copy.isAdmin;
         username = copy.username;
-        firstname = copy.firstname;
-        lastname = copy.lastname;
+        firstName = copy.firstName;
+        lastName = copy.lastName;
         email = copy.email;
         password = copy.password;
         profileImg = copy.profileImg;

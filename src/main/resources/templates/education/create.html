@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Education Post</title>
+    <th:block th:include="partials/header :: styling"></th:block>
+    <style>
+        textarea{
+            resize: none;
+        }
+
+    </style>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 
-<div class="container-fluid">
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
     <form th:action="@{/education/posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">
             <label for="title">Title</label>
@@ -16,27 +23,25 @@
         </div>
         <div class="form-group">
             <label for="description">description</label>
-            <input type="text" class="form-control" id="description" th:field="*{description}">
+            <textarea type="text" class="form-control" id="description" th:field="*{description}" rows="7"></textarea>
         </div>
         <div class="form-group">
             <label for="image">Image</label>
             <input id="image" type="hidden" th:field="*{contentImageUrl}">
             <button type="button" id="open">Choose image to upload</button>
         </div>
-        <div>
-            <div> Pick categories:</div>
-            <span th:each="category : ${cat}">
-                <div class="form-check form-check-inline m-2">
-                    <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
-                        <input class="form-check-input checkbox" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}">
-                </div>
-            </span>
-        </div>
+            <div class="form-group">
+                <label for="category">Select Category</label>
+                <select multiple class="form-control" id="category" th:field="*{category}"  >
+                    <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}"> </option>
+
+                </select>
+            </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </div>
-
+<th:block th:include="partials/footer :: scripts"></th:block>
 </body>
 </html>
