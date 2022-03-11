@@ -33,19 +33,19 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedInUser = userDao.getById(id);
-        if (user.getId() == loggedInUser.getId()) {
-            model.addAttribute("singleUser", loggedInUser);
-            return "/users/profile";
-        } else {
-            return "redirect:/login";
-        }
+       // if (user.getId() == loggedInUser.getId()) {
+            model.addAttribute("loggedInUser", loggedInUser);
+            return "users/profile";
+//        } else {
+//            return "redirect:/login";
+//        }
     }
 
-    @GetMapping("/users/{id}/edit")
+    @GetMapping("/profile/{id}/edit")
     public String viewEditProfile(@PathVariable long id, Model model) {
         User userToEdit = userDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -53,24 +53,25 @@ public class UserController {
             model.addAttribute("userToEdit", userToEdit);
             return "/users/edit";
         }else {
-            return "redirect:/index";
+            return "redirect:/profile";
         }
     }
 
-//    @PostMapping("/users/{id}/edit")
-//    public String editProfile(@ModelAttribute User userToEdit, @PathVariable long id) {
-//        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
-//            userToEdit.((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//            userDao.save(userToEdit);
-//        }
-//        return "redirect:/users/profile";
-//    }
+    @PostMapping("/profile/{id}/edit")
+    public String editProfile(@ModelAttribute User userToEdit, @PathVariable long id) {
+        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+            String hash = passwordEncoder.encode(userToEdit.getPassword());
+            userToEdit.setPassword(hash);
+            userDao.save(userToEdit);
+        }
+        return "redirect:/profile/{id}";
+    }
 
-    @PostMapping("/users/{id}/delete")
+    @PostMapping("/profile/{id}/delete")
     public String deleteProfile(@PathVariable long id) {
         if (userDao.getById(id).getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
             userDao.deleteById(id);
         }
-        return "redirect:/index";
+        return "redirect:/";
     }
 }

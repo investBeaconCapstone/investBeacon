@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -12,10 +12,10 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="col d-flex flex-row justify-around" th:object="${singleUser}">
-            <img th:src="${singleUser.profileImg}" alt="profile-avatar" class="col-4 avatar">
-            <h2 th:text="${singleUser.username}"class="col-4"></h2>
-            <button class="col-4 text-end settingsButton">Edit Profile</button>
+        <div class="col d-flex flex-row justify-around" th:object="${loggedInUser}">
+            <img th:src="${loggedInUser.profileImg}" alt="profile-avatar" class="col-4 avatar">
+            <h2 th:text="${loggedInUser.username}"class="col-4"></h2>
+            <button class="col-4 text-end settingsButton" sec:authorize="isAuthenticated()">Edit Profile</button>
         </div>
 
     </div>

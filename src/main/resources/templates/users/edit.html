@@ -8,7 +8,13 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Profile</h1>
-<form th:action="@{/users/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
+<form th:action="@{/profile/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
+
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" name="firstName" th:value="${userToEdit.firstName}" readonly>
+
+    <label for="lastName">Last Name</label>
+    <input type="text" id="lastName" name="lastName" th:value="${userToEdit.lastName}" readonly>
 
     <label for="email">Email</label>
     <input id="email" th:field="*{email}" th:value="${userToEdit.email}" />
@@ -24,21 +30,17 @@
     <button type="button" id="open">Choose image to upload</button>
 
     <input value="Submit Changes" type="submit" />
-    <form th:action="@{/users/{id}/delete}" method="post" th:object="${userToEdit}">
-        <input type="hidden" th:field="*{id}">
-        <input value="Delete Profile" type="submit">
-    </form>
-
-
-<<<<<<< HEAD
 </form>
-<th:block th:include="partials/scripts.html :: script"></th:block>
-<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
-=======
 
-
-
+<form th:action="@{/profile/{id}/delete (id = ${userToEdit.getId()})}" method="post" th:object="${userToEdit}">
+    <input type="hidden" th:field="*{id}">
+    <input value="Delete Profile" type="submit">
+</form>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
->>>>>>> main
+<th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
+
+
+
+
 </body>
 </html>

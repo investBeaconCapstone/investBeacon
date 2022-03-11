@@ -7,17 +7,17 @@
 
 </head>
 <body>
-  <nav th:replace="partials/navbar :: navbar"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container">
     <!-- post -->
     <div class="row link">
-<!--        This is for up and down votes IF we plan on integrating this function.-->
+        <!--        This is for up and down votes IF we plan on integrating this function.-->
 
-<!--        <div class="col-1">-->
-<!--            <div><a href="#" class="upvote"><i class="fas fa-arrow-up"></i></a></div>-->
-<!--            <div><span class="votecount">3</span></div>-->
-<!--            <div><a href="#" class="downvote"><i class="fas fa-arrow-down"></i></a></div>-->
-<!--        </div>-->
+        <!--        <div class="col-1">-->
+        <!--            <div><a href="#" class="upvote"><i class="fas fa-arrow-up"></i></a></div>-->
+        <!--            <div><span class="votecount">3</span></div>-->
+        <!--            <div><a href="#" class="downvote"><i class="fas fa-arrow-down"></i></a></div>-->
+        <!--        </div>-->
 
         <div class="col-11">
             <p class="title">
@@ -27,11 +27,15 @@
             <img th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
             <p th:text="${singleForumPost.description}">Content:</p>
             <p class="tagline ">submitted on
-                <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}" class="live-timestamp" th:text="${singleForumPost.getCreatedDate()}"></time> by
-                <a th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}" class="author" th:text="${singleForumPost.getUser().getUsername()}"></a>
+                <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
+                      class="live-timestamp" th:text="${singleForumPost.getCreatedDate()}"></time>
+                by
+                <a th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}" class="author"
+                   th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
             <p>
-                <a class="comments" th:text="|${singleForumPost.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                <a class="comments" th:text="|${singleForumPost.getComments().size()} comments|"><i
+                        class="fas fa-comments"></i> 0 comments</a>
             </p>
         </div>
     </div>
@@ -39,17 +43,19 @@
     <!-- Forum Post comments -->
     <div id="comments" class="comments">
         <div class="row header">
-            <div class="col-1"> </div>
+            <div class="col-1"></div>
             <div class="col-11 title" th:text="|all ${singleForumPost.getComments().size()} comments|"></div>
         </div>
-<!--        ADD COMMENT-->
-        <div class="row addcomment" >
+        <!--        ADD COMMENT-->
+        <div class="row addcomment">
             <div class="col-1">&nbsp;</div>
             <div class="col-11">
-                <form id="frmAddComment" method="POST" th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
+                <form id="frmAddComment" method="POST"
+                      th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
                     <input type="hidden" th:field="*{post}"/>
                     <div class="form-group">
-                        <textarea class="form-control" id="comment" rows="3" th:field="*{content}"></textarea>
+                        <textarea class="form-control" id="comment" rows="3" style="resize: none;"
+                                  th:field="*{content}"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Comment</button>
                 </form>
@@ -59,10 +65,23 @@
         <div class="row comment" th:each="comment : ${singleForumPost.getComments()}">
             <div class="col-1">&nbsp;</div>
             <div class="col-11">
-                <span><a th:href="@{'/profile/' + ${comment.getUser().getId()}}" th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
+                <span><a th:href="@{'/profile/' + ${comment.getUser().getId()}}"
+                         th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
                 <span th:text="${comment.getCreateDate()}"><i class="far fa-clock"></i></span>
                 <p class="body" th:text="${comment.getContent()}"></p>
                 <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+                <div class="row">
+                    <span class="col">
+                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/edit(id=${singleForumPost.id},commentId=${comment.id})}" th:method="Get">
+                            <button type="submit" name="id" class="btn btn-secondary edit-btn"><i class="fas fa-edit"></i></button>
+                        </form>
+                    </span>
+                    <span class="col">
+                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/delete(id=${singleForumPost.id},commentId=${comment.id})}" th:method="Post">
+                            <button type="submit" name="id" class="btn btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
