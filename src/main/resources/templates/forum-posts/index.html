@@ -9,10 +9,12 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <div th:each="post : ${allPosts}">
-    <img th:src="${post.contentImageUrl}" alt="image">
+    <div class="card my-3" style="width: 35rem;">
+    <img class="post-img" th:src="${post.contentImageUrl}" alt="image">
     <h2 th:text="${post.title}">Title:</h2>
     <p th:text="${post.description}">Content:</p>
     <div>Created by: <span th:text="${post.user.username}"> </span></div>
+    </div>
 </div>
 
 <!--<span class="likebtn-wrapper" data-theme="likebtn" data-identifier="item_1"></span>-->
