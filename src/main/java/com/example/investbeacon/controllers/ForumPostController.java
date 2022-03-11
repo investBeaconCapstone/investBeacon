@@ -10,7 +10,6 @@ import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +66,6 @@ public class ForumPostController {
             comment.setPost(currentForumPost);
             model.addAttribute("comment", comment);
             model.addAttribute("singleForumPost", currentForumPost);
-            model.addAttribute("success", model.containsAttribute("success"));
             return "/forum-posts/single-post";
         }else {
             return "redirect:/forum-posts";
