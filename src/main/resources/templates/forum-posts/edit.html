@@ -22,13 +22,13 @@
             <label for="Body">Body</label>
             <textarea type="text" class="form-control" id="Body" th:field="*{description}" th:value="${description}" rows 7></textarea>
         </div>
-    <div class="form-group">
-        <label for="category">Select Category</label>
-        <select multiple class="form-control" id="category" th:field="*{categories}"  >
-            <option th:each="category : ${categories}" th:value="${categories}" th:text="${categories}" th:selected="${post.categories.categories}"> </option>
+<!--    <div class="form-group">-->
+<!--        <label for="category">Select Category</label>-->
+<!--        <select multiple class="form-control" id="category" th:field="*{categories}"  >-->
+<!--            <option th:each="category : ${categories}" th:value="${categories}" th:text="${categories}" th:selected="${post.categories.categories}"> </option>-->
 
-        </select>
-    </div>
+<!--        </select>-->
+<!--    </div>-->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     </div>
