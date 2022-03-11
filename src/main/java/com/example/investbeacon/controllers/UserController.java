@@ -35,14 +35,14 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedInUser = userDao.getById(id);
-        if (user.getId() == loggedInUser.getId()) {
+       // if (user.getId() == loggedInUser.getId()) {
             model.addAttribute("loggedInUser", loggedInUser);
             return "users/profile";
-        } else {
-            return "redirect:/login";
-        }
+//        } else {
+//            return "redirect:/login";
+//        }
     }
 
     @GetMapping("/profile/{id}/edit")
