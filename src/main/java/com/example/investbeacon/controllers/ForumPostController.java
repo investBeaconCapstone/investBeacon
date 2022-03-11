@@ -10,6 +10,7 @@ import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,10 +67,11 @@ public class ForumPostController {
             comment.setPost(currentForumPost);
             model.addAttribute("comment", comment);
             model.addAttribute("singleForumPost", currentForumPost);
+            model.addAttribute("success", model.containsAttribute("success"));
+            return "/forum-posts/single-post";
         }else {
             return "redirect:/forum-posts";
         }
-        return "/forum-posts/single-post";
     }
 
     @GetMapping("/forum-posts/{id}/edit")
@@ -100,15 +102,16 @@ public class ForumPostController {
     }
 
 //    Still needs to be worked on
-    @PostMapping("/forum-post/{id}/comment")
-    public String comment(@ModelAttribute Comment comment, @PathVariable long id){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userDao.getById(user.getId());
-        comment.setUser(currentUser);
-        comment.setPost(forumPostDao.getById(id));
-        comment.setCreateDate(new Date());
-        commentDao.save(comment);
-        return "redirect:/forum-posts/"+forumPostDao.getById(id);
+    @PostMapping("/forum-posts/{id}/comment")
+    public String comment(@ModelAttribute Comment comment, @PathVariable long id, @ModelAttribute ForumPost post) {
+        Comment newComment = new Comment();
+        User currentUser = userDao.getById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+        newComment.setPost(forumPostDao.getById(id));
+        newComment.setUser(currentUser);
+        newComment.setCreateDate(new Date());
+        newComment.setContent(comment.getContent());
+        commentDao.save(newComment);
+        return "redirect:/forum-posts/" + id;
     }
 
 
