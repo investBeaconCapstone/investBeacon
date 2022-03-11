@@ -99,7 +99,6 @@ public class ForumPostController {
         return "redirect:/forum-posts";
     }
 
-//    Still needs to be worked on
     @PostMapping("/forum-posts/{id}/comment")
     public String comment(@ModelAttribute Comment comment, @PathVariable long id, @ModelAttribute ForumPost post) {
         Comment newComment = new Comment();
@@ -112,6 +111,37 @@ public class ForumPostController {
         return "redirect:/forum-posts/" + id;
     }
 
+    @GetMapping("/forum-posts/{id}/comment/{commentId}/edit")
+    public String viewComment(@PathVariable long id, @PathVariable long commentId, Model model) {
+//        ForumPost editPost = forumPostDao.getById(id);
+        Comment oldComment = commentDao.getById(commentId);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (oldComment.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("comment", oldComment);
+            return "/forum-posts/edit-comment";
+        } else {
+            return "redirect:/forum-posts" + id;
+        }
+    }
+
+
+
+    @PostMapping("/forum-posts/{id}/comment/{commentId}/edit")
+    public String editComment(@ModelAttribute Comment comment, @PathVariable long commentId, @PathVariable long id) {
+        Comment oldComment = commentDao.getById(commentId);
+        System.out.println(oldComment.getUser().getId());
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedInUser.getId());
+        if (oldComment.getUser().getId() == loggedInUser.getId()) {
+            comment.setUser(loggedInUser);
+            comment.setPost(oldComment.getPost());
+            comment.setCreateDate(new Date());
+            commentDao.save(comment);
+            return "redirect:/forum-posts/" + id;
+        }else {
+            return "redirect:/forum-posts";
+        }
+    }
 
 
 }
