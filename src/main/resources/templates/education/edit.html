@@ -3,23 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Education Post</title>
+    <th:block th:include="partials/header :: styling"></th:block>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+
+
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
     <form th:action="@{/education/posts/{id}/edit (id = ${post.getId()})}" th:method="post" th:object="${post}">
         <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp"
-                   th:value="${post.getTitle()}">
+            <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp" th:value="${post.getTitle()}">
         </div>
 
         <div class="form-group">
             <label for="Body">Body</label>
             <textarea type="text" class="form-control" id="Body" th:field="*{description}" th:value="${post.getDescription()}" rows 7></textarea>
         </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <img th:src="${post.getContentImageUrl()}" alt="content-image" class="col-4 ">
+            <input id="image" type="hidden" th:field="*{contentImageUrl}" th:value="${post.getContentImageUrl()}">
+            <button type="button" id="open">Choose image to upload</button>
+        </div>
+        <div class="form-group">
+            <label for="category">Select Category</label>
+            <select multiple class="form-control" id="category" th:field="*{category}"  >
+                <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}" th:selected="${post.getCategory().getCategory()}"> </option>
+
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
