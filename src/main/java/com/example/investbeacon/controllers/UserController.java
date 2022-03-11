@@ -50,7 +50,7 @@ public class UserController {
         User userToEdit = userDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userToEdit.getId() == loggedInUser.getId()) {
-            model.addAttribute("postToEdit", userToEdit);
+            model.addAttribute("userToEdit", userToEdit);
             return "/users/edit";
         }else {
             return "redirect:/index";
@@ -60,9 +60,17 @@ public class UserController {
 //    @PostMapping("/users/{id}/edit")
 //    public String editProfile(@ModelAttribute User userToEdit, @PathVariable long id) {
 //        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
-//            userToEdit.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//            userToEdit.((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 //            userDao.save(userToEdit);
 //        }
 //        return "redirect:/users/profile";
 //    }
+
+    @PostMapping("/users/{id}/delete")
+    public String deleteProfile(@PathVariable long id) {
+        if (userDao.getById(id).getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
+            userDao.deleteById(id);
+        }
+        return "redirect:/index";
+    }
 }
