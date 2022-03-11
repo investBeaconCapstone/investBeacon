@@ -13,22 +13,30 @@
     <h2 th:text="${post.title}">Title:</h2>
     <p th:text="${post.description}">Content:</p>
     <div>Created by: <span th:text="${post.user.username}"> </span></div>
+    <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+    <form th:action="@{/forum-posts/{id}(id=${post.id})}" th:method="get">
+        <button style="all: unset;
+  cursor: pointer;">
+            <a class="comments" th:text="|${post.getComments().size()} comments|"><i
+                    class="fas fa-comments"></i> 0 comments</a>
+        </button>
+    </form>
 </div>
 
-<span class="likebtn-wrapper" data-theme="likebtn" data-identifier="item_1"></span>
+<!--<span class="likebtn-wrapper" data-theme="likebtn" data-identifier="item_1"></span>-->
 
 
-<script>
-    (function(d,e,s){
-        if(d.getElementById("likebtn_wjs"))
-            return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];
-            a.async=1;
-            a.id="likebtn_wjs";
-            a.src=s;
-            m.parentNode.insertBefore(a, m)})
-    (document,"script","//w.likebtn.com/js/w/widget.js");
+<!--<script>-->
+<!--    (function(d,e,s){-->
+<!--        if(d.getElementById("likebtn_wjs"))-->
+<!--            return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];-->
+<!--            a.async=1;-->
+<!--            a.id="likebtn_wjs";-->
+<!--            a.src=s;-->
+<!--            m.parentNode.insertBefore(a, m)})-->
+<!--    (document,"script","//w.likebtn.com/js/w/widget.js");-->
 
-</script>
+<!--</script>-->
 
 
 

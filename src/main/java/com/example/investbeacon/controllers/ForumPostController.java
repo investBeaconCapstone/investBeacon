@@ -1,6 +1,7 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.Comment;
+import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.ForumPost;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
@@ -50,8 +51,7 @@ public class ForumPostController {
     @PostMapping("/forum-posts/create")
     public String createForumPost(@ModelAttribute ForumPost post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userDao.getById(user.getId());
-        post.setUser(currentUser);
+        post.setUser(user);
         post.setCreatedDate(new Date());
         forumPostDao.save(post);
         return "redirect:/forum-posts";
@@ -59,16 +59,14 @@ public class ForumPostController {
 
     @GetMapping("/forum-posts/{id}")
     public String singleForumPost(@PathVariable long id, Model model) {
-        Optional<ForumPost> forumPost = forumPostDao.findById(id);
-        if(forumPost.isPresent()){
-            ForumPost currentForumPost = forumPost.get();
-            Comment comment = new Comment();
-            comment.setPost(currentForumPost);
-            model.addAttribute("comment", comment);
-            model.addAttribute("singleForumPost", currentForumPost);
-            return "/forum-posts/single-post";
-        }else {
-            return "redirect:/forum-posts";
+       ForumPost editPost = forumPostDao.getById(id);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (editPost.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("category", categoryDao.findAll());
+            model.addAttribute("post", editPost);
+            return "/forum-posts/edit";
+        } else {
+            return "redirect:/login";
         }
     }
 
@@ -99,6 +97,7 @@ public class ForumPostController {
         return "redirect:/forum-posts";
     }
 
+//    Still needs to be worked on
     @PostMapping("/forum-posts/{id}/comment")
     public String comment(@ModelAttribute Comment comment, @PathVariable long id, @ModelAttribute ForumPost post) {
         Comment newComment = new Comment();
@@ -111,41 +110,6 @@ public class ForumPostController {
         return "redirect:/forum-posts/" + id;
     }
 
-    @GetMapping("/forum-posts/{id}/comment/{commentId}/edit")
-    public String viewComment(@PathVariable long id, @PathVariable long commentId, Model model) {
-        Comment oldComment = commentDao.getById(commentId);
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (oldComment.getUser().getId() == loggedInUser.getId()) {
-            model.addAttribute("comment", oldComment);
-            return "/forum-posts/edit-comment";
-        } else {
-            return "redirect:/forum-posts" + id;
-        }
-    }
 
-
-
-    @PostMapping("/forum-posts/{id}/comment/{commentId}/edit")
-    public String editComment(@ModelAttribute Comment comment, @PathVariable long commentId, @PathVariable long id) {
-        Comment oldComment = commentDao.getById(commentId);
-        System.out.println(oldComment.getUser().getId());
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(loggedInUser.getId());
-        if (oldComment.getUser().getId() == loggedInUser.getId()) {
-            comment.setUser(loggedInUser);
-            comment.setPost(oldComment.getPost());
-            comment.setCreateDate(new Date());
-            commentDao.save(comment);
-            return "redirect:/forum-posts/" + id;
-        }else {
-            return "redirect:/forum-posts";
-        }
-    }
-
-    @PostMapping("/forum-posts/{id}/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable long commentId, @PathVariable long id) {
-        commentDao.deleteById(commentId);
-        return "redirect:/forum-posts/" + id;
-    }
 
 }

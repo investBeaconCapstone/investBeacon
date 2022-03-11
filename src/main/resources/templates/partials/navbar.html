@@ -16,8 +16,21 @@
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" href="/profile"><span th:text="${#authentication.principal.username}"></span></a>
+                    <form th:action="@{/profile/{id}(id=${#authentication.principal.id})}" th:method="get">
+                        <button class="btn-link btn nav-link navIconLink"
+                                style="display: inline-block;margin-top: -1px">
+                            <i aria-labelledby="profile button" class="fas fa-user"></i>
+                            <span th:text="${#authentication.principal.username}"></span>
+                        </button>
+                    </form>
                 </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="/forum-posts">Forum Posts</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Learn</a>
                     <div class="dropdown-menu">

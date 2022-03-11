@@ -1,5 +1,5 @@
 # Run first three lines of code.
-DROP DATABASE IF EXISTS investbeacon_db;
+DROP DATABASE IF EXISTS investBeacon_db;
 CREATE DATABASE investBeacon_db;
 
 USE investBeacon_db;
@@ -11,31 +11,31 @@ VALUES ('noreply@investBeacon.net',
         'admin',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
-        'admin', ''),
+        'admin', 'image/avatar image.png'),
        ('jonathan@codeup.com',
         'jonathan',
         'robles',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
-        'jonathan-robles', ''),
+        'jonathan-robles', 'image/avatar image.png'),
        ('andrawes@codeup.com',
         'andrawes',
         'batshoun',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
-        'andrawes-batshoun', ''),
+        'andrawes-batshoun', 'image/avatar image.png'),
        ('aida@codeup.com',
         'aida',
         'gutierrez',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
-        'aida-gutierrez', ''),
+        'aida-gutierrez', 'image/avatar image.png'),
        ('jose@codeup.com',
         'jose',
         'diaz',
         true,
         '$2a$10$31kFX.gBvN6FeOtvE6i0BeOz6zi0v7xL8TbN1oABG7FoYZfa4EDV.',
-        'jose-diaz', '');
+        'jose-diaz', 'image/avatar image.png');
 
 INSERT INTO categories (category)
 VALUES ('Crypto'),
