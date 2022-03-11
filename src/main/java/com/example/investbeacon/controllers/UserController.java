@@ -66,7 +66,7 @@ public class UserController {
 //        return "redirect:/users/profile";
 //    }
 
-    @GetMapping("/users/{id}/delete")
+    @PostMapping("/users/{id}/delete")
     public String deleteProfile(@PathVariable long id) {
         if (userDao.getById(id).getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
             userDao.deleteById(id);
