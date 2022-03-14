@@ -9,6 +9,7 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <div th:each="post : ${allPosts}">
+    <div class="card my-3" style="width: 35rem;">
     <img th:src="${post.contentImageUrl}" alt="image">
     <h2 th:text="${post.title}">Title:</h2>
     <p th:text="${post.description}">Content:</p>
@@ -21,22 +22,11 @@
                     class="fas fa-comments"></i> 0 comments</a>
         </button>
     </form>
+    </div>
 </div>
 
-<!--<span class="likebtn-wrapper" data-theme="likebtn" data-identifier="item_1"></span>-->
 
 
-<!--<script>-->
-<!--    (function(d,e,s){-->
-<!--        if(d.getElementById("likebtn_wjs"))-->
-<!--            return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];-->
-<!--            a.async=1;-->
-<!--            a.id="likebtn_wjs";-->
-<!--            a.src=s;-->
-<!--            m.parentNode.insertBefore(a, m)})-->
-<!--    (document,"script","//w.likebtn.com/js/w/widget.js");-->
-
-<!--</script>-->
 
 
 
