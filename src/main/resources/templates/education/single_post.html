@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InvestBeacon</title>
+    <th:block th:include="partials/header :: styling"></th:block>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<main class="card text-center "
+      style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+    <div class="blog-post">
+        <h2 class="blog-post-title" th:text="${post.getTitle()}"></h2>
+        <p th:text="${post.getDescription()}"></p>
+        <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+    </div>
+    <div class="row d-flex justify-content-around">
+        <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}" th:method="get">
+            <button type="submit" class="btn btn-sm btn-warning">Edit</button>
+        </form>
+
+        <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}" th:method="post">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+    </div>
+
+
+    <div id="likes">
+        <p><span th:text="${likes}"></span></p>
+        <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+              th:method="post">
+            <button type="submit">upvote</button>
+        </form>
+    </div>
+
+
+</main>
+
+
+<th:block th:include="partials/footer :: scripts"></th:block>
+</body>
+</html>
