@@ -10,7 +10,7 @@
 
 
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
-    <form th:action="@{/education/posts/{id}/edit (id = ${post.getId()})}" th:method="post" th:object="${post}">
+    <form th:action="@{/education/posts/{category}/{id}/edit (category=${post.getCategory().getCategory()},id = ${post.getId()})}" th:method="post" th:object="${post}">
         <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
         <div class="form-group">
             <label for="title">Title</label>
