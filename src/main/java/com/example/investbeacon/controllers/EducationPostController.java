@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 
 import java.util.Date;
@@ -33,7 +34,7 @@ public class EducationPostController {
         this.postDao = postDao;
         this.userDoa = userDoa;
         this.catDao = catDao;
-        this.emailService= emailService;
+        this.emailService = emailService;
         this.likesDao = likesDao;
     }
 
@@ -48,14 +49,14 @@ public class EducationPostController {
     }
 
     @GetMapping("/education/posts/{category}/{id}")
-    public String singleEdPost(@PathVariable Long id, Model model){
-
+    public String singleEdPost(@PathVariable Long id, Model model) {
         EducationPost post = postDao.getById(id);
 
-        Integer likes = likesDao.findAll().size();
-        if(likes == null){
+        Integer likes = post.getUserLikes().size();
+        if (likes == null) {
             likes = 0;
         }
+
         model.addAttribute("likes", likes);
         model.addAttribute("post", post);
 
@@ -63,14 +64,17 @@ public class EducationPostController {
     }
 
     @PostMapping("/education/posts/{category}/{id}/upvote")
-    public String likePost(@PathVariable long id,  @ModelAttribute EducationPost post){
+    public String likePost(@PathVariable long id) {
+
         EducationPost likedPost = postDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EducationPostLikes likes = new EducationPostLikes(user.getId(), likedPost.getId());
+
+        EducationPostLikes likes = new EducationPostLikes(user, likedPost);
 
         likesDao.save(likes);
+        return "redirect:/education/posts/{category}/{id}";
 
-        return "redirect:/";
+
     }
 
     @GetMapping("/education/posts/create")
@@ -93,7 +97,7 @@ public class EducationPostController {
         String body = "A new post was created by " + user.getUsername();
         emailService.prepareAndSendEdPost(post, subject, body);
 
-        switch (post.getCategory().getCategory()){
+        switch (post.getCategory().getCategory()) {
             case "Crypto":
                 return "redirect:/education/posts/Crypto";
             case "Stocks":
@@ -109,7 +113,7 @@ public class EducationPostController {
     }
 
     @GetMapping("/education/posts/{category}/{id}/edit")
-    public String viewEdit(@PathVariable long id,  Model model) {
+    public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
 
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -123,7 +127,7 @@ public class EducationPostController {
     }
 
     @PostMapping("/education/posts/{category}/{id}/edit")
-    public String postEdit(@PathVariable long id,  @ModelAttribute EducationPost post) {
+    public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
 
         if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
@@ -144,7 +148,7 @@ public class EducationPostController {
         if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
             postDao.deleteById(id);
         }
-        switch (postCat){
+        switch (postCat) {
             case "Crypto":
                 return "redirect:/education/posts/Crypto";
             case "Stocks":
@@ -157,9 +161,6 @@ public class EducationPostController {
                 return "redirect:/education/posts/Platforms";
         }
     }
-
-
-
 
 
 }
