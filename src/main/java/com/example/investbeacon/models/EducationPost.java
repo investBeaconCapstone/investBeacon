@@ -39,33 +39,19 @@ public class EducationPost {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "education_posts_likes",
-            joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user")}
-    )
-    private List<User> userLikes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "edPost")
+    private List<EducationPostLikes> userLikes;
 
     public EducationPost() {
     }
 
-    public EducationPost(String title, String description, Timestamp createdDate, String content, User user) {
+    public EducationPost(String title, String description, Date createdDate, String contentImageUrl, Category category, User user, List<EducationPostLikes> userLikes) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
-        this.contentImageUrl = content;
-        this.user = user;
-    }
-
-
-    public EducationPost(String title, String description, Timestamp createdDate, String content, Category category, User user, List<User> users) {
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.contentImageUrl = content;
+        this.contentImageUrl = contentImageUrl;
         this.category = category;
         this.user = user;
-        this.userLikes = users;
+        this.userLikes = userLikes;
     }
 }
