@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>InvestBeacon | Register an account</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-<th:block th:include="partials/reCaptcha.html :: captcha"></th:block>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 <h1>Register Account</h1>
@@ -34,9 +35,9 @@
         <input id="image" type="hidden" th:field="*{profileImg}" />
         <button type="button" id="open">Choose image to upload</button>
     </div>
-<!--    <div class="form-group">-->
-<!--    -->
-<!--    </div>-->
+    <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
+    </div>
 
     <input value="Sign me up!" type="submit" onclick="return alert('Account has been successfully created!')"/>
 </form>
