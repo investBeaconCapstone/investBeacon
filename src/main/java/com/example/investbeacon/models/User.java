@@ -2,6 +2,8 @@ package com.example.investbeacon.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,9 +44,16 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "followers",
-            joinColumns = {@JoinColumn (name = "user_id")},
-            inverseJoinColumns ={@JoinColumn(name = "follow_id")})
+            joinColumns = {@JoinColumn (name = "followee")},
+            inverseJoinColumns ={@JoinColumn(name = "follower")})
     private List<User> users;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "followers",
+            joinColumns = {@JoinColumn(name = "follower")},
+            inverseJoinColumns = {@JoinColumn(name = "followee")})
+    private List<User> followers;
 
 
     public User() {}
