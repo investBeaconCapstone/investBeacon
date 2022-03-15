@@ -7,19 +7,24 @@
 
 </head>
 <body>
+
+
+
+<nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
     <img class="logo img-thumbnail mx-auto d-block" src="/image/logo.png" alt="InvestBeacon">
 </div>
+<hr>
+<div class="container-fluid" id="main">
 
-<nav th:replace="partials/navbar :: navbar"></nav>
-<div class="container-fluid">
-    <h1 class="text-align-center">This is the main page</h1>
+    <div class="container-fluid mx-auto text-align-center" id="load-market"> Stock ticker</div>
+    <hr>
+    <div class="container-fluid mx-auto text-align-center" id="load-crypto">crypto ticker
 </div>
+<hr>
 
 
 
-<div class="container-fluid mx-auto text-align-center"> Stock ticker</div>
-<div class="container-fluid mx-auto text-align-center">crypto ticker
 <div class="container-fluid my-5">
         <div class="row align-items-center">
             <div class="col-3">
@@ -77,5 +82,7 @@
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+
+<script src="market-tickers.js"></script>
 </body>
 </html>
