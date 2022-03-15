@@ -33,7 +33,7 @@
 <div class="card text-center" th:each="post: ${posts}" style="margin: 5em auto; padding: 1em; width: 60%; display: flex; justify-content: center" >
 
     <div class="blog-post" >
-        <h2 class="blog-post-title" th:text="${post.getTitle()}"></h2>
+        <h2 class="blog-post-title" ><a th:href="@{/education/posts/{category}/{id} (category= ${post.getCategory().getCategory()} ,id =${post.getId()})}"><span th:text="${post.getTitle()}" style="color: darkblue; text-decoration: none"></span></a></h2>
         <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
     </div>
