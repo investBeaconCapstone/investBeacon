@@ -21,7 +21,7 @@ public class Category {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<EducationPost> educationPosts;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
     private List<ForumPost> posts;
 
     public Category() {
