@@ -2,8 +2,8 @@ package com.example.investbeacon.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,22 +35,23 @@ public class ForumPost {
     @JoinColumn (name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
+    @ManyToMany()
     @JoinTable(name = "forum_categories",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private List<Category> categories;
 
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @ManyToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "forum_posts_likes",
             joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user")}
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> users;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
     private List<Comment> comments;
 
     public ForumPost() {

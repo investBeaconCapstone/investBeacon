@@ -35,16 +35,23 @@ public class UserController {
 
     @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
+        boolean isFollowing = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedInUser = userDao.getById(user.getId());
             model.addAttribute("loggedInUser", loggedInUser);
+            for (User u : loggedInUser.getUsers()) {
+                if (u.getId() == id) {
+                    isFollowing = true;
+                    break;
+                }
+            }
         }
         User user = userDao.getById(id);
         model.addAttribute("user", user);
         model.addAttribute("thisUsersPosts", user.getForumPosts());
-//        model.addAttribute("following", user.getUsers());
-//        model.addAttribute("followedBy", user.getUsers());
+        model.addAttribute("following", isFollowing);
+        model.addAttribute("followedBy", user.getFollowers());
         return "users/profile";
     }
 
@@ -76,5 +83,33 @@ public class UserController {
             userDao.deleteById(id);
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/users/follow/{id}")
+    public String followUser(@PathVariable long id, @RequestParam("following") boolean following) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userOfProfile = userDao.getById(id);
+        if (following) {
+            //WORKING
+            System.out.println("logged in user? : " + loggedInUser.getUsername());
+            System.out.println(loggedInUser.getUsername() + " Will Stop FOLLOWING: " + userOfProfile.getUsername());
+            System.out.println("User of this profile is followed by: ");
+            for (User u : userOfProfile.getUsers()) {
+                System.out.println("GetUsers LIST: " + u.getUsername() + " ID: " + u.getId());
+            }
+            System.out.println("User of this profile is following: ");
+            for (User u : userOfProfile.getFollowers()) {
+                System.out.println("GetFollowers LIST: " + u.getUsername() + " ID: " + u.getId());
+            }
+            userOfProfile.getFollowers().removeIf(n -> n.getId() == loggedInUser.getId());
+        } else {
+            //WORKING
+            User followUser = userDao.getById(loggedInUser.getId());
+            System.out.println(loggedInUser.getUsername() + " WILL FOLLOW " + userOfProfile.getUsername());
+            System.out.println(loggedInUser.getId() + " WILL FOLLOW " + userOfProfile.getId());
+            userOfProfile.getFollowers().add(followUser);
+        }
+        userDao.save(userOfProfile);
+        return "redirect:/profile/{id}";
     }
 }
