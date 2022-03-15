@@ -1,7 +1,6 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.Comment;
-import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.ForumPost;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.CategoryRepository;
@@ -34,13 +33,14 @@ public class ForumPostController {
         this.commentDao = commentDao;
     }
 
+    //    VIEW ALL Forum Posts
     @GetMapping("/forum-posts")
     public String forumPosts(Model model) {
         model.addAttribute("allPosts", forumPostDao.findAll());
         return "/forum-posts/index";
     }
 
-
+    //      VIEW CREATE Forum Post
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
         model.addAttribute("post", new ForumPost());
@@ -48,6 +48,7 @@ public class ForumPostController {
         return "/forum-posts/create";
     }
 
+    //    POST CREATED Forum Post
     @PostMapping("/forum-posts/create")
     public String createForumPost(@ModelAttribute ForumPost post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -57,19 +58,23 @@ public class ForumPostController {
         return "redirect:/forum-posts";
     }
 
+    //    VIEW SINGLE Forum Post
     @GetMapping("/forum-posts/{id}")
     public String singleForumPost(@PathVariable long id, Model model) {
-       ForumPost editPost = forumPostDao.getById(id);
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (editPost.getUser().getId() == loggedInUser.getId()) {
-            model.addAttribute("category", categoryDao.findAll());
-            model.addAttribute("post", editPost);
-            return "/forum-posts/edit";
+        Optional<ForumPost> forumPost = forumPostDao.findById(id);
+        if (forumPost.isPresent()) {
+            ForumPost currentForumPost = forumPost.get();
+            Comment comment = new Comment();
+            comment.setPost(currentForumPost);
+            model.addAttribute("comment", comment);
+            model.addAttribute("singleForumPost", currentForumPost);
+            return "/forum-posts/single-post";
         } else {
-            return "redirect:/login";
+            return "redirect:/forum-posts";
         }
     }
 
+    //    VIEW EDIT Forum Post
     @GetMapping("/forum-posts/{id}/edit")
     public String viewEdit(@PathVariable long id, Model model) {
         ForumPost editPost = forumPostDao.getById(id);
@@ -82,22 +87,36 @@ public class ForumPostController {
         }
     }
 
+    //    POST EDITED Forum Post
     @PostMapping("/forum-posts/{id}/edit")
     public String editForumPosts(@ModelAttribute ForumPost editPost, @PathVariable long id) {
         if (forumPostDao.getById(id).getUser().getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+            editPost.setCreatedDate(forumPostDao.getById(id).getCreatedDate());
+            if (editPost.getContentImageUrl() == null) {
+                editPost.setContentImageUrl(forumPostDao.getById(id).getContentImageUrl());
+            }
+            if (editPost.getCategories().isEmpty()) {
+                editPost.setCategories((forumPostDao.getById(id).getCategories()));
+            }
             editPost.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             forumPostDao.save(editPost);
         }
         return "redirect:/forum-posts";
     }
 
-    @GetMapping("/forum-posts/{id}/delete")
+    //    DELETE Forum Post
+    @PostMapping("/forum-posts/{id}/delete")
     public String deleteForumPosts(@PathVariable long id) {
-        forumPostDao.deleteById(id);
+        ForumPost forumPost = forumPostDao.findPostById(id);
+        User user = userDao.findByForumPosts(forumPost);
+        User currentUser = userDao.getById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+        if (currentUser.getId() == user.getId()) {
+            forumPostDao.delete(forumPost);
+        }
         return "redirect:/forum-posts";
     }
 
-//    Still needs to be worked on
+    //     POST Comment
     @PostMapping("/forum-posts/{id}/comment")
     public String comment(@ModelAttribute Comment comment, @PathVariable long id, @ModelAttribute ForumPost post) {
         Comment newComment = new Comment();
@@ -110,6 +129,46 @@ public class ForumPostController {
         return "redirect:/forum-posts/" + id;
     }
 
+    //    VIEW Edit Comment Form
+    @GetMapping("/forum-posts/{id}/comment/{commentId}/edit")
+    public String viewComment(@PathVariable long id, @PathVariable long commentId, Model model) {
+        Comment oldComment = commentDao.getById(commentId);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (oldComment.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("comment", oldComment);
+            return "/forum-posts/edit-comment";
+        } else {
+            return "redirect:/forum-posts/" + id;
+        }
+    }
+
+    //    POST EDITED Comment
+    @PostMapping("/forum-posts/{id}/comment/{commentId}/edit")
+    public String editComment(@ModelAttribute Comment comment, @PathVariable long commentId, @PathVariable long id) {
+        Comment oldComment = commentDao.getById(commentId);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (oldComment.getUser().getId() == loggedInUser.getId()) {
+//            comment.setId(oldComment.getId());
+            comment.setUser(loggedInUser);
+            comment.setPost(oldComment.getPost());
+            comment.setCreateDate(new Date());
+            commentDao.save(comment);
+            return "redirect:/forum-posts/" + id;
+        } else {
+            return "redirect:/forum-posts";
+        }
+    }
+
+    //  DELETE Comment
+    @PostMapping("/forum-posts/{id}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable long commentId, @PathVariable long id) {
+        Comment comment = commentDao.getById(commentId);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (comment.getUser().getId() == loggedInUser.getId()) {
+            commentDao.deleteById(commentId);
+        }
+        return "redirect:/forum-posts/" + id;
+    }
 
 
 }

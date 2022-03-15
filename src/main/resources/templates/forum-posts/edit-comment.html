@@ -10,6 +10,7 @@
 
 
     <div class="form-group">
+        <input type="hidden" th:value="${comment.getId()}" th:field="*{id}">
         <label for="title"></label>
         <textarea class="form-control" name="title" id="title" style="resize: none;" th:value="${comment.getContent()}" th:field="*{content}"></textarea>
     </div>

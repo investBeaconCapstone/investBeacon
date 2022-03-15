@@ -4,63 +4,111 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+    <style>
+        #follow-button {
+            color: #3399FF;
+            font-family: "Helvetica";
+            font-size: 10pt;
+            background-color: #ffffff;
+            border: 1px solid;
+            border-color: #3399FF;
+            border-radius: 3px;
+            width: 85px;
+            height: 30px;
+            top: 50px;
+            left: 50px;
+            cursor: hand;
+        }
 
+        #unfollow-button {
+            color: #fff;
+            font-family: "Helvetica";
+            font-size: 10pt;
+            background-color: #2EB82E;
+            border: 1px solid;
+            border-color: #2EB82E;
+            border-radius: 3px;
+            width: 85px;
+            height: 30px;
+            top: 50px;
+            left: 50px;
+            cursor: hand;
+        }
+    </style>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<h1>Here is Your Profile</h1>
-<br>
 <div class="container">
     <div class="row">
         <div class="col d-flex flex-row justify-around" th:object="${user}">
             <img th:src="${user.profileImg}" alt="profile-avatar" class="col-4 avatar">
             <h2 th:text="${user.username}" class="col-4"></h2>
-            <div sec:authorize="isAuthenticated()">
-                <div th:if="${#authentication.principal.id == user.id}">
-                    <button class="col-4 text-end settingsButton">Edit Profile</button>
-                </div>
+            <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
+            <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
+                <button class="col-4 text-end settingsButton">Edit Profile</button>
             </div>
         </div>
     </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <div class="row" th:if="${#authentication.principal.id != user.id}">
-            <div class="col">
-                <button id="follow-button">+ Follow</button>
+    <!--    FOLLOW AND UNFOLLOW BUTTON SHOWN ONLY IF LOGGED IN AND NOT THE USER OF THE PROFILE-->
+    <div class="row" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
+        <div class="col">
+            <form th:action="@{/users/follow/{id}(id=${user.id})}" th:method="Post">
+                <button id="unfollow-button"
+                        name="unfollow" th:if="${following}">Following
+                </button>
+                <input type="hidden" name="following" th:value="${following}">
+            </form>
+            <form th:action="@{/users/follow/{id}(id=${user.id})}" th:method="Post">
+                <button id="follow-button" name="follow" th:if="${!following}">+ Follow</button>
+                <input type="hidden" name="following" th:value="${following}">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <!--DISPLAY Followers-->
+        <div class="col">
+            <h5>Followers</h5>
+            <div class="row" th:each="follower : ${user.getFollowers()}">
+                <span>
+                    <a th:href="@{'/profile/' + ${follower.getId()}}" th:text="${follower.getUsername()}"><i
+                            class="far fa-user"></i></a>
+                </span>
+            </div>
+        </div>
+        <!--        DISPLAY Following-->
+        <div class="col">
+            <h5>Following</h5>
+            <div class="row" th:each="followee : ${user.getUsers()}">
+                <span>
+                    <a th:href="@{'/profile/' + ${followee.getId()}}" th:text="${followee.getUsername()}"><i
+                            class="far fa-user"></i></a>
+                </span>
             </div>
         </div>
     </div>
 </div>
+<!--DISPLAY PROFILE USER'S POST-->
 
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="files" role="tabpanel">
-        <div class="row">
-            <div th:each="post : ${thisUsersPosts}" th:id="'post-' + ${post.id}" class="col-12 col-md-6">
-                <div class="card backgroundDiv d-flex flex-column align-items-start justify-content-between">
-                    <div class="card-header">
-                        <a th:href="@{'/forum-posts/' + ${post.id}}" class="card-title fs-5 file-title-link"
-                           th:text="${post.title}"></a>
-                    </div>
-                    <div class="card-body" th:text="${post.description}"></div>
-                    <hr class="bg-light w-100 m-1">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div class="card-footer" style="color: #b3efbd">posted <span th:text="${post.createdDate}">
-                        </span>
-                        </div>
-                        <div class="card-footer" sec:authorize="isAuthenticated()"
-                             th:if="${#authentication.principal.id == user.id}">
-                            <a th:href="@{/forum-posts/{id}/edit(id=${post.id})}"
-                               class="btn btn-outline-secondary whiteFont"><i
-                                    aria-labelledby="edit File Button" class="fas fa-edit"></i></a>
-                            <form th:action="@{/forum-posts/{id}/delete(id=${post.id})}" th:method="post"
-                                  class="d-inline-block" id="delete-form">
-                                <button th:type="button" class="btn btn-outline-danger" id="delete-btn">
-                                    <i aria-labelledby="Delete File Button"
-                                       class="fas fa-trash-alt">
-                                    </i>
-                                </button>
-                            </form>
-                        </div>
+<div class="row">
+    <div th:each="post : ${thisUsersPosts}" th:id="'post-' + ${post.id}" class="col-12 col-md-6">
+        <div class="card d-flex flex-column align-items-start justify-content-between">
+            <div>
+                <a th:href="@{'/forum-posts/' + ${post.id}}" class=""
+                   th:text="${post.title}"></a>
+            </div>
+            <div class="card-body" th:text="${post.description}"></div>
+            <div class="d-flex w-100 justify-content-between">
+                <div>posted <span th:text="${post.createdDate}"></span>
+                    <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
+                    <div sec:authorize="isAuthenticated()"
+                         th:if="${#authentication.principal.id == user.id}">
+                        <a th:href="@{/forum-posts/{id}/edit(id=${post.id})}"
+                           class="btn btn-outline-secondary"><i
+                                class="fas fa-edit"></i></a>
+                        <form th:action="@{/forum-posts/{id}/delete(id=${post.id})}" th:method="Post">
+                            <button th:type="submit" name="id" class="btn btn-danger delete-btn"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>
