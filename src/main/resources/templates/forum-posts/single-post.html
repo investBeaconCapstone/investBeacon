@@ -47,7 +47,22 @@
             <div class="col-11 title" th:text="|all ${singleForumPost.getComments().size()} comments|"></div>
         </div>
         <!--        ADD COMMENT-->
-        <div class="row">
+        <div class="row" sec:authorize="!isAuthenticated()">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-11">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Log in or sign up to leave a comment" readonly>
+                    <div class="input-group-append">
+                        <form th:action="@{/login}"
+                              th:method="Get">
+                            <button type="submit" class="btn btn-outline-primary">Log In</button>
+                            <button th:formaction="@{/register}" type="submit" class="btn btn-outline-primary">Sign up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" sec:authorize="isAuthenticated()">
             <div class="col-1">&nbsp;</div>
             <div class="col-11">
                 <form method="POST"
