@@ -14,7 +14,7 @@
         <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
     </div>
-    <div class="row d-flex justify-content-around">
+    <div class="row d-flex justify-content-around" >
         <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}" th:method="get">
             <button type="submit" class="btn btn-sm btn-warning">Edit</button>
         </form>
@@ -25,13 +25,21 @@
     </div>
 
 
-    <div id="likes">
-        <p><span th:text="${likes}"></span></p>
+    <div id="upvote">
+
         <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
               th:method="post">
             <button type="submit">upvote</button>
         </form>
+        <p><span th:text="${likes}"></span></p>
     </div>
+        <div id="downvote">
+        <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+              th:method="post">
+            <button type="submit">downvote</button>
+        </form>
+    </div>
+
 
 
 </main>

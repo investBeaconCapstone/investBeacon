@@ -13,7 +13,7 @@ public class EducationPostLikes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne @JoinColumn(name = "user_id", unique = true)
+    @ManyToOne @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne @JoinColumn(name = "post_id")

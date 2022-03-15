@@ -38,34 +38,55 @@ public class EducationPostController {
         this.likesDao = likesDao;
     }
 
-
+    //Shows posts for specific category
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
-
         model.addAttribute("posts", post);
 
         return "/education/show_category";
     }
 
+    //shows individual post
     @GetMapping("/education/posts/{category}/{id}")
     public String singleEdPost(@PathVariable Long id, Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         EducationPost post = postDao.getById(id);
-
-        Integer likes = post.getUserLikes().size();
-        if (likes == null) {
-            likes = 0;
+        Integer postLikes = post.getUserLikes().size();
+        List<EducationPostLikes> likes = post.getUserLikes();
+        boolean isCreator = false;
+        if(post.getUser().getUsername().equals(user.getUsername())){
+            isCreator= true;
         }
 
 
-        model.addAttribute("likes", likes);
+        boolean hasVoted = false;
+        if(! likes.isEmpty()){
+            for(EducationPostLikes like : likes){
+                if(like.getUser().getUsername().equals(user.getUsername())){
+                    hasVoted = true;
+                    break;
+                }
+            }
+        }
+
+
+
+        if (postLikes == null) {
+            postLikes = 0;
+        }
+
+        model.addAttribute("creator", isCreator);
+        model.addAttribute("voted", hasVoted);
+        model.addAttribute("likes", postLikes);
         model.addAttribute("post", post);
 
         return "/education/single_post";
     }
 
+    //upvote function
     @PostMapping("/education/posts/{category}/{id}/upvote")
-    public String likePost(@PathVariable long id) {
+    public String upPost(@PathVariable long id) {
 
         EducationPost likedPost = postDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -77,7 +98,26 @@ public class EducationPostController {
 
 
     }
+    //downvote function
+    @PostMapping("/education/posts/{category}/{id}/downvote")
+    public String downPost(@PathVariable long id){
 
+
+        EducationPost likedPost = postDao.getById(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+           List<EducationPostLikes> likes = likesDao.getEducationPostLikesByUser(user);
+            for (EducationPostLikes like : likes){
+                if (like.getEdPost().getId() == likedPost.getId()){
+                    System.out.println("like found");
+                    likesDao.deleteById(like.getId());
+                }
+
+            }
+
+        return "redirect:/education/posts/{category}/{id}";
+    }
+
+    //view create form
     @GetMapping("/education/posts/create")
     public String viewCreate(Model model) {
 
@@ -87,6 +127,8 @@ public class EducationPostController {
         return "/education/create";
     }
 
+
+    //create a post for education
     @PostMapping("/education/posts/create")
     public String postCreate(@ModelAttribute EducationPost post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -113,6 +155,7 @@ public class EducationPostController {
 
     }
 
+    //view edit form
     @GetMapping("/education/posts/{category}/{id}/edit")
     public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
@@ -127,6 +170,7 @@ public class EducationPostController {
         }
     }
 
+    //edit post and redirect to individual post
     @PostMapping("/education/posts/{category}/{id}/edit")
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
@@ -142,10 +186,10 @@ public class EducationPostController {
 
     }
 
+    //delete post
     @PostMapping("/education/posts/{category}/{id}/delete")
-    public String postDelete(@PathVariable long id, @PathVariable String category) {
+    public String postDelete(@PathVariable long id) {
         String postCat = postDao.getById(id).getCategory().getCategory();
-        category = postCat;
         if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
             postDao.deleteById(id);
         }
