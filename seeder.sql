@@ -87,7 +87,7 @@ VALUES (1, 1),
        (4, 4),
        (5, 5);
 
-INSERT INTO forum_posts_likes(post_id, user)
+INSERT INTO forum_posts_likes(post_id, user_id)
 VALUES (1, 2),
        (1, 3),
        (2, 1);
@@ -96,7 +96,7 @@ INSERT INTO comments(content, create_date, post_id, user_id)
 VALUES ('example of a comment', NOW(), 1, 3),
        ('example of another comment', NOW(), 2, 1);
 
-INSERT INTO followers(user_id, follow_id)
+INSERT INTO followers(follower, followee)
 VALUES (1,2),
        (2,1),
        (3,1),
