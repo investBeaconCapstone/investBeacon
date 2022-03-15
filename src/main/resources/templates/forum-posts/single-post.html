@@ -10,7 +10,7 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container">
     <!-- post -->
-    <div class="row link">
+    <div class="row">
         <!--        This is for up and down votes IF we plan on integrating this function.-->
 
         <!--        <div class="col-1">-->
@@ -26,31 +26,31 @@
             </p>
             <img th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
             <p th:text="${singleForumPost.description}">Content:</p>
-            <p class="tagline ">submitted on
+            <p>submitted on
                 <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
-                      class="live-timestamp" th:text="${singleForumPost.getCreatedDate()}"></time>
+                      th:text="${singleForumPost.getCreatedDate()}"></time>
                 by
                 <a th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}" class="author"
                    th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
             <p>
                 <a class="comments" th:text="|${singleForumPost.getComments().size()} comments|"><i
-                        class="fas fa-comments"></i> 0 comments</a>
+                        class="fas  fa-comments-o"></i> 0 comments</a>
             </p>
         </div>
     </div>
 
     <!-- Forum Post comments -->
-    <div id="comments" class="comments">
+    <div id="comments" class="comment_block">
         <div class="row header">
             <div class="col-1"></div>
             <div class="col-11 title" th:text="|all ${singleForumPost.getComments().size()} comments|"></div>
         </div>
         <!--        ADD COMMENT-->
-        <div class="row addcomment">
+        <div class="row">
             <div class="col-1">&nbsp;</div>
             <div class="col-11">
-                <form id="frmAddComment" method="POST"
+                <form method="POST"
                       th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
                     <input type="hidden" th:field="*{post}"/>
                     <div class="form-group">
@@ -61,8 +61,9 @@
                 </form>
             </div>
         </div>
+        <hr>
         <!-- single comment -->
-        <div class="row comment" th:each="comment : ${singleForumPost.getComments()}">
+        <div class="row" th:each="comment : ${singleForumPost.getComments()}">
             <div class="col-1">&nbsp;</div>
             <div class="col-11">
                 <span><a th:href="@{'/profile/' + ${comment.getUser().getId()}}"
@@ -70,15 +71,20 @@
                 <span th:text="${comment.getCreateDate()}"><i class="far fa-clock"></i></span>
                 <p class="body" th:text="${comment.getContent()}"></p>
                 <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
-                <div class="row">
+                <div class="row" sec:authorize="isAuthenticated()"
+                     th:if="${#authentication.principal.id == comment.getUser().id}">
                     <span class="col">
-                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/edit(id=${singleForumPost.id},commentId=${comment.id})}" th:method="Get">
-                            <button type="submit" name="id" class="btn btn-secondary edit-btn"><i class="fas fa-edit"></i></button>
+                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/edit(id=${singleForumPost.id},commentId=${comment.id})}"
+                              th:method="Get">
+                            <button type="submit" name="id" class="btn btn-secondary edit-btn"><i
+                                    class="fas fa-edit"></i></button>
                         </form>
                     </span>
                     <span class="col">
-                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/delete(id=${singleForumPost.id},commentId=${comment.id})}" th:method="Post">
-                            <button type="submit" name="id" class="btn btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>
+                        <form th:action="@{/forum-posts/{id}/comment/{commentId}/delete(id=${singleForumPost.id},commentId=${comment.id})}"
+                              th:method="Post">
+                            <button type="submit" name="id" class="btn btn-danger delete-btn"><i
+                                    class="fas fa-trash-alt"></i></button>
                         </form>
                     </span>
                 </div>
