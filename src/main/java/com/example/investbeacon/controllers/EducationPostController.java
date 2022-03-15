@@ -57,6 +57,7 @@ public class EducationPostController {
             likes = 0;
         }
 
+
         model.addAttribute("likes", likes);
         model.addAttribute("post", post);
 
@@ -68,8 +69,8 @@ public class EducationPostController {
 
         EducationPost likedPost = postDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         EducationPostLikes likes = new EducationPostLikes(user, likedPost);
+
 
         likesDao.save(likes);
         return "redirect:/education/posts/{category}/{id}";
