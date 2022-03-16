@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>InvestBeacon | Register an account</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
-
+<!--CAPTCHA SCRIPT-->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
@@ -36,7 +36,11 @@
         <button type="button" id="open">Choose image to upload</button>
     </div>
     <div class="form-group">
-        <div class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
+        <label for="captcha">Captcha</label>
+        <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
+    </div>
+    <div>
+        <span th:text="${message}"></span>
     </div>
 
     <input value="Sign me up!" type="submit" onclick="return alert('Account has been successfully created!')"/>

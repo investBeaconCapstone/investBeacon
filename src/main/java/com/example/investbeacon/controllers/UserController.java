@@ -1,7 +1,9 @@
 package com.example.investbeacon.controllers;
 
+import com.example.investbeacon.CaptchaValidator;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CaptchaValidator validator;
 
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
@@ -26,11 +31,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user) {
-        String hash = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hash);
-        userDao.save(user);
-        return "redirect:/login";
+    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model) {
+
+        if (validator.isValid(captcha)) {
+            String hash = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hash);
+            userDao.save(user);
+            return "redirect:/login";
+        } else {
+            model.addAttribute("message", "Please Validate CAPTCHA");
+        }
+            return "Please Validate CAPTCHA";
     }
 
     @GetMapping("/profile/{id}")

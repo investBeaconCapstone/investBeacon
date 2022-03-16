@@ -45,7 +45,7 @@
             <h2 th:text="${user.username}" class="col-4"></h2>
             <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
             <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
-                <a th:each="loggedInUser : ${user}" th:href="@{/profile/{id}(id=${loggedInUser.id})/edit}" class="col-4 text-end btn btn-primary settingsButton">Edit Profile</a>
+                <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="col-4 text-end btn btn-primary settingsButton">Edit Profile</a>
             </div>
         </div>
     </div>
