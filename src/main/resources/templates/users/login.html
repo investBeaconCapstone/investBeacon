@@ -5,6 +5,7 @@
     <title>Login</title>
 
     <th:block th:include="partials/header.html :: styling"></th:block>
+
 </head>
 <body>
 
@@ -17,13 +18,16 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-
-<form th:action="@{/login}" method="post">
+<br>
+<form class="form" th:action="@{/login}" method="post">
     <label for="username">Username</label>
-    <input id="username" name="username" type="text" /><br>
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" /><br>
-    <input type="submit" value="Log In" />
+    <input id="username" name="username" type="text" />
+    <br>
+    <label for="password">Password </label>
+    <input id="password" name="password" type="password" />
+    <br>
+    <button class="button btn-primary" type="submit">Log In</button>
+    <p class="message">Not registered? <a th:href="@{/register}">Create an account</a></p>
 </form>
 
 </div>

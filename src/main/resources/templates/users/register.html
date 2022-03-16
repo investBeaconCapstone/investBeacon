@@ -11,7 +11,7 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 <h1>Register Account</h1>
-<form th:action="@{/register}" method="POST" th:object="${user}">
+<form class="form" th:action="@{/register}" method="POST" th:object="${user}">
     <div class="form-group">
         <label for="firstName">First Name</label>
         <input id="firstName" th:field="*{firstName}" />
@@ -35,15 +35,16 @@
         <input id="image" type="hidden" th:field="*{profileImg}" />
         <button type="button" id="open">Choose image to upload</button>
     </div>
-    <div class="form-group">
-        <label for="captcha">Captcha</label>
+    <hr>
+
         <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
-    </div>
+
     <div>
         <span th:text="${message}"></span>
     </div>
-
-    <input value="Sign me up!" type="submit" onclick="return alert('Account has been successfully created!')"/>
+    <br>
+    <button class="button btn-primary" type="submit" onclick="return alert('Account has been successfully created!')">Sign me up!</button>
+    <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
 </form>
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
