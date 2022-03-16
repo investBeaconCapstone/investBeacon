@@ -63,6 +63,10 @@ public class ForumPostController {
     public String singleForumPost(@PathVariable long id, Model model) {
         Optional<ForumPost> forumPost = forumPostDao.findById(id);
         if (forumPost.isPresent()) {
+            if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+                User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                model.addAttribute("loggedInUser", loggedInUser);
+            }
             ForumPost currentForumPost = forumPost.get();
             Comment comment = new Comment();
             comment.setPost(currentForumPost);
