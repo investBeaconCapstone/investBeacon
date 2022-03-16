@@ -1,12 +1,7 @@
 package com.example.investbeacon.controllers;
 
-import com.example.investbeacon.models.Comment;
-import com.example.investbeacon.models.ForumPost;
-import com.example.investbeacon.models.User;
-import com.example.investbeacon.repositories.CategoryRepository;
-import com.example.investbeacon.repositories.CommentRepository;
-import com.example.investbeacon.repositories.ForumPostRepository;
-import com.example.investbeacon.repositories.UserRepository;
+import com.example.investbeacon.models.*;
+import com.example.investbeacon.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,13 +20,15 @@ public class ForumPostController {
     private final UserRepository userDao;
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
+    private final ForumLikesRepository likesDao;
 
 
-    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao) {
+    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao, ForumLikesRepository likesDao) {
         this.forumPostDao = forumPostDao;
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.commentDao = commentDao;
+        this.likesDao = likesDao;
     }
 
     //    VIEW ALL Forum Posts
@@ -68,8 +66,34 @@ public class ForumPostController {
                 model.addAttribute("loggedInUser", loggedInUser);
             }
             ForumPost currentForumPost = forumPost.get();
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Integer postLikes = currentForumPost.getUserLikes().size();
+            List<ForumPostLike> likes = currentForumPost.getUserLikes();
+
+            //if user voted button will change to downvote
+            boolean hasVoted = false;
+            if(! likes.isEmpty()){
+                for(ForumPostLike like : likes){
+                    if(like.getUsers().getUsername().equals(user.getUsername())){
+                        hasVoted = true;
+                        break;
+                    }
+                }
+            }
+
+            //if the array of postlikes is null then it will show zero
+            if (postLikes == null) {
+                postLikes = 0;
+            }
+
+
+
             Comment comment = new Comment();
             comment.setPost(currentForumPost);
+
+
+            model.addAttribute("voted", hasVoted);
+            model.addAttribute("likes", postLikes );
             model.addAttribute("comment", comment);
             model.addAttribute("singleForumPost", currentForumPost);
             return "/forum-posts/single-post";
@@ -172,6 +196,32 @@ public class ForumPostController {
             commentDao.deleteById(commentId);
         }
         return "redirect:/forum-posts/" + id;
+    }
+
+    //upvote post
+    @PostMapping("/forum-posts/{id}/upvote")
+    public String upVote(@PathVariable long id){
+        ForumPost likedPost = forumPostDao.getById(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ForumPostLike like = new ForumPostLike(user, likedPost);
+
+        likesDao.save(like);
+        return "redirect:/forum-posts/{id}";
+    }
+
+    //down vote post
+    @PostMapping("/forum-posts/{id}/downvote")
+    public String downVote(@PathVariable long id){
+        ForumPost likedPost = forumPostDao.getById(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<ForumPostLike> likes = likesDao.getForumPostLikeByUsers(user);
+        for(ForumPostLike like: likes){
+            if(like.getForumPost().getId() == likedPost.getId()){
+                likesDao.deleteById(like.getId());
+            }
+        }
+
+        return "redirect:/forum-posts/{id}";
     }
 
 

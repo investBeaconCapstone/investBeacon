@@ -31,6 +31,11 @@ public class ForumPost {
     @Column(name ="content_img_url", length = 500)
     private String contentImageUrl;
 
+    //forum likes
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forumPost")
+    private List<ForumPostLike> userLikes;
+
+
     @ManyToOne
     @JoinColumn (name = "user_id", nullable = false)
     private User user;
@@ -41,15 +46,15 @@ public class ForumPost {
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private List<Category> categories;
 
-
-    @ManyToMany()
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "forum_posts_likes",
-            joinColumns = {@JoinColumn(name="post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
-    private List<User> users;
+//   Has no use implemented another way for forum likes
+//    @ManyToMany()
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(
+//            name = "forum_posts_likes",
+//            joinColumns = {@JoinColumn(name="post_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+//    )
+//    private List<User> users;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
     private List<Comment> comments;
@@ -57,14 +62,15 @@ public class ForumPost {
     public ForumPost() {
     }
 
-    public ForumPost(String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<User> users) {
+    public ForumPost(String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<ForumPostLike> userLikes) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
         this.contentImageUrl = contentImageUrl;
         this.user = user;
         this.categories = categories;
-        this.users = users;
+
+        this.userLikes = userLikes;
     }
 
     public ForumPost(ForumPost copy){
@@ -75,6 +81,6 @@ public class ForumPost {
         contentImageUrl = copy.contentImageUrl;
         user = copy.user;
         categories = copy.categories;
-        users = copy.users;
+//        users = copy.users;
     }
 }
