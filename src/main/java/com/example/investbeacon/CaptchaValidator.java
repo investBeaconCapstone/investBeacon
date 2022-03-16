@@ -2,6 +2,7 @@ package com.example.investbeacon;
 
 import com.example.investbeacon.models.CaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,9 +12,12 @@ public class CaptchaValidator {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${google.recaptcha.key.secret}")
+    private String reCaptchaSecret;
+
     public boolean isValid(String captcha) {
         String url = "https://www.google.com/recaptcha/api/siteverify";
-        String params = "?secret=6Lf2PuIeAAAAAG1yglTqq1PCcZISOYegHnvUFaww&response="+captcha;
+        String params = "?secret="+reCaptchaSecret+"&response="+captcha;
 
         CaptchaResponse resp = restTemplate.postForObject(url+params, null, CaptchaResponse.class);
         System.out.println("Success: " + resp.isSuccess());
