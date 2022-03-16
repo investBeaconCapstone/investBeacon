@@ -40,8 +40,9 @@ public class UserController {
             return "redirect:/login";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
+            return "users/register";
         }
-            return "Please Validate CAPTCHA";
+
     }
 
     @GetMapping("/profile/{id}")
