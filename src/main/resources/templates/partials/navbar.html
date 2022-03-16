@@ -1,4 +1,5 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
         <a class="navbar-brand nav-item" sec:authorize="isAuthenticated()" href="/"><img class="nav-icon" src="/image/icon.png" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +54,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/forum-posts/create">Forum</a>
 <!--                        needs to be added access only to admin-->
-                        <a class="dropdown-item" href="/education/create">Education</a>
+                        <a class="dropdown-item" href="/education/posts/create">Education</a>
                     </div>
                 </li>
                 <li class="nav-item">

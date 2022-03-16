@@ -87,7 +87,7 @@ VALUES (1, 1),
        (4, 4),
        (5, 5);
 
-INSERT INTO forum_posts_likes(post_id, user_id)
+INSERT INTO forum_post_like(post_id, user_id)
 VALUES (1, 2),
        (1, 3),
        (2, 1);
