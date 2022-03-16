@@ -12,11 +12,11 @@
 <form th:action="@{/profile/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
     <div class="form-group">
         <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="firstName" th:value="${userToEdit.firstName}" readonly>
+        <input type="text" id="firstName" name="firstName" th:value="${userToEdit.firstName}">
     </div>
     <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="lastName" th:value="${userToEdit.lastName}" readonly>
+        <input type="text" id="lastName" name="lastName" th:value="${userToEdit.lastName}">
     </div>
     <div class="form-group">
         <label for="email">Email</label>
