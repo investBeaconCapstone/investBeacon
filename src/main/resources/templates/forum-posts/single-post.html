@@ -11,13 +11,18 @@
 <div class="container">
     <!-- post -->
     <div class="row">
-        <!--        This is for up and down votes IF we plan on integrating this function.-->
+<!--                This is for up and down votes IF we plan on integrating this function.-->
 
-        <!--        <div class="col-1">-->
-        <!--            <div><a href="#" class="upvote"><i class="fas fa-arrow-up"></i></a></div>-->
-        <!--            <div><span class="votecount">3</span></div>-->
-        <!--            <div><a href="#" class="downvote"><i class="fas fa-arrow-down"></i></a></div>-->
-        <!--        </div>-->
+                <div class="col-1">
+                    <form th:action="@{/forum-posts/{id}/upvote (id = ${singleForumPost.getId()})}" th:method="POST">
+                        <button class="upvote" type="submit"><i class="fas fa-arrow-up"></i></button>
+                    </form>
+                    <div><span class="votecount" th:text="${likes}">3</span></div>
+                    <form th:action="@{/forum-posts/{id}/downvote (id = ${singleForumPost.getId()})}" th:method="POST">
+                        <button  class="downvote" type="submit"><i class="fas fa-arrow-down"></i></button>
+                    </form>
+
+                </div>
 
         <div class="col-11">
             <p class="title">
