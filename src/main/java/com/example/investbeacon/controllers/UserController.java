@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 
 @Controller
 public class UserController {
@@ -31,11 +33,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model) {
+    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
 
         if (validator.isValid(captcha)) {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
+            if(profileImg.isEmpty()){
+                user.setProfileImg("/image/avatar.jpeg");
+            }
             userDao.save(user);
             return "redirect:/login";
         } else {
