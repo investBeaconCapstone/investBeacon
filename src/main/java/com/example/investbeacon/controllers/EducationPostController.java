@@ -1,6 +1,5 @@
 package com.example.investbeacon.controllers;
 
-import com.example.investbeacon.models.Category;
 import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.EducationPostLikes;
 import com.example.investbeacon.models.User;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 
 import java.util.Date;

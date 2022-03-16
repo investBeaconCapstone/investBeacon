@@ -1,6 +1,5 @@
 package com.example.investbeacon.repositories;
 
-import com.example.investbeacon.models.EducationPost;
 import com.example.investbeacon.models.EducationPostLikes;
 import com.example.investbeacon.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
