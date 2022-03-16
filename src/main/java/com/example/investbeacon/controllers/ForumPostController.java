@@ -60,42 +60,36 @@ public class ForumPostController {
     @GetMapping("/forum-posts/{id}")
     public String singleForumPost(@PathVariable long id, Model model) {
         Optional<ForumPost> forumPost = forumPostDao.findById(id);
+        ForumPost currentForumPost = forumPost.get();
         if (forumPost.isPresent()) {
+            Comment comment = new Comment();
             if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-                User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                model.addAttribute("loggedInUser", loggedInUser);
-            }
-            ForumPost currentForumPost = forumPost.get();
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Integer postLikes = currentForumPost.getUserLikes().size();
-            List<ForumPostLike> likes = currentForumPost.getUserLikes();
+                User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                Integer postLikes = currentForumPost.getUserLikes().size();
+                List<ForumPostLike> likes = currentForumPost.getUserLikes();
 
-            //if user voted button will change to downvote
-            boolean hasVoted = false;
-            if(! likes.isEmpty()){
-                for(ForumPostLike like : likes){
-                    if(like.getUsers().getUsername().equals(user.getUsername())){
-                        hasVoted = true;
-                        break;
+                //if user voted button will change to downvote
+                boolean hasVoted = false;
+                if(! likes.isEmpty()){
+                    for(ForumPostLike like : likes){
+                        if(like.getUsers().getUsername().equals(user.getUsername())){
+                            hasVoted = true;
+                            break;
+                        }
                     }
                 }
+
+                //if the array of postlikes is null then it will show zero
+                if (postLikes == null) {
+                    postLikes = 0;
+                }
+                comment.setPost(currentForumPost);
+                model.addAttribute("loggedInUser", user);
+                model.addAttribute("voted", hasVoted);
+                model.addAttribute("likes", postLikes );
             }
-
-            //if the array of postlikes is null then it will show zero
-            if (postLikes == null) {
-                postLikes = 0;
-            }
-
-
-
-            Comment comment = new Comment();
-            comment.setPost(currentForumPost);
-
-
-            model.addAttribute("voted", hasVoted);
-            model.addAttribute("likes", postLikes );
-            model.addAttribute("comment", comment);
             model.addAttribute("singleForumPost", currentForumPost);
+            model.addAttribute("comment", comment);
             return "/forum-posts/single-post";
         } else {
             return "redirect:/forum-posts";

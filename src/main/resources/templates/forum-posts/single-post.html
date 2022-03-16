@@ -11,18 +11,17 @@
 <div class="container">
     <!-- post -->
     <div class="row">
-<!--                This is for up and down votes IF we plan on integrating this function.-->
+        <!--                This is for up and down votes IF we plan on integrating this function.-->
 
-                <div class="col-1">
-                    <form th:action="@{/forum-posts/{id}/upvote (id = ${singleForumPost.getId()})}" th:method="POST">
-                        <button class="upvote" type="submit"><i class="fas fa-arrow-up"></i></button>
-                    </form>
-                    <div><span class="votecount" th:text="${likes}">3</span></div>
-                    <form th:action="@{/forum-posts/{id}/downvote (id = ${singleForumPost.getId()})}" th:method="POST">
-                        <button  class="downvote" type="submit"><i class="fas fa-arrow-down"></i></button>
-                    </form>
-
-                </div>
+        <div class="col-1" sec:authorize="isAuthenticated()">
+            <form th:action="@{/forum-posts/{id}/upvote (id = ${singleForumPost.getId()})}" th:method="POST">
+                <button class="upvote" type="submit"><i class="fas fa-arrow-up"></i></button>
+            </form>
+            <div><span class="votecount" th:text="${likes}">3</span></div>
+            <form th:action="@{/forum-posts/{id}/downvote (id = ${singleForumPost.getId()})}" th:method="POST">
+                <button class="downvote" type="submit"><i class="fas fa-arrow-down"></i></button>
+            </form>
+        </div>
 
         <div class="col-11">
             <h3>
@@ -34,7 +33,8 @@
                 <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
                       th:text="${singleForumPost.getCreatedDate()}"></time>
                 by
-                <a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}" class="author"
+                <a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}"
+                   class="author"
                    th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
             <p sec:authorize="isAuthenticated()">
@@ -48,7 +48,8 @@
         <div class="row header">
             <div class="col-1"></div>
             <div class="col-11">
-                <label><i class="far fa-comment-alt"></i> <span th:text="|${singleForumPost.getComments().size()} comments|"></span></label>
+                <label><i class="far fa-comment-alt"></i> <span
+                        th:text="|${singleForumPost.getComments().size()} comments|"></span></label>
             </div>
         </div>
         <!--        ADD COMMENT-->
@@ -61,7 +62,8 @@
                         <form th:action="@{/login}"
                               th:method="Get">
                             <button type="submit" class="btn btn-outline-primary">Log In</button>
-                            <button th:formaction="@{/register}" type="submit" class="btn btn-outline-primary">Sign up</button>
+                            <button th:formaction="@{/register}" type="submit" class="btn btn-outline-primary">Sign up
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -94,13 +96,13 @@
                          th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
                 <span class="datetime-created" th:text="${comment.getCreateDate()}"><i class="fa-regular fa-clock"></i></span>
                 <p style="min-height: 50px;" class="body" th:text="${comment.getContent()}"></p>
-<!--                <div class="comment_details">-->
-<!--                    <ul>-->
-<!--                        <li><i class="fa-regular fa-clock"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
-<!--                        <li><i class="fa-regular fa-calendar"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
-<!--                        <li><i class="fa-regular fa-pencil"></i><span th:text="${comment.getUser().getUsername()}"></span></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+                <!--                <div class="comment_details">-->
+                <!--                    <ul>-->
+                <!--                        <li><i class="fa-regular fa-clock"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
+                <!--                        <li><i class="fa-regular fa-calendar"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
+                <!--                        <li><i class="fa-regular fa-pencil"></i><span th:text="${comment.getUser().getUsername()}"></span></li>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
                 <a sec:authorize="isAuthenticated()" href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
                 <div class="row" sec:authorize="isAuthenticated()"
                      th:if="${#authentication.principal.id == comment.getUser().id}">
