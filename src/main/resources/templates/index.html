@@ -12,7 +12,7 @@
 
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
-    <img class="logo img-thumbnail mx-auto d-block" src="/image/logo.png" alt="InvestBeacon">
+    <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
 </div>
 <hr>
 <div class="container-fluid" id="main">
@@ -28,7 +28,7 @@
 <div class="container-fluid my-5">
         <div class="row align-items-center">
             <div class="col-3">
-               <div>
+               <div id="load-news">
                    <h1> Some News here</h1>
                    <img alt="Picture">
                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro. Nec ne meis natum eripuit, eu cum stet virtute detraxit, lorem labores civibus eu vis. Sed ne amet tacimates pertinacia. Quo ceteros propriae mandamus an. Cu vel cibo omnis, omnium quaerendum nec cu. Novum persius alterum eam et.
@@ -82,7 +82,56 @@
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+<!--    <script src="/js/index.js"></script>-->
+<!--<script>-->
 
-<script src="market-tickers.js"></script>
+<!--    //  url for API-->
+<!--    const NEWS_API = ' https://api.marketaux.com/v1/news/all?symbols=TSLA,AMZN,MSFT&filter_entities=true&language=en&api_token=ZaTmr6mrrox3LxBsnqE92JhHuk6bgjAYWUVgoyFR' ;-->
+
+
+<!--    const MARKET_API = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=WF0J3C09DVQXVCSK'-->
+
+<!--    const CRYPTO_API = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=CNY&apikey=WF0J3C09DVQXVCSK'-->
+
+<!--    /// market news// working on test page not working here-->
+
+
+<!--    fetch(NEWS_API)-->
+<!--        .then(data => {-->
+<!--            return data.json();-->
+<!--        })-->
+<!--        .then(data => {-->
+<!--            console.log(data);-->
+<!--        });-->
+
+<!--    // market news//-->
+
+<!--    let getMarketNews = () => {-->
+<!--        return fetch(NEWS_API)-->
+<!--            .then(resp => resp.json())-->
+<!--            .then(data => {-->
+<!--                console.log(data);-->
+<!--                $('#load-news').empty();-->
+<!--                let newsMarket = data.data;-->
+
+<!--                for (let property of newsMarket) {-->
+<!--                    //cards-->
+<!--                    $('#load-news').append(`<div class="row" >-->
+<!--                    <div class="card" style="width: 35rem;">-->
+<!--                        <h3 class="newsTitle text-center">${property.title.toUpperCase()}</h3>-->
+<!--                        <img id="newsPoster" src="${property.image_url}" class="card-img-top" alt="pic" style="width: 35rem;">-->
+<!--                        <div class="card-body body">-->
+<!--                        <p class="newsDescription">${property.description}</p>-->
+<!--                 </div>-->
+<!--                 </div>`)-->
+<!--                }-->
+<!--            })-->
+<!--    }-->
+
+<!--    getMarketNews();-->
+
+
+<!--</script>-->
+
 </body>
 </html>
