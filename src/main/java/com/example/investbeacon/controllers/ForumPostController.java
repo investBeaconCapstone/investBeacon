@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.*;
 import com.example.investbeacon.repositories.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class ForumPostController {
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
     private final ForumLikesRepository likesDao;
+
+    @Value("${FILESTACK_API_KEY}")
+    String fileStackKey;
 
 
     public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao, ForumLikesRepository likesDao) {
@@ -42,6 +46,7 @@ public class ForumPostController {
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
         model.addAttribute("post", new ForumPost());
+        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("categoryList", categoryDao.findAll());
         return "/forum-posts/create";
     }
@@ -102,6 +107,7 @@ public class ForumPostController {
         ForumPost editPost = forumPostDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (editPost.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("editPost", editPost);
             return "/forum-posts/edit";
         } else {
