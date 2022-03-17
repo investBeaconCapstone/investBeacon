@@ -26,10 +26,19 @@ post-img{
 }
 
 ul#load-market {
-    padding: 0px
+    padding: 0px;
 }
 ul#load-market li {
     display: inline-block;
+    width: auto;
+    list-style: outside none none;
+}
+
+ul#load-crypto {
+    padding: 0px;
+}
+ul#load-crypto li {
+    display: inline;
     width: auto;
     list-style: outside none none;
 }
