@@ -8,7 +8,7 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border:none;">
     <h3> Create A New Post</h3>
     <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">

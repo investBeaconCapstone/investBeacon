@@ -1,9 +1,9 @@
 
 
 
-let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API ;
 
-    // let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
+
+     let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
     let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AAPL.US&offset=0&limit=3");
     let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
     let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
@@ -64,12 +64,12 @@ let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + E
 
                     $('#load-crypto').append(`
                       <li  style="list-style-type: none;  display:inline-block;">
-                     <span class="mx-3"> ${result.T}</span>
+                     <span class="mx-3" style="color: #FFFFFF"> ${result.T}</span>
 
                      <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
                      <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
                  }
-            }).catch(err => console.error("This is your err:", err));
+            }).catch(err => console.error("This is your err:"));
     }
 
     getCrypto();
@@ -100,21 +100,17 @@ let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + E
                 for (let result of newsMarket) {
                     //cards
                     $('#load-news').append(`
-                    <div class="card" style="width: 30rem; height:25rem; border: none; color:black;">
-                        <a class="newsUrlandTitle" href="${result.link}">${result.title.toUpperCase()}</a>
-                        
-                        <p class="newsDescription">${result.content}</p>
-<!-- <div class="col-md-6">-->
-<!--      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
-<!--        <div class="col p-4 d-flex flex-column position-static">-->
-<!--          <strong class="d-inline-block mb-2 text-primary">World</strong>-->
-<!--          <h3 class="mb-0">Featured post</h3>-->
-<!--          <div class="mb-1 text-muted">Nov 12</div>-->
-<!--          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>-->
-<!--          <a href="#" class="stretched-link">Continue reading</a>-->
-<!--        </div>-->
-                      
-                 </div>`)
+                    <div class="col-md-4">
+                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="width: 30rem; height: 30rem; border: none; color:black;">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary"></strong>
+                                    <h3 class="mb-0">${result.title.toUpperCase()}</h3>
+                                   <div class="mb-1">${result.date}</div>
+                                    <p class="card-text mb-auto">${result.content}</p>
+                                    <a href="${result.link}" class="stretched-link">Continue reading</a>
+                                </div>
+                            </div>                      
+                         </div>`)
                 }
             }).catch(err => console.error("This is your err:", err));
     }
@@ -132,13 +128,22 @@ let getMarketNews2 = () => {
             for (let property of newsMkt) {
                 //cards
                 $('#load-news-2').append(`
-                    <div class="card col mx-5" style="width: 30rem; border: none;">
-                        <h5 class="newsTitle text-center">${property.title}</h5>
-                        <img style="width: 20rem;" id="newsImg" src="${property.image_url}">
-                        <p class="newsDescription">${property.description}</p>
+                <div class="col-md-4">
+                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="width: 30rem; height: 30rem; border: none; color:black;">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary"></strong>
+                                    <h3 class="mb-0">${property.title}</h3>
+                                   <div class="mb-1">${property.date}/div>
+                                    <p class="card-text mb-auto">${property.description}</p>
+                                    <a href="${property.url}" class="stretched-link">Continue reading</a>
+                                </div>
+                                 <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="250"  role="img" aria-label="Placeholder: Thumbnail" src="${property.image_url}"><rect width="100%" height="100%" /></img>
 
-                       <a class="newsUrl">${property.url}</a>
-                 </div>`)
+        </div>
+                            </div>
+                         </div>
+`)
             }
         }).catch(err => console.error("This is your err:", err));
 }
