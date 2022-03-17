@@ -38,15 +38,18 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
+<br>
 <div class="container">
     <div class="row">
-        <div class="col d-flex flex-row justify-around" th:object="${user}">
-            <img th:src="${user.profileImg}" alt="profile-avatar" class="col-4 avatar">
-            <h2 th:text="${user.username}" class="col-4"></h2>
+        <div class="mx-auto card" style="width: 18rem; text-align: center" th:object="${user}">
+            <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top avatar">
+            <div class="card-body">
+            <h5 th:text="${user.username}" class="card-title text-align"></h5>
             <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
             <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
-                <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="col-4 text-end btn btn-primary settingsButton">Edit Profile</a>
+                <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="text-end btn btn-primary settingsButton">Edit Profile</a>
             </div>
+        </div>
         </div>
     </div>
     <!--    FOLLOW AND UNFOLLOW BUTTON SHOWN ONLY IF LOGGED IN AND NOT THE USER OF THE PROFILE-->
@@ -64,6 +67,7 @@
             </form>
         </div>
     </div>
+    <br>
     <div class="row">
         <!--DISPLAY Followers-->
         <div class="col">
@@ -86,7 +90,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <!--DISPLAY PROFILE USER'S POST-->
 
 <div class="row">
@@ -114,6 +118,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
