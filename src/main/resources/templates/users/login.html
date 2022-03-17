@@ -20,11 +20,9 @@
 </div>
 <br>
 <form class="form" th:action="@{/login}" method="post">
-    <label for="username">Username</label>
-    <input id="username" name="username" type="text" />
+    <input id="username" placeholder="Enter Username" name="username" type="text" />
     <br>
-    <label for="password">Password </label>
-    <input id="password" name="password" type="password" />
+    <input id="password" placeholder="Enter Password" name="password" type="password" />
     <br>
     <button class="button btn-primary" type="submit">Log In</button>
     <p class="message">Not registered? <a th:href="@{/register}">Create an account</a></p>
