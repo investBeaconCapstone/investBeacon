@@ -4,6 +4,7 @@ import com.example.investbeacon.CaptchaValidator;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,9 @@ public class UserController {
     @Autowired
     private CaptchaValidator validator;
 
+    @Value("${FILESTACK_API_KEY}")
+    String fileStackKey;
+
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
@@ -30,6 +34,7 @@ public class UserController {
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         return "users/register";
     }
 
