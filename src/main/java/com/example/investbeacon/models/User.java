@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -21,18 +22,27 @@ public class User {
     private boolean isAdmin;
 
     @Column(nullable = false, length = 100, unique = true)
+    @NotBlank
     private String username;
 
     @Column(nullable = false, length = 50)
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String firstName;
 
     @Column(nullable = false, length = 50)
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String lastName;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
+    @Email(message = "Please enter a valid e-mail address")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank
+    @Size(min = 6, max = 15)
     private String password;
 
 
