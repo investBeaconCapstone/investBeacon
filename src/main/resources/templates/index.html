@@ -7,53 +7,29 @@
 
 </head>
 <body>
-<div class="container-fluid mx-auto first-div">
-    <img class="logo img-thumbnail mx-auto d-block" src="/image/logo.png" alt="InvestBeacon">
-</div>
+
+
 
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class="container-fluid">
-    <h1 class="text-align-center">This is the main page</h1>
+<div class="container-fluid mx-auto first-div">
+    <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
 </div>
+    <h5>Equities Markets</h5>
+    <div class="container-fluid mx-auto text-align-center"  style="background-color:#2C3333 " >
+        <ul id="load-market" class="row" style="overflow:hidden;"></ul>
+    </div>
+    <hr>
+<h5>Cryptocurrency Markets</h5>
+    <div class="container-fluid mx-auto text-align-center my-5">
+        <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
+<!--        <iframe src="https://www.widgets.investing.com/top-cryptocurrencies?theme=darkTheme" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe><div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif;">Powered by <a href="https://www.investing.com?utm_source=WMT&amp;utm_medium=referral&amp;utm_campaign=TOP_CRYPTOCURRENCIES&amp;utm_content=Footer%20Link" target="_blank" rel="nofollow">Investing.com</a></div>-->
+    </div>
+<hr>
+<div class="container-fluid" >
+    <div id="load-news-2" class="d-flex col">   </div>
+    <br>
+               <div id="load-news" class="d-flex col my-5"></div>
 
-
-
-<div class="container-fluid mx-auto text-align-center"> Stock ticker</div>
-<div class="container-fluid mx-auto text-align-center">crypto ticker</div>
-<div class="container-fluid my-5">
-        <div class="row align-items-center">
-            <div class="col-3">
-               <div>
-                   <h1> Some News here</h1>
-                   <img alt="Picture">
-                   <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro. Nec ne meis natum eripuit, eu cum stet virtute detraxit, lorem labores civibus eu vis. Sed ne amet tacimates pertinacia. Quo ceteros propriae mandamus an. Cu vel cibo omnis, omnium quaerendum nec cu. Novum persius alterum eam et.
-                   </p>
-                   <a href="#" class="nav-link px-2 text-muted">Continue...</a>
-            </div>
-                </div>
-
-            <div class="col-6">
-                <div>
-                    <h1> Some Article</h1>
-                    <img alt="Picture">
-                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro. Nec ne meis natum eripuit, eu cum stet virtute detraxit, lorem labores civibus eu vis. Sed ne amet tacimates pertinacia. Quo ceteros propriae mandamus an. Cu vel cibo omnis, omnium quaerendum nec cu. Novum persius alterum eam et.
-
-                        Has accusam dolores aliquando cu, eam feugiat patrioque ne, eros philosophia cum cu. Est unum omnis inciderint te. Nam ut probo platonem, antiopam democritum ne quo. Case commodo suscipiantur te eum, facer admodum deleniti ad has. Quo causae prompta iracundia cu, elit nostro fastidii ad eam.
-                    </p>
-                    <a href="#" class="nav-link px-2 text-muted">Continue...</a>
-                </div>
-            </div>
-            <div class="col">
-                <div>
-                    <h3> Something else </h3>
-                     <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
-                    <h3> Something else </h3>
-                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
-                    <h3> Something else </h3>
-                    <p>Lorem ipsum dolor sit amet, at quod imperdiet conclusionemque cum, eu mea minim dignissim mediocritatem. An sit illud debet, ne assum dictas vivendum pro.</p><br>
-                </div>
-            </div>
-        </div>
 </div>
 
 
@@ -77,5 +53,7 @@
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+<th:block th:include="partials/footer.html :: home"></th:block>
+
 </body>
 </html>
