@@ -1,5 +1,6 @@
 
-
+const EOD_API = '62323211e2b454.72150400';
+const MARKETAUX_API = "OQcuybFOTyxyyyq7oor8BZXHZatId5dWHnQwxIIL";
 
 let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API ;
 
