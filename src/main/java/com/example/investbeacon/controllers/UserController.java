@@ -5,14 +5,14 @@ import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @Controller
@@ -39,9 +39,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
-
-        if (validator.isValid(captcha)) {
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+        System.out.println(user);
+        if (validator.isValid(captcha) && !bindingResult.hasErrors()) {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             if(profileImg.isEmpty()){
