@@ -59,7 +59,7 @@ ul#load-crypto li {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-.form input {
+.form-control {
     /*font-family: "Roboto", sans-serif;*/
     outline: 0;
     background: #f2f2f2;
@@ -71,7 +71,7 @@ ul#load-crypto li {
     font-size: 14px;
 }
 
-.button {
+.button#create {
     text-transform: uppercase;
     outline: 0;
     /*background: #4CAF50;*/

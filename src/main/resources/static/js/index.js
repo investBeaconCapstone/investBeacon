@@ -41,38 +41,38 @@
 
 
 
-
-   // CRYPTO//
-    fetch(CRYPTO_API)
-        .then(data => {
-            return data.json();
-        })
-        .then(data => {
-            console.log(data);
-        });
-
-    let getCrypto = () => {
-        return fetch(CRYPTO_API)
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data);
-                $('#load-crypto').empty();
-                let crypto = data.results;
-
-                for (let result of crypto) {
-                    //cards
-
-                    $('#load-crypto').append(`
-                      <li  style="list-style-type: none;  display:inline-block;">
-                     <span class="mx-3" style="color: #FFFFFF"> ${result.T}</span>
-
-                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
-                     <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
-                 }
-            }).catch(err => console.error("This is your err:"));
-    }
-
-    getCrypto();
+   //
+   // // CRYPTO//
+   //  fetch(CRYPTO_API)
+   //      .then(data => {
+   //          return data.json();
+   //      })
+   //      .then(data => {
+   //          console.log(data);
+   //      });
+   //
+   //  let getCrypto = () => {
+   //      return fetch(CRYPTO_API)
+   //          .then(resp => resp.json())
+   //          .then(data => {
+   //              console.log(data);
+   //              $('#load-crypto').empty();
+   //              let crypto = data.results;
+   //
+   //              for (let result of crypto) {
+   //                  //cards
+   //
+   //                  $('#load-crypto').append(`
+   //                    <li  style="list-style-type: none;  display:inline-block;">
+   //                   <span class="mx-3" style="color: #FFFFFF"> ${result.T}</span>
+   //
+   //                   <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
+   //                   <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
+   //               }
+   //          }).catch(err => console.error("This is your err:"));
+   //  }
+   //
+   //  getCrypto();
 
 
 
