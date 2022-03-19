@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 
 @Controller
@@ -29,6 +30,12 @@ public class UserController {
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/welcome")
+    public String welcomePage(Model model) {
+        model.addAttribute("welcomeUser", new User());
+        return "users/welcome";
     }
 
     @GetMapping("/register")
@@ -48,7 +55,7 @@ public class UserController {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
-            return "redirect:/login";
+            return "redirect:/welcome";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
             return "users/register";

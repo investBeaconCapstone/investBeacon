@@ -26,13 +26,13 @@ public class User {
     private String username;
 
     @Column(nullable = false, length = 50)
-    @NotBlank(message = "First name must be 3 to 50 characters")
-    @Size(min = 3, max = 50, message = "")
+    @NotBlank(message = "Please enter first name")
+    @Size(max = 50, message = "")
     private String firstName;
 
     @Column(nullable = false, length = 50)
-    @NotBlank(message = "Last name must be 3 to 50 characters")
-    @Size(min = 3, max = 50, message = "")
+    @NotBlank(message = "Please enter last name")
+    @Size(max = 50, message = "")
     private String lastName;
 
     @Column(nullable = false, unique = true)
@@ -44,7 +44,6 @@ public class User {
     @NotBlank(message = "Password must be min 6 characters")
     @Size(min = 6, message = "")
     private String password;
-
 
     @Column(name = "photo")
     private String profileImg;
@@ -115,4 +114,5 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
