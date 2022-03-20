@@ -55,9 +55,9 @@ public class User {
     //education post likes
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<EducationPostLikes> likes;
-    //forum post likes
-     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private List<ForumPostLike> forumLikes;
+//    //forum post likes
+//     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+//    private List<ForumPostLike> forumLikes;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
