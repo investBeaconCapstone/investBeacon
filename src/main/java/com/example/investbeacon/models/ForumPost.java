@@ -32,8 +32,8 @@ public class ForumPost {
     private String contentImageUrl;
 
     //forum likes
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forumPost")
-    private List<ForumPostLike> userLikes;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forumPost")
+//    private List<ForumPostLike> userLikes;
 
 
     @ManyToOne
@@ -46,15 +46,14 @@ public class ForumPost {
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private List<Category> categories;
 
-//   Has no use implemented another way for forum likes
-//    @ManyToMany()
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @JoinTable(
-//            name = "forum_posts_likes",
-//            joinColumns = {@JoinColumn(name="post_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-//    )
-//    private List<User> users;
+    @ManyToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(
+            name = "forum_posts_likes",
+            joinColumns = {@JoinColumn(name="post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private List<User> users;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
     private List<Comment> comments;
@@ -62,15 +61,14 @@ public class ForumPost {
     public ForumPost() {
     }
 
-    public ForumPost(String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<ForumPostLike> userLikes) {
+    public ForumPost(String title, String description, Date createdDate, String contentImageUrl, User user, List<Category> categories, List<User> users) {
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
         this.contentImageUrl = contentImageUrl;
         this.user = user;
         this.categories = categories;
-
-        this.userLikes = userLikes;
+        this.users = users;
     }
 
     public ForumPost(ForumPost copy){
@@ -81,6 +79,6 @@ public class ForumPost {
         contentImageUrl = copy.contentImageUrl;
         user = copy.user;
         categories = copy.categories;
-//        users = copy.users;
+        users = copy.users;
     }
 }
