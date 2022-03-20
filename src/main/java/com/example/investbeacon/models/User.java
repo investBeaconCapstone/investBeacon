@@ -22,29 +22,28 @@ public class User {
     private boolean isAdmin;
 
     @Column(nullable = false, length = 100, unique = true)
-    @NotBlank
+    @NotBlank(message = "Please enter a username")
     private String username;
 
     @Column(nullable = false, length = 50)
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "Please enter first name")
+    @Size(max = 50, message = "")
     private String firstName;
 
     @Column(nullable = false, length = 50)
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "Please enter last name")
+    @Size(max = 50, message = "")
     private String lastName;
 
     @Column(nullable = false, unique = true)
-    @NotBlank
+    @NotBlank(message = "Please enter a valid e-mail address")
     @Email(message = "Please enter a valid e-mail address")
     private String email;
 
     @Column(nullable = false)
-    @NotBlank
-    @Size(min = 6, max = 15)
+    @NotBlank(message = "Password must be min 6 characters")
+    @Size(min = 6, message = "")
     private String password;
-
 
     @Column(name = "photo")
     private String profileImg;
@@ -104,4 +103,16 @@ public class User {
         forumPosts = copy.forumPosts;
         users = copy.users;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
 }
