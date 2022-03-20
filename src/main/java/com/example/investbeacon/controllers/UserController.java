@@ -14,7 +14,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @Controller
 public class UserController {
     private UserRepository userDao;
@@ -39,12 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
 
         if (validator.isValid(captcha)) {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
-            if(profileImg.isEmpty()){
+            if (profileImg.isEmpty()) {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
@@ -59,10 +58,19 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
         boolean isFollowing = false;
+        boolean loggedInUserIsAdmin = false;
+        boolean profileUserIsAdmin = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedInUser = userDao.getById(user.getId());
+            User profileUser = userDao.getById(id);
             model.addAttribute("loggedInUser", loggedInUser);
+            if (loggedInUser.isAdmin()) {
+                loggedInUserIsAdmin = true;
+            }
+            if (profileUser.isAdmin()) {
+                profileUserIsAdmin = true;
+            }
             for (User u : loggedInUser.getUsers()) {
                 if (u.getId() == id) {
                     isFollowing = true;
@@ -74,6 +82,8 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("thisUsersPosts", user.getForumPosts());
         model.addAttribute("following", isFollowing);
+        model.addAttribute("loggedInUserIsAdmin", loggedInUserIsAdmin);
+        model.addAttribute("profileUserIsAdmin", profileUserIsAdmin);
         model.addAttribute("followedBy", user.getFollowers());
         return "users/profile";
     }
@@ -134,5 +144,20 @@ public class UserController {
         }
         userDao.save(userOfProfile);
         return "redirect:/profile/{id}";
+    }
+
+    @PostMapping("/users/admin/{id}")
+    public String adminUser(@PathVariable long id, @RequestParam("profileUserIsAdmin") boolean isAdmin) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser.isAdmin()) {
+            User userOfProfile = userDao.getById(id);
+            System.out.println(userOfProfile.getUsername());
+            System.out.println(!isAdmin);
+            userOfProfile.setAdmin(!isAdmin);
+            userDao.save(userOfProfile);
+            return "redirect:/profile/{id}";
+        } else {
+            return "redirect:/";
+        }
     }
 }
