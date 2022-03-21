@@ -13,7 +13,7 @@
 <div class=" container-fluid">
     <div th:each="post : ${allPosts}" class="col mx-auto">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
-            <div class="col-auto d-none d-lg-block">
+            <div class="col-auto d-none d-lg-block" th:if="${!post.contentImageUrl.isEmpty()}">
                 <img width="300" height="250" th:src="${post.contentImageUrl}" alt="image"><rect width="100%" height="100%" /></img>
             </div>
             <div class="col p-4 d-flex flex-column position-static">
@@ -24,7 +24,18 @@
                 <div>Create by: <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${post.user.id}}"
                                          th:text="${post.user.username}"><i class="far fa-user"></i></a></span>
                 </div>
-                <a sec:authorize="isAuthenticated()" href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+<!--                <div sec:authorize="isAuthenticated()">-->
+<!--                    <form th:action="@{/forum-posts/{id}/like-unlike (id = ${post.getId()})}" th:method="POST">-->
+<!--                        <button class="like" type="submit" id="like" th:if="${!voted}" style="color:grey; all:unset; cursor:pointer;">-->
+<!--                            <i class="fa-regular fa-thumbs-up"></i>-->
+<!--                        </button>-->
+<!--                        <button class="unlike" type="submit" id="unlike" th:if="${voted}" style="all:unset; color:#3399FF; cursor:pointer;">-->
+<!--                            <i class="fa-solid fa-thumbs-up"></i>-->
+<!--                        </button>-->
+<!--                        <span class="votecount" th:text="${likes}">3</span><span> likes</span>-->
+<!--                        <input type="hidden" name="voted" th:value="${voted}" />-->
+<!--                    </form>-->
+<!--                </div>                -->
                 <form th:action="@{/forum-posts/{id}(id=${post.id})}" th:method="get">
                     <button style="all: unset; cursor: pointer;">
                         <a style="all: unset; cursor: pointer" class="comments" th:text="|${post.getComments().size()} comments|">
