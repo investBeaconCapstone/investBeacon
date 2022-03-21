@@ -7,7 +7,6 @@
 
     <style>
 
-
         .form {
             /*position: relative;*/
             z-index: 1;
@@ -23,6 +22,7 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
+
 <div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
     <h1> Update Your Post</h1>
     <form class="form" th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}" style="margin: 2em auto; padding: 1em; width: 100%; ">
@@ -31,6 +31,7 @@
         <input id="description" placeholder="Content" name="content" type="text" th:rows="8" th:field="*{description}" th:value="${editPost.description}" style="height: 15rem;"/>
         <br>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{FILESTACK_API_KEY.contentImageUrl}">
+
         <button class="my-3" type="button" id="open">Choose image to upload</button>
         <br>
         <div class="row my-5">
