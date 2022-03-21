@@ -39,7 +39,7 @@ public class ForumPostController {
     @GetMapping("/forum-posts")
     public String forumPosts(Model model) {
         model.addAttribute("allPosts", forumPostDao.findAll());
-        return "/forum-posts/index";
+        return "forum-posts/index";
     }
 
     //      VIEW CREATE Forum Post
@@ -48,7 +48,7 @@ public class ForumPostController {
         model.addAttribute("post", new ForumPost());
         model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("categoryList", categoryDao.findAll());
-        return "/forum-posts/create";
+        return "forum-posts/create";
     }
 
     //    POST CREATED Forum Post
