@@ -2,14 +2,23 @@
 <html lang="en xmlns:th=http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Title</title>
+=======
+
+    <title>Invest Beacon</title>
+
+>>>>>>> main
     <th:block th:include="partials/header.html :: styling"></th:block>
 
 </head>
 <body>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> main
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
     <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
@@ -29,7 +38,11 @@
         <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
     </div>
 </div>
+<<<<<<< HEAD
     <hr>
+=======
+<hr>
+>>>>>>> main
 <div class="container-fluid">
     <div class="p-3 p-md-5 mb-3 text-white rounded bg-dark" id="featured-post"></div>
 
@@ -73,7 +86,6 @@
         </div>
     </div>
 </div>
-
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/market-scripts.html :: marketScripts"></th:block>
 

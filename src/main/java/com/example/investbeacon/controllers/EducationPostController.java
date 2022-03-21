@@ -43,27 +43,26 @@ public class EducationPostController {
 
     //Shows posts for specific category
     @GetMapping("/education/posts/{category}")
-    public String postCatId(@PathVariable String category, Model model ) {
+    public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> posts = catDao.findCategoryByCategory(category).getEducationPosts();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean isCreator = false;
         boolean hasVoted = false;
 //        Integer postLikes = null;
 
-        for (EducationPost post : posts){
+        for (EducationPost post : posts) {
 //             postLikes  = post.getUserLikes().size();
 //            System.out.println(postLikes);
             List<EducationPostLikes> likes = post.getUserLikes();
 
-            if(post.getUser().getUsername().equals(user.getUsername())){
-                isCreator= true;
+            if (post.getUser().getUsername().equals(user.getUsername())) {
+                isCreator = true;
             }
 
 
-
-            if(! likes.isEmpty()){
-                for(EducationPostLikes like : likes){
-                    if(like.getUser().getUsername().equals(user.getUsername())){
+            if (!likes.isEmpty()) {
+                for (EducationPostLikes like : likes) {
+                    if (like.getUser().getUsername().equals(user.getUsername())) {
                         hasVoted = true;
                         break;
                     }
@@ -73,57 +72,15 @@ public class EducationPostController {
         }
 
 
-//        if (postLikes == null) {
-//            postLikes = 0;
-//        }
-//        model.addAttribute("likes", postLikes);
-
         model.addAttribute("creator", isCreator);
         model.addAttribute("voted", hasVoted);
 
         model.addAttribute("author", user);
         model.addAttribute("posts", posts);
 
-        return "/education/show_category";
+        return "education/show_category";
     }
 
-    //shows individual post
-    @GetMapping("/education/posts/{category}/{id}")
-    public String singleEdPost(@PathVariable Long id, Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EducationPost post = postDao.getById(id);
-        Integer postLikes = post.getUserLikes().size();
-        List<EducationPostLikes> likes = post.getUserLikes();
-//        boolean isCreator = false;
-//        if(post.getUser().getUsername().equals(user.getUsername())){
-//            isCreator= true;
-//        }
-//
-//
-//        boolean hasVoted = false;
-//        if(! likes.isEmpty()){
-//            for(EducationPostLikes like : likes){
-//                if(like.getUser().getUsername().equals(user.getUsername())){
-//                    hasVoted = true;
-//                    break;
-//                }
-//            }
-//        }
-//
-//
-//
-        if (postLikes == null) {
-            postLikes = 0;
-        }
-
-//        model.addAttribute("creator", isCreator);
-//        model.addAttribute("voted", hasVoted);
-        model.addAttribute("likes", postLikes);
-        model.addAttribute("post", post);
-        model.addAttribute("author", user);
-
-        return "/education/single_post";
-    }
 
     //upvote function
     @PostMapping("/education/posts/{category}/{id}/upvote")
@@ -139,21 +96,22 @@ public class EducationPostController {
 
 
     }
+
     //downvote function
     @PostMapping("/education/posts/{category}/{id}/downvote")
-    public String downPost(@PathVariable long id){
+    public String downPost(@PathVariable long id) {
 
 
         EducationPost likedPost = postDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-           List<EducationPostLikes> likes = likesDao.getEducationPostLikesByUser(user);
-            for (EducationPostLikes like : likes){
-                if (like.getEdPost().getId() == likedPost.getId()){
-                    System.out.println("like found");
-                    likesDao.deleteById(like.getId());
-                }
-
+        List<EducationPostLikes> likes = likesDao.getEducationPostLikesByUser(user);
+        for (EducationPostLikes like : likes) {
+            if (like.getEdPost().getId() == likedPost.getId()) {
+                System.out.println("like found");
+                likesDao.deleteById(like.getId());
             }
+
+        }
 
         return "redirect:/education/posts/{category}/";
     }
@@ -166,7 +124,7 @@ public class EducationPostController {
         model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("cat", catDao.findAll());
 
-        return "/education/create";
+        return "education/create";
     }
 
 
@@ -205,7 +163,7 @@ public class EducationPostController {
         if (editPost.getUser().isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
-            return "/education/edit";
+            return "education/edit";
         } else {
             return "redirect:/login";
         }
