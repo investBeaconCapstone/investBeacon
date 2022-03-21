@@ -7,7 +7,6 @@
 
     <style>
 
-
         .form {
             /*position: relative;*/
             z-index: 1;
@@ -23,21 +22,21 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none;">
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE; ">
     <h1> Update Your Post</h1>
     <form class="form" th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}" style="margin: 2em auto; padding: 1em; width: 100%; ">
-        <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
+        <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"  th:value="${editPost.title}">
         <br>
-        <input id="description" placeholder="Content" name="content" type="text"maxlength="1500" th:field="*{description}" style="height: 15rem;"/>
+        <input id="description" placeholder="Content" name="content" type="text" th:rows="8" th:field="*{description}" th:value="${editPost.description}" style="height: 15rem;">
         <br>
-        <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
+        <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}" th:value="${editPost.contentImageUrl}">
         <button class="my-3" type="button" id="open">Choose image to upload</button>
         <br>
         <div class="row my-5">
             <br>
-            <span th:each="category : ${categoryList}" class="col">
-                <input class="form-check-input" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}" style="width: 25px;">
-                 <label class="form-check-label" th:for="${category.category}" th:text="${category.category}" ></label>
+            <span th:each="category : ${category}" class="col">
+                <input class="form-check-input" type="checkbox" th:id="${categories}" name="categories" th:field="*{categories}" th:value="${categories}" style="width: 25px;">
+                 <label class="form-check-label" th:for="${categories}" th:text="${category}" ></label>
                 <br>
             </span>
         </div>

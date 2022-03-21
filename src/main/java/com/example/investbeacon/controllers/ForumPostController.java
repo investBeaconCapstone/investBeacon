@@ -102,6 +102,7 @@ public class ForumPostController {
         ForumPost editPost = forumPostDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (editPost.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("category", categoryDao.findAll());
             model.addAttribute("editPost", editPost);
             return "/forum-posts/edit";
         } else {
