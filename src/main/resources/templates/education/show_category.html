@@ -34,8 +34,26 @@
 
     <div class="blog-post" >
         <h2 class="blog-post-title" ><a th:href="@{/education/posts/{category}/{id} (category= ${post.getCategory().getCategory()} ,id =${post.getId()})}"><span th:text="${post.getTitle()}" style="color: darkblue; text-decoration: none"></span></a></h2>
-<!--        <p th:text="${post.getDescription()}"></p>-->
+        <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+        <p><span th:text="${post.getUserLikes().size()}" >upvotes</span></p>
+        <div id="voting" sec:authorize="isAuthenticated()">
+            <div id="upvote" th:if="${!voted}">
+
+                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                      th:method="post" >
+                    <button type="submit">upvote</button>
+                </form>
+
+            </div>
+            <div id="downvote" th:if="${voted}">
+                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                      th:method="post" >
+                    <button type="submit">downvote</button>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
 
 
