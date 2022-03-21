@@ -4,15 +4,16 @@ import com.example.investbeacon.CaptchaValidator;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -22,28 +23,38 @@ public class UserController {
     @Autowired
     private CaptchaValidator validator;
 
+    @Value("${FILESTACK_API_KEY}")
+    String fileStackKey;
+
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping("/welcome")
+    public String welcomePage(Model model) {
+        model.addAttribute("welcomeUser", new User());
+        return "users/welcome";
+    }
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         return "users/register";
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
-
-        if (validator.isValid(captcha)) {
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+        System.out.println(user);
+        if (validator.isValid(captcha) && !bindingResult.hasErrors()) {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
-            if(profileImg.isEmpty()){
+            if (profileImg.isEmpty()) {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
-            return "redirect:/login";
+            return "redirect:/welcome";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
             return "users/register";
@@ -54,10 +65,19 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public String viewProfile(@PathVariable long id, Model model) {
         boolean isFollowing = false;
+        boolean loggedInUserIsAdmin = false;
+        boolean profileUserIsAdmin = false;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedInUser = userDao.getById(user.getId());
+            User profileUser = userDao.getById(id);
             model.addAttribute("loggedInUser", loggedInUser);
+            if (loggedInUser.isAdmin()) {
+                loggedInUserIsAdmin = true;
+            }
+            if (profileUser.isAdmin()) {
+                profileUserIsAdmin = true;
+            }
             for (User u : loggedInUser.getUsers()) {
                 if (u.getId() == id) {
                     isFollowing = true;
@@ -69,6 +89,8 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("thisUsersPosts", user.getForumPosts());
         model.addAttribute("following", isFollowing);
+        model.addAttribute("loggedInUserIsAdmin", loggedInUserIsAdmin);
+        model.addAttribute("profileUserIsAdmin", profileUserIsAdmin);
         model.addAttribute("followedBy", user.getFollowers());
         return "users/profile";
     }
@@ -129,5 +151,20 @@ public class UserController {
         }
         userDao.save(userOfProfile);
         return "redirect:/profile/{id}";
+    }
+
+    @PostMapping("/users/admin/{id}")
+    public String adminUser(@PathVariable long id, @RequestParam("profileUserIsAdmin") boolean isAdmin) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser.isAdmin()) {
+            User userOfProfile = userDao.getById(id);
+            System.out.println(userOfProfile.getUsername());
+            System.out.println(!isAdmin);
+            userOfProfile.setAdmin(!isAdmin);
+            userDao.save(userOfProfile);
+            return "redirect:/profile/{id}";
+        } else {
+            return "redirect:/";
+        }
     }
 }

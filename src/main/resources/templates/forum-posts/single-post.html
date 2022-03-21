@@ -12,16 +12,7 @@
     <!-- post -->
     <div class="row">
         <!--                This is for up and down votes IF we plan on integrating this function.-->
-
-        <div class="col-1" sec:authorize="isAuthenticated()">
-            <form th:action="@{/forum-posts/{id}/upvote (id = ${singleForumPost.getId()})}" th:method="POST">
-                <button class="upvote" type="submit"><i class="fas fa-arrow-up"></i></button>
-            </form>
-            <div><span class="votecount" th:text="${likes}">3</span></div>
-            <form th:action="@{/forum-posts/{id}/downvote (id = ${singleForumPost.getId()})}" th:method="POST">
-                <button class="downvote" type="submit"><i class="fas fa-arrow-down"></i></button>
-            </form>
-        </div>
+        <div class="col-1"></div>
 
         <div class="col-11">
             <h3>
@@ -37,9 +28,18 @@
                    class="author"
                    th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
-            <p sec:authorize="isAuthenticated()">
-                <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
-            </p>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/forum-posts/{id}/like-unlike (id = ${singleForumPost.getId()})}" th:method="POST">
+                    <button class="like" type="submit" id="like" th:if="${!voted}" style="color:grey; all:unset; cursor:pointer;">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                    </button>
+                    <button class="unlike" type="submit" id="unlike" th:if="${voted}" style="all:unset; color:#3399FF; cursor:pointer;">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                    </button>
+                    <span class="votecount" th:text="${likes}">3</span><span> likes</span>
+                    <input type="hidden" name="voted" th:value="${voted}" />
+                </form>
+            </div>
         </div>
     </div>
 

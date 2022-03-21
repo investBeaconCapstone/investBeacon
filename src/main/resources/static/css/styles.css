@@ -1,7 +1,14 @@
+body{
+    background-color: #EEEEEE;
+}
+
+
+
 .logo{
     width: 150px;
     height: 90px;
     border: #e5e5e5;
+    background-color: #EEEEEE;
 }
 
 
