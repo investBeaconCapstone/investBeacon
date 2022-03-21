@@ -1,6 +1,5 @@
+
 <th:block th:fragment="scripts">
-<!--    Keys    -->
-<script th:src="@{/js/keys.js}"></script>
 
 <!-- javascript and jquery-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -10,12 +9,12 @@
 
 <!--    FileStack API -->
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+
+<!--    Register Js-->
+<script th:src="@{/js/register.js}"></script>
 </th:block>
 
-<th:block th:fragment="home">
-    <!-- API Market -->
-    <script th:src="@{/js/index.js}"></script>
-</th:block>
+
 
 
 <th:block th:fragment="footer">
