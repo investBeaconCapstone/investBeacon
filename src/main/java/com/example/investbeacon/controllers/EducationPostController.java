@@ -82,6 +82,7 @@ public class EducationPostController {
         model.addAttribute("voted", hasVoted);
         model.addAttribute("likes", postLikes);
         model.addAttribute("post", post);
+        model.addAttribute("author", user);
 
         return "/education/single_post";
     }
