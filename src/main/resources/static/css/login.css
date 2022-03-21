@@ -22,7 +22,7 @@
     font-size: 14px;
 }
 
-.login-button .register-button {
+.button {
     text-transform: uppercase;
     outline: 0;
     /*background: #4CAF50;*/

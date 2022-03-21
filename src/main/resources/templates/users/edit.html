@@ -40,7 +40,7 @@
 
 <form th:action="@{/profile/{id}/delete (id = ${userToEdit.getId()})}" method="post" th:object="${userToEdit}">
     <input type="hidden" th:field="*{id}">
-    <input value="Delete Profile" type="submit">
+    <input value="Delete Profile" type="submit" onclick="return alert('Are you sure you wish to delete profile?')">
 </form>
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
