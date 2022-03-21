@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -30,13 +28,47 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class="card " th:each="post: ${posts}" style="margin: 2em auto; padding: 1em; width: 60%; display: flex; justify-content: center" >
+<div class="card " th:each="post: ${posts}"
+     style="margin: 2em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 
-    <div class="blog-post" >
-        <h2 class="blog-post-title" ><a th:href="@{/education/posts/{category}/{id} (category= ${post.getCategory().getCategory()} ,id =${post.getId()})}"><span th:text="${post.getTitle()}" style="color: darkblue; text-decoration: none"></span></a></h2>
-<!--        <p th:text="${post.getDescription()}"></p>-->
+    <div class="blog-post">
+        <h2 class="blog-post-title"><a
+                th:href="@{/education/posts/{category}/{id} (category= ${post.getCategory().getCategory()} ,id =${post.getId()})}"><span
+                th:text="${post.getTitle()}" style="color: darkblue; text-decoration: none"></span></a></h2>
+        <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+        <p><span th:text="${post.getUserLikes().size()}">upvotes</span></p>
+        <div id="voting" sec:authorize="isAuthenticated()">
+            <div id="upvote" th:if="${!voted}">
+
+                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                      th:method="post">
+                    <button type="submit">upvote</button>
+                </form>
+
+            </div>
+            <div id="downvote" th:if="${voted}">
+                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                      th:method="post">
+                    <button type="submit">downvote</button>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col d-flex flex-wrap justify-content-end" sec:authorize="isAuthenticated()"
+                 th:if="${post.getUser().isAdmin()}">
+                <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
+                      th:method="get">
+                    <button type="submit" id="edit" class="btn btn-sm btn-warning">Edit</button>
+                </form>
+
+                <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
+                      th:method="post" onclick="return confirm('Are you sure you want to delete this post?');">
+                    <button type="submit" id="delete" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </div>
     </div>
+</div>
 
 
 </div>

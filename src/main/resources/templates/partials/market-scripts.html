@@ -4,12 +4,13 @@
         const EOD_API = [[${EOD_API}]];
         const MARKETAUX_API = [[${MARKETAUX_API}]];
         const POLYGON_API = [[${POLYGON_API}]]
-        let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API ;
+        let CRYPTO_API = "https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API;
 
         // let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
-        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AAPL.US&offset=0&limit=3");
+        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token=" + EOD_API + "&s=AAPL.US&offset=0&limit=3");
         let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
         let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
+        let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token=" + EOD_API + "&s=AMZN.US&offset=0&limit=1");
 
 
         //MARKET//
@@ -43,8 +44,6 @@
         getStocks();
 
 
-
-
         // CRYPTO//
         fetch(CRYPTO_API)
             .then(data => {
@@ -76,7 +75,6 @@
         }
 
         getCrypto();
-
 
 
         //MARKET NEWS//
@@ -148,17 +146,29 @@
 
         getMarketNews2();
 
+        let getFeaturedPost = () => {
+            return fetch(FEATURED_API)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    $('#featured-post').empty();
+                    let featuredPost = data;
 
 
+                    for (let result of featuredPost) {
+                        //cards
+                        $('#featured-post').append(`
+                   <div class="col-md-8 px-0">
+                       <h1 class="display-4 fst-italic">${result.title}</h1>
+                       <p class="lead me-5 my-3">${result.content}</p>
+                       <p class="lead mb-0"><a href="${result.link}" class="text-white fw-bold">Continue reading...</a></p>
+                   </div>
+                    `)
+                    }
+                }).catch(err => console.error("This is your err:", err));
+        }
 
-
-
-
-
-
-
-
-
+        getFeaturedPost();
 
 
     </script>
