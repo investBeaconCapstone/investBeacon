@@ -1,11 +1,10 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary"
      xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
-        <a class="navbar-brand nav-item" sec:authorize="isAuthenticated()" href="/"><img class="nav-icon" src="/image/icon.png" alt="logo"></a>
+        <a class="navbar-brand nav-item" sec:authorize="isAuthenticated()" href="/"><img class="nav-icon" src="/image/icon.png" alt="logo" style="filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(153deg) brightness(101%) contrast(102%);"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -23,7 +22,6 @@
                 <li class="nav-item">
                     <a  class="nav-link" href="/forum-posts">Forum Posts</a>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Learn</a>
                     <div class="dropdown-menu">
@@ -56,7 +54,7 @@
                 </li>
                 <li class="nav-item">
                     <form class="nav-link" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
-                        <button class="btn-link btn" style="margin-top: 8px"><i title="Logout"><a href="#"><span class="fa fa-sign-out">Logout</span></a></i></button>
+                        <button class="btn-link btn" style="margin-top: -8px"><i title="Logout"><a href=""><span class="fa fa-sign-out">Logout</span></a></i></button>
                     </form>
                 </li>
             </ul>
