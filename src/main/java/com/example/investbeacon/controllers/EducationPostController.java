@@ -201,8 +201,7 @@ public class EducationPostController {
     public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
 
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (editPost.getUser().getId() == loggedInUser.getId()) {
+        if (editPost.getUser().isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
             return "/education/edit";
@@ -216,7 +215,7 @@ public class EducationPostController {
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
 
-        if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
+        if (postDao.getById(id).getUser().isAdmin()) {
             post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             post.setCreatedDate(new Date());
             postDao.save(post);
