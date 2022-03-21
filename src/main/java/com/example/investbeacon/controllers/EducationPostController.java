@@ -77,7 +77,7 @@ public class EducationPostController {
         model.addAttribute("author", user);
         model.addAttribute("posts", posts);
 
-        return "/education/show_category";
+        return "education/show_category";
     }
 
 
@@ -123,7 +123,7 @@ public class EducationPostController {
         model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("cat", catDao.findAll());
 
-        return "/education/create";
+        return "education/create";
     }
 
 
@@ -162,7 +162,7 @@ public class EducationPostController {
         if (editPost.getUser().isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
-            return "/education/edit";
+            return "education/edit";
         } else {
             return "redirect:/login";
         }

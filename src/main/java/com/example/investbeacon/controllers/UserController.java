@@ -101,7 +101,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userToEdit.getId() == loggedInUser.getId()) {
             model.addAttribute("userToEdit", userToEdit);
-            return "/users/edit";
+            return "users/edit";
         } else {
             return "redirect:/profile";
         }
