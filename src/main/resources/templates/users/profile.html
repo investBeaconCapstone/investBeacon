@@ -40,16 +40,34 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <br>
 <div class="container">
+    <div class="row" sec:authorize="isAuthenticated()"
+         th:if="${#authentication.principal.isAdmin == true && #authentication.principal.id != user.id}">
+        <div class="col">
+            <form th:action="@{/users/admin/{id}(id=${user.id})}" th:method="Post">
+                <button id="addAdmin-button"
+                        name="addAdmin" th:if="${!profileUserIsAdmin}">Add Admin
+                </button>
+                <input type="hidden" name="profileUserIsAdmin" th:value="${profileUserIsAdmin}">
+            </form>
+            <form th:action="@{/users/admin/{id}(id=${user.id})}" th:method="Post">
+                <button id="removeAdmin-button" name="removeAdmin" th:if="${profileUserIsAdmin}">Remove Admin</button>
+                <input type="hidden" name="profileUserIsAdmin" th:value="${profileUserIsAdmin}">
+            </form>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="mx-auto card" style="width: 18rem; text-align: center; background-color: #EEEEEE;" th:object="${user}">
             <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top avatar">
             <div class="card-body">
-            <h5 th:text="${user.username}" class="card-title text-align"></h5>
-            <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
-            <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
-                <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="text-end btn btn-primary settingsButton">Edit Profile</a>
+                <h5 th:text="${user.username}" class="card-title text-align"></h5>
+                <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
+                <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
+                    <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="text-end btn btn-primary settingsButton">Edit
+                        Profile</a>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     <!--    FOLLOW AND UNFOLLOW BUTTON SHOWN ONLY IF LOGGED IN AND NOT THE USER OF THE PROFILE-->
@@ -90,35 +108,42 @@
             </div>
         </div>
     </div>
-
-<!--DISPLAY PROFILE USER'S POST-->
-
-<div class="row">
-    <div th:each="post : ${thisUsersPosts}" th:id="'post-' + ${post.id}" class="col-12 col-md-6">
-        <div class="card d-flex flex-column align-items-start justify-content-between">
-            <div>
-                <a th:href="@{'/forum-posts/' + ${post.id}}" class=""
-                   th:text="${post.title}"></a>
-            </div>
-            <div class="card-body" th:text="${post.description}"></div>
-            <div class="d-flex w-100 justify-content-between">
-                <div>posted <span th:text="${post.createdDate}"></span>
-                    <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
-                    <div sec:authorize="isAuthenticated()"
-                         th:if="${#authentication.principal.id == user.id}">
-                        <a th:href="@{/forum-posts/{id}/edit(id=${post.id})}"
-                           class="btn btn-outline-secondary"><i
-                                class="fas fa-edit"></i></a>
-                        <form th:action="@{/forum-posts/{id}/delete(id=${post.id})}" th:method="Post">
-                            <button th:type="submit" name="id" class="btn btn-danger delete-btn"><i
-                                    class="fas fa-trash-alt"></i></button>
-                        </form>
+    <!--DISPLAY PROFILE USER'S POST-->
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col" th:each="post : ${thisUsersPosts}" th:id="'post-' + ${post.id}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a th:href="@{'/forum-posts/' + ${post.id}}"
+                               th:text="${post.title}">
+                            </a>
+                        </h5>
+                        <p class="card-text" th:text="${post.description}"></p>
+                        <p class="card-text">posted <span th:text="${post.createdDate}"></span></p>
+                        <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
+                        <div class="row" sec:authorize="isAuthenticated()"
+                             th:if="${#authentication.principal.id == user.id}">
+                            <span class="col">
+                                <form th:action="@{/forum-posts/{id}/edit(id=${post.id})}" th:method="Get">
+                                    <button type="submit" name="id" class="btn btn-secondary edit-btn float-start">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </form>
+                            </span>
+                            <span class="col">
+                                <form th:action="@{/forum-posts/{id}/delete(id=${post.id})}" th:method="Post">
+                                    <button type="submit" name="id" class="btn btn-danger delete-btn float-end">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 

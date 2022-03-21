@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.*;
 import com.example.investbeacon.repositories.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +21,16 @@ public class ForumPostController {
     private final UserRepository userDao;
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
-    private final ForumLikesRepository likesDao;
+
+    @Value("${FILESTACK_API_KEY}")
+    String fileStackKey;
 
 
-    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao, ForumLikesRepository likesDao) {
+    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao) {
         this.forumPostDao = forumPostDao;
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.commentDao = commentDao;
-        this.likesDao = likesDao;
     }
 
     //    VIEW ALL Forum Posts
@@ -42,6 +44,7 @@ public class ForumPostController {
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
         model.addAttribute("post", new ForumPost());
+        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("categoryList", categoryDao.findAll());
         return "/forum-posts/create";
     }
@@ -59,29 +62,22 @@ public class ForumPostController {
     //    VIEW SINGLE Forum Post
     @GetMapping("/forum-posts/{id}")
     public String singleForumPost(@PathVariable long id, Model model) {
+        boolean hasVoted = false;
         Optional<ForumPost> forumPost = forumPostDao.findById(id);
         ForumPost currentForumPost = forumPost.get();
         if (forumPost.isPresent()) {
             Comment comment = new Comment();
             if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
                 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                Integer postLikes = currentForumPost.getUserLikes().size();
-                List<ForumPostLike> likes = currentForumPost.getUserLikes();
-
-                //if user voted button will change to downvote
-                boolean hasVoted = false;
-                if(! likes.isEmpty()){
-                    for(ForumPostLike like : likes){
-                        if(like.getUsers().getUsername().equals(user.getUsername())){
+                Integer postLikes = currentForumPost.getUsers().size();
+                List<User> likes = currentForumPost.getUsers();
+                if(!likes.isEmpty()){
+                    for(User like : likes){
+                        if(like.getUsername().equals(user.getUsername())){
                             hasVoted = true;
                             break;
                         }
                     }
-                }
-
-                //if the array of postlikes is null then it will show zero
-                if (postLikes == null) {
-                    postLikes = 0;
                 }
                 comment.setPost(currentForumPost);
                 model.addAttribute("loggedInUser", user);
@@ -103,6 +99,7 @@ public class ForumPostController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (editPost.getUser().getId() == loggedInUser.getId()) {
             model.addAttribute("category", categoryDao.findAll());
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("editPost", editPost);
             return "/forum-posts/edit";
         } else {
@@ -118,7 +115,7 @@ public class ForumPostController {
             if (editPost.getContentImageUrl() == null) {
                 editPost.setContentImageUrl(forumPostDao.getById(id).getContentImageUrl());
             }
-            if (editPost.getCategories().isEmpty()) {
+            if (editPost.getCategories() == null) {
                 editPost.setCategories((forumPostDao.getById(id).getCategories()));
             }
             editPost.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -193,31 +190,17 @@ public class ForumPostController {
         return "redirect:/forum-posts/" + id;
     }
 
-    //upvote post
-    @PostMapping("/forum-posts/{id}/upvote")
-    public String upVote(@PathVariable long id){
+    //LIKE AND UNLIKE POST
+    @PostMapping("/forum-posts/{id}/like-unlike")
+    public String upVote(@PathVariable long id, @RequestParam("voted") boolean voted) {
         ForumPost likedPost = forumPostDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ForumPostLike like = new ForumPostLike(user, likedPost);
-
-        likesDao.save(like);
-        return "redirect:/forum-posts/{id}";
-    }
-
-    //down vote post
-    @PostMapping("/forum-posts/{id}/downvote")
-    public String downVote(@PathVariable long id){
-        ForumPost likedPost = forumPostDao.getById(id);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<ForumPostLike> likes = likesDao.getForumPostLikeByUsers(user);
-        for(ForumPostLike like: likes){
-            if(like.getForumPost().getId() == likedPost.getId()){
-                likesDao.deleteById(like.getId());
-            }
+        if(voted){
+            likedPost.getUsers().removeIf(n -> n.getId() == user.getId());
+        }else{
+            likedPost.getUsers().add(user);
         }
-
+        forumPostDao.save(likedPost);
         return "redirect:/forum-posts/{id}";
     }
-
-
 }
