@@ -4,13 +4,16 @@
         const EOD_API = [[${EOD_API}]];
         const MARKETAUX_API = [[${MARKETAUX_API}]];
         const POLYGON_API = [[${POLYGON_API}]]
-        let CRYPTO_API="https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API ;
+        let CRYPTO_API = "https://eodhistoricaldata.com/api/eod/BTC-USD.CC?api_token=" + EOD_API;
 
         // let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
-        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AAPL.US&offset=0&limit=3");
+        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token=" + EOD_API + "&s=AAPL.US&offset=0&limit=3");
         let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
         let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
-        let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
+
+        let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token=" + EOD_API + "&s=AMZN.US&offset=0&limit=1");
+
+
 
         //MARKET//
         fetch(MARKET_API)
@@ -41,8 +44,6 @@
                 }).catch(err => console.error("This is your err:", err));
         }
         getStocks();
-
-
 
 
         // CRYPTO//
@@ -76,7 +77,6 @@
         }
 
         getCrypto();
-
 
 
         //MARKET NEWS//
@@ -157,6 +157,8 @@
                     let featuredPost = data;
 
 
+        getFeaturedPost();
+
                     for (let result of featuredPost) {
                         //cards
                         $('#featured-post').append(`
@@ -171,16 +173,6 @@
         }
 
         getFeaturedPost();
-
-
-
-
-
-
-
-
-
-
 
 
     </script>

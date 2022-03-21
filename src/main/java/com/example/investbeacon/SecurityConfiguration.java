@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 /* Pages that can be viewed without having to log in */
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/profile/{id}", "/forum-posts", "/education/posts/{category}") // anyone can see the home and the register pages
+                .antMatchers("/", "/register", "/profile/{id}","/forum-posts","/forum-posts/{id}", "/education/posts/{category}") // anyone can see the home and the register pages
                 .permitAll()
                 /* Pages that require authentication */
                 .and()
@@ -53,7 +53,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/forum-posts/create", // only authenticated users can create posts
                         "/forum-posts/{id}/edit", // only authenticated users can edit posts
+                        "/forum-posts/{id}/delete", // only authenticated users can delete posts
+                        "/forum-posts/{id}/comment/{commentId}/edit", //only authenticated users can edit comments
+                        "/forum-posts/{id}/comment/{commentId}/delete", //only authenticated users can delete comments
+                        "/forum-posts/{id}/like-unlike", //only authenticated users can vote
                         "/profile/{id}/edit" // only authenticated users can edit profile
+
+
                 )
                 .authenticated()
         ;

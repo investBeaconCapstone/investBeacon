@@ -1,15 +1,6 @@
 
 <th:block th:fragment="scripts">
 
-<!-- javascript and jquery-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
-<!--Bootstrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<!--    FileStack API -->
-<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
-
 <!--    Register Js-->
 <script th:src="@{/js/register.js}"></script>
 </th:block>
@@ -18,6 +9,7 @@
 
 
 <th:block th:fragment="footer">
+
     <div class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-muted">&copy; 2022 InvestBeacon</p>
@@ -34,4 +26,15 @@
             </ul>
         </footer>
     </div>
+<!-- javascript and jquery-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!--Bootstrap-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</th:block>
+
+<th:block th:fragment="filestack">
+    <!--    FileStack API -->
+    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 </th:block>
