@@ -1,7 +1,7 @@
 <th:block th:fragment="fileStackScript">
-    <script>
+    <script th:inline="javascript">
         window.addEventListener('DOMContentLoaded', function () {
-            const client = filestack.init(FILESTACK_API_KEY);
+            const client = filestack.init([[${FILESTACK_API_KEY}]]);
             const options = {
                 container: 'modal',
                 maxFiles: 1,
@@ -20,6 +20,7 @@
 
             function uploadImage(result) {
                 const image = result.filesUploaded[0];
+                console.log(image);
                 $('#image').val(image.url);
             }
         });

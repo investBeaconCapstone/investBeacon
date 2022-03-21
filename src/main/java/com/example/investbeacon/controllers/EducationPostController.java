@@ -8,6 +8,7 @@ import com.example.investbeacon.repositories.EducationLikesRepository;
 import com.example.investbeacon.repositories.EducationPostRepository;
 import com.example.investbeacon.repositories.UserRepository;
 import com.example.investbeacon.services.EmailService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ public class EducationPostController {
     private final CategoryRepository catDao;
     private final EducationLikesRepository likesDao;
     private final EmailService emailService;
+
+    @Value("${FILESTACK_API_KEY}")
+    String fileStackKey;
 
     public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao, EmailService emailService, EducationLikesRepository likesDao) {
         this.postDao = postDao;
@@ -120,6 +124,7 @@ public class EducationPostController {
     public String viewCreate(Model model) {
 
         model.addAttribute("post", new EducationPost());
+        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
         model.addAttribute("cat", catDao.findAll());
 
         return "/education/create";
