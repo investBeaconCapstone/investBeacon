@@ -2,21 +2,11 @@
 
 
     let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
-
     let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
     let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AAPL.US&offset=0&limit=3");
     let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
     let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
 
-
-    // //MARKET//
-    //  fetch(MARKET_API)
-    //     .then(data => {
-    //         return data.json();
-    //     })
-    //     .then(data => {
-    //         console.log(data);
-    //     });
 
     let getStocks = () => {
         return fetch(MARKET_API)
@@ -123,37 +113,37 @@
 
      getFeaturedPost();
 
-     //
-     // let getMarketNews2 = () => {
-     //     return fetch(NEWS_API_MKTAUX)
-     //         .then(resp => resp.json())
-     //         .then(data => {
-     //             console.log(data);
-     //             $('#load-news-2').empty();
-     //             let newsMkt = data.data;
-     //
-     //             for (let property of newsMkt) {
-     //                 //cards
-     //                 $('#load-news-2').append(`
-     //            <div class="col mx-auto">
-     //                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
-     //                        <div class="col p-4 d-flex flex-column position-static">
-     //                            <strong class="d-inline-block mb-2 text-primary">
-     //                                <h4 class="mb-0">${property.title}</h4></strong>
-     //                                <br>
-     //                                <p class="card-text mb-auto">${property.description}</p>
-     //                                <a href="${property.url}" class="news2-link">Continue reading</a>
-     //                            </div>
-     //                             <div class="col-auto d-none d-lg-block">
-     //                             <img class="bd-placeholder-img " width="190" height="235"  color="blue" src="${property.image_url}"><rect width="100%" height="100%" /></img>
-     //                             </div>
-     //                        </div>
-     //                     </div>`)
-     //             }
-     //         }).catch(err => console.error("This is your err:", err));
-     // }
-     //
-     // getMarketNews2();
+
+     let getMarketNews2 = () => {
+         return fetch(NEWS_API_MKTAUX)
+             .then(resp => resp.json())
+             .then(data => {
+                 console.log(data);
+                 $('#load-news-2').empty();
+                 let newsMkt = data.data;
+
+                 for (let property of newsMkt) {
+                     //cards
+                     $('#load-news-2').append(`
+                <div class="col mx-auto">
+                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary">
+                                    <h4 class="mb-0">${property.title}</h4></strong>
+                                    <br>
+                                    <p class="card-text mb-auto">${property.description}</p>
+                                    <a href="${property.url}" class="news2-link">Continue reading</a>
+                                </div>
+                                 <div class="col-auto d-none d-lg-block">
+                                 <img class="bd-placeholder-img " width="190" height="235"  color="blue" src="${property.image_url}"><rect width="100%" height="100%" /></img>
+                                 </div>
+                            </div>
+                         </div>`)
+                 }
+             }).catch(err => console.error("This is your err:", err));
+     }
+
+     getMarketNews2();
 
 
 
