@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.*;
 import com.example.investbeacon.repositories.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ public class ForumPostController {
     private final UserRepository userDao;
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
-    private final ForumLikesRepository likesDao;
+
 
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
@@ -31,7 +32,7 @@ public class ForumPostController {
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.commentDao = commentDao;
-        this.likesDao = likesDao;
+
     }
 
     //    VIEW ALL Forum Posts

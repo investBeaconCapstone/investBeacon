@@ -29,8 +29,9 @@ public class EducationPostController {
     private final EducationLikesRepository likesDao;
     private final EmailService emailService;
 
+
     @Value("${FILESTACK_API_KEY}")
-    String fileStackKey;
+     String fileStackKey;
 
     public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao, EmailService emailService, EducationLikesRepository likesDao) {
         this.postDao = postDao;

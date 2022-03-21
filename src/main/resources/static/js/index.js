@@ -9,14 +9,14 @@
     let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
 
 
-    //MARKET//
-     fetch(MARKET_API)
-        .then(data => {
-            return data.json();
-        })
-        .then(data => {
-            console.log(data);
-        });
+    // //MARKET//
+    //  fetch(MARKET_API)
+    //     .then(data => {
+    //         return data.json();
+    //     })
+    //     .then(data => {
+    //         console.log(data);
+    //     });
 
     let getStocks = () => {
         return fetch(MARKET_API)
@@ -41,38 +41,38 @@
 
 
 
+   //
+   // // CRYPTO//
+   //  fetch(CRYPTO_API)
+   //      .then(data => {
+   //          return data.json();
+   //      })
+   //      .then(data => {
+   //          console.log(data);
+   //      });
 
-   // CRYPTO//
-    fetch(CRYPTO_API)
-        .then(data => {
-            return data.json();
-        })
-        .then(data => {
-            console.log(data);
-        });
-
-    let getCrypto = () => {
-        return fetch(CRYPTO_API)
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data);
-                $('#load-crypto').empty();
-                let crypto = data.results;
-
-                for (let result of crypto) {
-                    //cards
-
-                    $('#load-crypto').append(`
-                      <li  style="list-style-type: none;  display:inline-block;">
-                     <span class="mx-3"> ${result.T}</span>
-
-                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
-                     <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
-                 }
-            }).catch(err => console.error("This is your err:", err));
-    }
-
-    getCrypto();
+    // let getCrypto = () => {
+    //     return fetch(CRYPTO_API)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             $('#load-crypto').empty();
+    //             let crypto = data.results;
+    //
+    //             for (let result of crypto) {
+    //                 //cards
+    //
+    //                 $('#load-crypto').append(`
+    //                   <li  style="list-style-type: none; color: #FFFFFF; display:inline-block;">
+    //                  <span class="mx-3"> ${result.T}</span>
+    //
+    //                  <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
+    //                  <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
+    //              }
+    //         }).catch(err => console.error("This is your err:", err));
+    // }
+    //
+    // getCrypto();
 
 
 
@@ -123,37 +123,37 @@
 
      getFeaturedPost();
 
-
-     let getMarketNews2 = () => {
-         return fetch(NEWS_API_MKTAUX)
-             .then(resp => resp.json())
-             .then(data => {
-                 console.log(data);
-                 $('#load-news-2').empty();
-                 let newsMkt = data.data;
-
-                 for (let property of newsMkt) {
-                     //cards
-                     $('#load-news-2').append(`
-                <div class="col mx-auto">
-                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
-                            <div class="col p-4 d-flex flex-column position-static">
-                                <strong class="d-inline-block mb-2 text-primary">
-                                    <h4 class="mb-0">${property.title}</h4></strong>
-                                    <br>
-                                    <p class="card-text mb-auto">${property.description}</p>
-                                    <a href="${property.url}" class="news2-link">Continue reading</a>
-                                </div>
-                                 <div class="col-auto d-none d-lg-block">
-                                 <img class="bd-placeholder-img " width="190" height="235"  color="blue" src="${property.image_url}"><rect width="100%" height="100%" /></img>
-                                 </div>
-                            </div>
-                         </div>`)
-                 }
-             }).catch(err => console.error("This is your err:", err));
-     }
-
-     getMarketNews2();
+     //
+     // let getMarketNews2 = () => {
+     //     return fetch(NEWS_API_MKTAUX)
+     //         .then(resp => resp.json())
+     //         .then(data => {
+     //             console.log(data);
+     //             $('#load-news-2').empty();
+     //             let newsMkt = data.data;
+     //
+     //             for (let property of newsMkt) {
+     //                 //cards
+     //                 $('#load-news-2').append(`
+     //            <div class="col mx-auto">
+     //                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
+     //                        <div class="col p-4 d-flex flex-column position-static">
+     //                            <strong class="d-inline-block mb-2 text-primary">
+     //                                <h4 class="mb-0">${property.title}</h4></strong>
+     //                                <br>
+     //                                <p class="card-text mb-auto">${property.description}</p>
+     //                                <a href="${property.url}" class="news2-link">Continue reading</a>
+     //                            </div>
+     //                             <div class="col-auto d-none d-lg-block">
+     //                             <img class="bd-placeholder-img " width="190" height="235"  color="blue" src="${property.image_url}"><rect width="100%" height="100%" /></img>
+     //                             </div>
+     //                        </div>
+     //                     </div>`)
+     //             }
+     //         }).catch(err => console.error("This is your err:", err));
+     // }
+     //
+     // getMarketNews2();
 
 
 

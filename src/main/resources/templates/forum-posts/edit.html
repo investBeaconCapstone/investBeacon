@@ -28,7 +28,7 @@
     <form class="form" th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}" style="margin: 2em auto; padding: 1em; width: 100%; ">
         <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}" th:value="${editPost.title}">
         <br>
-        <input id="description" placeholder="Content" name="content" type="text" th:rows="8" th:field="*{description}" th:value="${editPost.description}" style="height: 15rem;"/>
+        <textarea id="description" placeholder="Content" name="content" type="text" th:rows="8" th:field="*{description}" th:value="${editPost.description}" style="height: 15rem;"></textarea>
         <br>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{FILESTACK_API_KEY.contentImageUrl}">
 

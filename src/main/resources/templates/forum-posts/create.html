@@ -30,7 +30,7 @@
     <form class="form" th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
         <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
         <br>
-        <input id="description" placeholder="Content" name="content" type="text" th:rows="7" th:field="*{description}" style="height: 15rem;"/>
+        <textarea id="description" placeholder="Content" name="content" type="text" th:rows="7" th:field="*{description}" style="height: 15rem;"/>
        <br>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
         <button class="my-3" type="button" id="open">Choose image to upload</button>
