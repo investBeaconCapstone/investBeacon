@@ -28,24 +28,24 @@
             </form>
         </div>
 
-        <p><span th:text="${likes}">upvotes</span></p>
-        <div id="voting" sec:authorize="isAuthenticated()">
-            <div id="upvote" th:if="${!voted}">
+<!--        <p><span th:text="${likes}">upvotes</span></p>-->
+<!--        <div id="voting" sec:authorize="isAuthenticated()">-->
+<!--            <div id="upvote" th:if="${!voted}">-->
 
-                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post" >
-                    <button type="submit">upvote</button>
-                </form>
+<!--                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"-->
+<!--                      th:method="post" >-->
+<!--                    <button type="submit">upvote</button>-->
+<!--                </form>-->
 
-            </div>
-            <div id="downvote" th:if="${voted}">
-                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post" >
-                    <button type="submit">downvote</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<!--            </div>-->
+<!--            <div id="downvote" th:if="${voted}">-->
+<!--                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"-->
+<!--                      th:method="post" >-->
+<!--                    <button type="submit">downvote</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
 </main>
