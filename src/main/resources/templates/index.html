@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+
 </head>
 <body>
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 507293b36ff4713fb6d3395b7646e6b941e16905
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
     <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
+
     <br>
 </div>
+
 <hr>
 <div class="container-fluid" >
     <span>Equities Markets</span>
@@ -29,25 +29,12 @@
         <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
     </div>
 </div>
-<<<<<<< HEAD
-<hr>
-=======
     <hr>
->>>>>>> 507293b36ff4713fb6d3395b7646e6b941e16905
 <div class="container-fluid">
     <div class="p-3 p-md-5 mb-3 text-white rounded bg-dark" id="featured-post"></div>
 
     <div class="row mb-2" id="load-news-2"></div>
 </div>
-<<<<<<< HEAD
-<div class="row g-5 container-fluid">
-    <div class="col-md-8">
-        <h3 class="pb-4 mb-4 fst-italic border-bottom">News Room</h3>
-        <article class="blog-post" id="load-news">
-            <hr>
-        </article>
-    </div>
-=======
     <div class="row g-5 container-fluid">
         <div class="col-md-8">
             <h3 class="pb-4 mb-4 fst-italic border-bottom">News Room</h3>
@@ -55,7 +42,6 @@
                 <hr>
             </article>
         </div>
->>>>>>> 507293b36ff4713fb6d3395b7646e6b941e16905
 
 
     <div class="col-md-4">
@@ -75,6 +61,7 @@
                     <li><a href="/education/posts/Platforms">Platforms</a></li>
                 </ol>
             </div>
+
             <div class="p-4">
                 <h4 class="fst-italic">Follow Us</h4>
                 <ol class="list-unstyled">
@@ -86,16 +73,9 @@
         </div>
     </div>
 </div>
-<th:block th:include="partials/footer.html :: footer"></th:block>
-<<<<<<< HEAD
-<th:block th:include="partials/footer.html :: scripts"></th:block>
-<th:block th:include="partials/footer.html :: home"></th:block>
-=======
-
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
-<th:block th:include="partials/footer.html :: home"></th:block>
+<th:block th:include="partials/market-scripts.html :: marketScripts"></th:block>
 
->>>>>>> 507293b36ff4713fb6d3395b7646e6b941e16905
 </body>
 </html>

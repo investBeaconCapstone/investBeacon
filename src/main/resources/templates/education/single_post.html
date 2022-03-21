@@ -14,38 +14,8 @@
         <p th:text="${post.getDescription()}"></p>
         <p>created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
     </div>
-    <div class="container">
-        <div class="col d-flex flex-wrap justify-content-start" sec:authorize="isAuthenticated()"
-             th:if="${post.getUser().getId() == author.getId()}">
-            <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
-                  th:method="get">
-                <button type="submit" id="edit" class="btn btn-sm btn-warning">Edit</button>
-            </form>
 
-            <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
-                  th:method="post" onclick="return confirm('Are you sure you want to delete this post?');">
-                <button type="submit" id="delete" class="btn btn-sm btn-danger">Delete</button>
-            </form>
-        </div>
 
-        <p><span th:text="${likes}">upvotes</span></p>
-        <div id="voting" sec:authorize="isAuthenticated()">
-            <div id="upvote" th:if="${!voted}">
-
-                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post" >
-                    <button type="submit">upvote</button>
-                </form>
-
-            </div>
-            <div id="downvote" th:if="${voted}">
-                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post" >
-                    <button type="submit">downvote</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
 </main>

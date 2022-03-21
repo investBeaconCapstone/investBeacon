@@ -42,9 +42,46 @@ public class EducationPostController {
 
     //Shows posts for specific category
     @GetMapping("/education/posts/{category}")
-    public String postCatId(@PathVariable String category, Model model) {
-        List<EducationPost> post = catDao.findCategoryByCategory(category).getEducationPosts();
-        model.addAttribute("posts", post);
+    public String postCatId(@PathVariable String category, Model model ) {
+        List<EducationPost> posts = catDao.findCategoryByCategory(category).getEducationPosts();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean isCreator = false;
+        boolean hasVoted = false;
+//        Integer postLikes = null;
+
+        for (EducationPost post : posts){
+//             postLikes  = post.getUserLikes().size();
+//            System.out.println(postLikes);
+            List<EducationPostLikes> likes = post.getUserLikes();
+
+            if(post.getUser().getUsername().equals(user.getUsername())){
+                isCreator= true;
+            }
+
+
+
+            if(! likes.isEmpty()){
+                for(EducationPostLikes like : likes){
+                    if(like.getUser().getUsername().equals(user.getUsername())){
+                        hasVoted = true;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+
+//        if (postLikes == null) {
+//            postLikes = 0;
+//        }
+//        model.addAttribute("likes", postLikes);
+
+        model.addAttribute("creator", isCreator);
+        model.addAttribute("voted", hasVoted);
+
+        model.addAttribute("author", user);
+        model.addAttribute("posts", posts);
 
         return "/education/show_category";
     }
@@ -56,30 +93,30 @@ public class EducationPostController {
         EducationPost post = postDao.getById(id);
         Integer postLikes = post.getUserLikes().size();
         List<EducationPostLikes> likes = post.getUserLikes();
-        boolean isCreator = false;
-        if(post.getUser().getUsername().equals(user.getUsername())){
-            isCreator= true;
-        }
-
-
-        boolean hasVoted = false;
-        if(! likes.isEmpty()){
-            for(EducationPostLikes like : likes){
-                if(like.getUser().getUsername().equals(user.getUsername())){
-                    hasVoted = true;
-                    break;
-                }
-            }
-        }
-
-
-
+//        boolean isCreator = false;
+//        if(post.getUser().getUsername().equals(user.getUsername())){
+//            isCreator= true;
+//        }
+//
+//
+//        boolean hasVoted = false;
+//        if(! likes.isEmpty()){
+//            for(EducationPostLikes like : likes){
+//                if(like.getUser().getUsername().equals(user.getUsername())){
+//                    hasVoted = true;
+//                    break;
+//                }
+//            }
+//        }
+//
+//
+//
         if (postLikes == null) {
             postLikes = 0;
         }
 
-        model.addAttribute("creator", isCreator);
-        model.addAttribute("voted", hasVoted);
+//        model.addAttribute("creator", isCreator);
+//        model.addAttribute("voted", hasVoted);
         model.addAttribute("likes", postLikes);
         model.addAttribute("post", post);
         model.addAttribute("author", user);
@@ -97,7 +134,7 @@ public class EducationPostController {
 
 
         likesDao.save(likes);
-        return "redirect:/education/posts/{category}/{id}";
+        return "redirect:/education/posts/{category}/";
 
 
     }
@@ -117,7 +154,7 @@ public class EducationPostController {
 
             }
 
-        return "redirect:/education/posts/{category}/{id}";
+        return "redirect:/education/posts/{category}/";
     }
 
     //view create form
@@ -164,8 +201,7 @@ public class EducationPostController {
     public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
 
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (editPost.getUser().getId() == loggedInUser.getId()) {
+        if (editPost.getUser().isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
             return "/education/edit";
@@ -179,7 +215,7 @@ public class EducationPostController {
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
 
 
-        if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
+        if (postDao.getById(id).getUser().isAdmin()) {
             post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             post.setCreatedDate(new Date());
             postDao.save(post);
