@@ -1,43 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>InvestBeacon | Create a post</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+    <style>
+
+
+        .form {
+            /*position: relative;*/
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 1000px;
+            margin: 0 auto 200px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+    </style>
+
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
-    <h3> Create A New Post</h3>
-    <form th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}">
-        </div>
-        <div class="form-group">
-            <label for="description">description</label>
-            <input type="text" class="form-control" id="description" th:field="*{description}">
-        </div>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <input id="image" type="hidden" th:field="*{contentImageUrl}">
-            <button type="button" id="open">Choose image to upload</button>
-        </div>
-        <div>
-            <div> Pick categories:</div>
-            <span th:each="category : ${categoryList}">
-                <div class="form-check form-check-inline m-2">
-                    <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
-                        <input class="form-check-input checkbox" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}">
-                </div>
-
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+    <h1> Create A New Post</h1>
+    <form class="form" th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
+        <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
+        <br>
+        <input id="description" placeholder="Content" name="content" type="text" th:rows="7" th:field="*{description}" style="height: 15rem;"/>
+       <br>
+        <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
+        <button class="my-3" type="button" id="open">Choose image to upload</button>
+        <br>
+        <div class="row my-5">
+            <br>
+            <span th:each="category : ${categoryList}" class="col">
+                <input class="form-check-input" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}" style="width: 25px;">
+                 <label class="form-check-label" th:for="${category.category}" th:text="${category.category}" ></label>
+                <br>
             </span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+       <br>
 
+        <button id="create" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+<a href="/users/profile.html">profile</a>
 </div>
 
 

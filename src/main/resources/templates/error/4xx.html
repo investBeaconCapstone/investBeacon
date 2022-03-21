@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title> Error 404</title>
+  <th:block th:include="partials/header.html :: styling"></th:block>
+
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<nav  th:replace="partials/navbar :: navbar"></nav>
+
+<div class="text-center mt-5">
+
+  <div class="error-img container-fluid">
+    <h3 class="text-center mt-1 fs-1">Ooops!</h3>
+    <h3 class="text-center mt-1 fs-3">404 - PAGE NOT FOUND</h3>
+    <img style="width: 600px; height: 480px;"  class="img-fluid" src="/image/bearmarket.png" alt="400" >
+
+  </div>
+  <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Home Page</a>
+
+</div>
+
+
+<!--attributes-->
+
+<a class="text-end" href="https://storyset.com/business" style="opacity: 0.2;">Illustrations by Storyset</a>
+<th:block th:include="partials/footer.html :: scripts"></th:block>
+</body>
+</html>

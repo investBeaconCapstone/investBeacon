@@ -9,51 +9,75 @@
 <body>
 
 
+
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
-    <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png"
-         alt="InvestBeacon">
-</div>
-<h5>Equities Markets</h5>
-<div class="container-fluid mx-auto text-align-center" style="background-color:#2C3333 ">
-    <ul id="load-market" class="row" style="overflow:hidden;"></ul>
-</div>
-<hr>
-<h5>Cryptocurrency Markets</h5>
-<div class="container-fluid mx-auto text-align-center my-5">
-    <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
-    <!--        <iframe src="https://www.widgets.investing.com/top-cryptocurrencies?theme=darkTheme" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe><div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif;">Powered by <a href="https://www.investing.com?utm_source=WMT&amp;utm_medium=referral&amp;utm_campaign=TOP_CRYPTOCURRENCIES&amp;utm_content=Footer%20Link" target="_blank" rel="nofollow">Investing.com</a></div>-->
-</div>
-<hr>
-<div class="container-fluid">
-    <div id="load-news-2" class="d-flex col"></div>
+    <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
+
     <br>
-    <div id="load-news" class="d-flex col my-5"></div>
-
 </div>
 
-
+<hr>
+<div class="container-fluid" >
+    <span>Equities Markets</span>
+    <div class="container-fluid mx-auto text-align-center"  style="background-color:#2C3333 " >
+        <ul id="load-market" class="row" style="overflow:hidden;"></ul>
+    </div>
+    <hr>
+    <span>Cryptocurrency Markets</span>
+    <div class="container-fluid mx-auto text-align-center my-5" style="background-color:#2C3333 ">
+        <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
+    </div>
+</div>
+    <hr>
 <div class="container-fluid">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-muted">&copy; 2022 InvestBeacon</p>
+    <div class="p-3 p-md-5 mb-3 text-white rounded bg-dark" id="featured-post"></div>
 
-        <a href="/"
-           class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <img class="icon" src="/image/icon.png" alt="logo">
-        </a>
-
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-        </ul>
-    </footer>
+    <div class="row mb-2" id="load-news-2"></div>
 </div>
+    <div class="row g-5 container-fluid">
+        <div class="col-md-8">
+            <h3 class="pb-4 mb-4 fst-italic border-bottom">News Room</h3>
+            <article class="blog-post" id="load-news">
+                <hr>
+            </article>
+        </div>
+
+
+    <div class="col-md-4">
+        <div class="position-sticky"  >
+            <div class="p-4 mb-3  rounded" style="background-color: #BBC5C5;">
+                <h4 class="fst-italic" >About</h4>
+                <p class="mb-0">Welcome to Invest Beacon!  </p>
+            </div>
+
+            <div class="p-4">
+                <h4 class="fst-italic">Learn</h4>
+                <ol class="list-unstyled mb-0">
+                    <li><a href="/education/posts/Crypto">Crypto</a></li>
+                    <li><a href="/education/posts/Stocks">Stock</a></li>
+                    <li><a href="/education/posts/Finance">Finance</a></li>
+                    <li><a href="/education/posts/Strategies">Strategies</a></li>
+                    <li><a href="/education/posts/Platforms">Platforms</a></li>
+                </ol>
+            </div>
+
+            <div class="p-4">
+                <h4 class="fst-italic">Follow Us</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="partials/footer.html :: footer"></th:block>
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
-<th:block th:include="partials/market-scripts.html :: marketScripts"></th:block>
+<th:block th:include="partials/footer.html :: home"></th:block>
 
 </body>
 </html>

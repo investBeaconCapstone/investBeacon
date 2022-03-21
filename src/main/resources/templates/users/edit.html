@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; background-color: #EEEEEE;">
 <h1>Edit Profile</h1>
 <form class="form" th:action="@{/profile/{id}/edit (id = ${userToEdit.getId()})}" th:method="POST" th:object="${userToEdit}">
     <div class="form-group">

@@ -98,6 +98,7 @@ public class ForumPostController {
         ForumPost editPost = forumPostDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (editPost.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("category", categoryDao.findAll());
             model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("editPost", editPost);
             return "/forum-posts/edit";
