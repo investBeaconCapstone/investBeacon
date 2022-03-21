@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>InvestBeacon | Create a post</title>
@@ -30,7 +30,8 @@
     <form class="form" th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
         <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
         <br>
-        <input id="description" placeholder="Content" name="content" type="text" th:rows="7" th:field="*{description}" style="height: 15rem;"/>
+        <textarea id="description" placeholder="Content" name="content" type="text" th:rows="5"  th:cols="33" th:field="*{description}" style="width: 100%; background-color:#F2F2F2; border: none;"></textarea>
+
        <br>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
         <button class="my-3" type="button" id="open">Choose image to upload</button>

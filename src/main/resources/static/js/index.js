@@ -1,23 +1,12 @@
 
 
 
-
-
-     let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
-    let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=TSLA.US&offset=0&limit=2");
-     let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
+    let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
+    let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
+    let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AAPL.US&offset=0&limit=3");
     let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
     let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH");
 
-
-    //MARKET//
-     fetch(MARKET_API)
-        .then(data => {
-            return data.json();
-        })
-        .then(data => {
-            console.log(data);
-        });
 
     let getStocks = () => {
         return fetch(MARKET_API)
@@ -51,50 +40,51 @@
    //      .then(data => {
    //          console.log(data);
    //      });
-   //
-   //  let getCrypto = () => {
-   //      return fetch(CRYPTO_API)
-   //          .then(resp => resp.json())
-   //          .then(data => {
-   //              console.log(data);
-   //              $('#load-crypto').empty();
-   //              let crypto = data.results;
-   //
-   //              for (let result of crypto) {
-   //                  //cards
-   //
-   //                  $('#load-crypto').append(`
-   //                    <li  style="list-style-type: none;  display:inline-block;">
-   //                   <span class="mx-3" style="color: #FFFFFF"> ${result.T}</span>
-   //
-   //                   <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
-   //                   <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
-   //               }
-   //          }).catch(err => console.error("This is your err:"));
-   //  }
-   //
-   //  getCrypto();
+
+    // let getCrypto = () => {
+    //     return fetch(CRYPTO_API)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             $('#load-crypto').empty();
+    //             let crypto = data.results;
+    //
+    //             for (let result of crypto) {
+    //                 //cards
+    //
+    //                 $('#load-crypto').append(`
+    //                   <li  style="list-style-type: none; color: #FFFFFF; display:inline-block;">
+    //                  <span class="mx-3"> ${result.T}</span>
+    //
+    //                  <i class="fa-solid fa-arrow-up" style="color: #2EB82E"><span class="mx-2">${result.h} </span>
+    //                  <i class="fa-solid fa-arrow-down-long" style="color: red"><span class="mx-2">${result.c}</span> </li>`)
+    //              }
+    //         }).catch(err => console.error("This is your err:", err));
+    // }
+    //
+    // getCrypto();
 
 
 
    //MARKET NEWS//
-      let getMarketNews = () => {
-         return fetch(NEWS_API)
-             .then(resp => resp.json())
-             .then(data => {
-                 console.log(data);
-                 $('#load-news').empty();
-                 let newsMarket = data;
 
-                 for (let result of newsMarket) {
-                     //cards
-                     $('#load-news').append(`
+
+    let getMarketNews = () => {
+        return fetch(NEWS_API)
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+                $('#load-news').empty();
+                let newsMarket = data;
+                for (let result of newsMarket) {
+                    //cards
+                    $('#load-news').append(`
                          <h3 class="market-new-title">${result.title}</h3>
                 <p >${result.content} </p>
-                <a href="${result.link}" class="news-link">Continue reading</a> <hr>`)
-                 }
-             }).catch(err => console.error("This is your err:", err));
-     }
+                    <a href="${result.link}" class="news-link">Continue reading</a> <hr>`)
+                        }
+                        }).catch(err => console.error("This is your err:", err));
+                        }
 
      getMarketNews();
 
@@ -157,7 +147,7 @@
 
 
 
-     // style="width: 35rem; height: 20rem;  color:black;"
+
 
 
 

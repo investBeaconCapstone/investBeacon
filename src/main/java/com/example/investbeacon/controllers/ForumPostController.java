@@ -22,6 +22,7 @@ public class ForumPostController {
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
 
+
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
@@ -31,6 +32,7 @@ public class ForumPostController {
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.commentDao = commentDao;
+
     }
 
     //    VIEW ALL Forum Posts
@@ -203,4 +205,6 @@ public class ForumPostController {
         forumPostDao.save(likedPost);
         return "redirect:/forum-posts/{id}";
     }
+
+
 }
