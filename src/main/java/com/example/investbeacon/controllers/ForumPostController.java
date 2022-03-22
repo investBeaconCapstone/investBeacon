@@ -88,7 +88,7 @@ public class ForumPostController {
             }
             model.addAttribute("singleForumPost", currentForumPost);
             model.addAttribute("comment", comment);
-            return "/forum-posts/single-post";
+            return "forum-posts/single-post";
         } else {
             return "redirect:/forum-posts";
         }
@@ -103,7 +103,7 @@ public class ForumPostController {
             model.addAttribute("category", categoryDao.findAll());
             model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("editPost", editPost);
-            return "/forum-posts/edit";
+            return "forum-posts/edit";
         } else {
             return "redirect:/forum-posts";
         }
@@ -158,7 +158,7 @@ public class ForumPostController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (oldComment.getUser().getId() == loggedInUser.getId()) {
             model.addAttribute("comment", oldComment);
-            return "/forum-posts/edit-comment";
+            return "forum-posts/edit-comment";
         } else {
             return "redirect:/forum-posts/" + id;
         }
