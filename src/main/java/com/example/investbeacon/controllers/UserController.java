@@ -183,11 +183,10 @@ public class UserController {
     @PostMapping("/password/{id}/change")
     public String changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, @ModelAttribute User passwordEdit, @PathVariable long id) {
         if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
-            if(passwordEncoder.matches(oldPassword, passwordEdit.getPassword())) {
+            if(passwordEncoder.matches(oldPassword, userDao.getById(id).getPassword())) {
                 passwordEdit.setPassword(passwordEncoder.encode(newPassword));
                 String hash = passwordEncoder.encode(passwordEdit.getPassword());
                 passwordEdit.setPassword(hash);
-
             }
             userDao.save(passwordEdit);
             return "redirect:/profile/{id}";
