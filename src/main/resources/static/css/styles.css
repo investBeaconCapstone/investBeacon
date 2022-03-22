@@ -1,5 +1,9 @@
 body{
     background-color: #EEEEEE;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .logo{
@@ -28,6 +32,7 @@ body{
 post-img{
     width: 225px;
     height: 120px;
+    border-radius: 50%;
 }
 
 ul#load-market {
@@ -96,14 +101,16 @@ ul#load-crypto li {
     font-size: 12px;
 }
 
-a {
-
+a:link {
+    text-decoration: none;
 }
-
-
-
-
-
+#footer {
+    margin-top: auto;
+    /*clear: both;*/
+    /*position: relative;*/
+    /*height: 200px;*/
+    /*margin-top: -200px;*/
+}
 
 
 

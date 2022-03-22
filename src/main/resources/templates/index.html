@@ -2,26 +2,19 @@
 <html lang="en xmlns:th=http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title>Title</title>
-=======
+
 
     <title>Invest Beacon</title>
 
->>>>>>> main
+
     <th:block th:include="partials/header.html :: styling"></th:block>
 
 </head>
-<body>
-<<<<<<< HEAD
+<body class="d-flex flex-column min-vh-100">
 
-
-
-=======
->>>>>>> main
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
-    <img class="logo img-thumbnail mx-auto d-block" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
+    <img class="logo img-thumbnail mx-auto d-block mt-3" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
 
     <br>
 </div>
@@ -29,27 +22,25 @@
 <hr>
 <div class="container-fluid" >
     <span>Equities Markets</span>
-    <div class="container-fluid mx-auto text-align-center"  style="background-color:#2C3333 " >
+    <div class="  justify-content-around"  style="background-color:#2C3333 " >
         <ul id="load-market" class="row" style="overflow:hidden;"></ul>
     </div>
     <hr>
     <span>Cryptocurrency Markets</span>
-    <div class="container-fluid mx-auto text-align-center my-5" style="background-color:#2C3333 ">
+    <div class="container-fluid mx-auto text-align-center  justify-content-around" style="background-color:#2C3333 ">
         <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
     </div>
 </div>
-<<<<<<< HEAD
-    <hr>
-=======
+
 <hr>
->>>>>>> main
+
 <div class="container-fluid">
     <div class="p-3 p-md-5 mb-3 text-white rounded bg-dark" id="featured-post"></div>
 
     <div class="row mb-2" id="load-news-2"></div>
 </div>
-    <div class="row g-5 container-fluid">
-        <div class="col-md-8">
+    <div class="row container-fluid">
+        <div class="col-md-9">
             <h3 class="pb-4 mb-4 fst-italic border-bottom">News Room</h3>
             <article class="blog-post" id="load-news">
                 <hr>
@@ -57,11 +48,11 @@
         </div>
 
 
-    <div class="col-md-4">
+    <div class="col-md-3 text-end">
         <div class="position-sticky"  >
-            <div class="p-4 mb-3  rounded" style="background-color: #BBC5C5;">
-                <h4 class="fst-italic" >About</h4>
-                <p class="mb-0">Welcome to Invest Beacon!  </p>
+            <div class="p-4 mb-3  rounded" style="background-color: #BBC5C5; ">
+                <a href="/about-us" ><h4 class="fst-italic" >About</h4>
+                <p class="mb-0">Welcome to Invest Beacon!  </p></a>
             </div>
 
             <div class="p-4">
