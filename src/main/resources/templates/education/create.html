@@ -7,7 +7,12 @@
     <style>
         textarea{
             resize: none;
+
         }
+        .card{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
 
     </style>
 </head>
@@ -15,7 +20,7 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+<div class=" card  mb-3 text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
     <form th:action="@{/education/posts/create}" th:method="POST" th:object="${post}">
         <div class="form-group">
             <label for="title">Title</label>
@@ -23,7 +28,7 @@
         </div>
         <div class="form-group">
             <label for="description">description</label>
-            <textarea type="text" class="form-control" id="description" th:field="*{description}" rows="7"></textarea>
+            <textarea type="text" class="form-control" id="description" th:field="*{description}" rows="13"></textarea>
         </div>
         <div class="form-group">
             <label for="image">Image</label>

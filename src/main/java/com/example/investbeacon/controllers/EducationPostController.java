@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,7 @@ public class EducationPostController {
 
 
     @Value("${FILESTACK_API_KEY}")
-     String fileStackKey;
+    String fileStackKey;
 
     public EducationPostController(EducationPostRepository postDao, UserRepository userDoa, CategoryRepository catDao, EmailService emailService, EducationLikesRepository likesDao) {
         this.postDao = postDao;
@@ -45,37 +46,40 @@ public class EducationPostController {
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
         List<EducationPost> posts = catDao.findCategoryByCategory(category).getEducationPosts();
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        boolean isCreator = false;
-        boolean hasVoted = false;
-//        Integer postLikes = null;
 
-        for (EducationPost post : posts) {
-//             postLikes  = post.getUserLikes().size();
-//            System.out.println(postLikes);
-            List<EducationPostLikes> likes = post.getUserLikes();
-
-            if (post.getUser().getUsername().equals(user.getUsername())) {
-                isCreator = true;
-            }
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userDoa.getById(user.getId());
+            boolean hasVoted = false;
 
 
-            if (!likes.isEmpty()) {
-                for (EducationPostLikes like : likes) {
-                    if (like.getUser().getUsername().equals(user.getUsername())) {
-                        hasVoted = true;
-                        break;
+            for (EducationPost post : posts) {
+
+                List<EducationPostLikes> likes = post.getUserLikes();
+
+                if (!likes.isEmpty()) {
+                    for (EducationPostLikes like : likes) {
+                        if (like.getUser().getUsername().equals(user.getUsername())) {
+                            hasVoted = true;
+                            break;
+                        }
                     }
                 }
+
             }
+            HashMap<Long, EducationPostLikes> userLikes = new HashMap<>();
+            List<EducationPostLikes> likesFromDao = likesDao.getEducationPostLikesByUser(user);
+            for (EducationPostLikes like : likesFromDao){
+                userLikes.put(like.getEdPost().getId(), like);
+            }
+            model.addAttribute("voted", hasVoted);
+            model.addAttribute("loggedUser", user);
+            model.addAttribute("userLikes", userLikes);
+
 
         }
 
 
-        model.addAttribute("creator", isCreator);
-        model.addAttribute("voted", hasVoted);
-
-        model.addAttribute("author", user);
         model.addAttribute("posts", posts);
 
         return "education/show_category";
@@ -119,12 +123,18 @@ public class EducationPostController {
     //view create form
     @GetMapping("/education/posts/create")
     public String viewCreate(Model model) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.isAdmin()){
+            model.addAttribute("post", new EducationPost());
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
+            model.addAttribute("cat", catDao.findAll());
 
-        model.addAttribute("post", new EducationPost());
-        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
-        model.addAttribute("cat", catDao.findAll());
+            return "education/create";
+        }else {
+            return "redirect:/";
+        }
 
-        return "education/create";
+
     }
 
 
@@ -136,9 +146,6 @@ public class EducationPostController {
 
         post.setCreatedDate(new Date());
         postDao.save(post);
-        String subject = "New Post!";
-        String body = "A new post was created by " + user.getUsername();
-        emailService.prepareAndSendEdPost(post, subject, body);
 
         switch (post.getCategory().getCategory()) {
             case "Crypto":
@@ -159,8 +166,9 @@ public class EducationPostController {
     @GetMapping("/education/posts/{category}/{id}/edit")
     public String viewEdit(@PathVariable long id, Model model) {
         EducationPost editPost = postDao.getById(id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (editPost.getUser().isAdmin()) {
+        if (user.isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
             return "education/edit";
@@ -172,24 +180,24 @@ public class EducationPostController {
     //edit post and redirect to individual post
     @PostMapping("/education/posts/{category}/{id}/edit")
     public String postEdit(@PathVariable long id, @ModelAttribute EducationPost post) {
-
-
-        if (postDao.getById(id).getUser().isAdmin()) {
-            post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.isAdmin()) {
+            post.setUser(user);
             post.setCreatedDate(new Date());
             postDao.save(post);
 
         }
 
-        return "redirect:/education/posts/{category}/{id}";
+        return "redirect:/education/posts/{category}";
 
     }
 
     //delete post
     @PostMapping("/education/posts/{category}/{id}/delete")
     public String postDelete(@PathVariable long id) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String postCat = postDao.getById(id).getCategory().getCategory();
-        if (postDao.getById(id).getUser().getId() == (((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())) {
+        if (user.isAdmin()) {
             postDao.deleteById(id);
         }
         switch (postCat) {
