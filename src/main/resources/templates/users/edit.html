@@ -27,10 +27,6 @@
         <input id="username" th:field="*{username}" th:value="${userToEdit.username}" />
     </div>
     <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" th:field="*{password}" th:value="${userToEdit.password}"/>
-    </div>
-    <div class="form-group">
         <label for="image">Upload Your Image</label>
         <input id="image" type="hidden" th:field="*{profileImg}" th:value="${userToEdit.profileImg}" />
         <button type="button" id="open">Choose image to upload</button>
