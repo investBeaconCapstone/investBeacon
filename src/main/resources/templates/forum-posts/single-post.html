@@ -11,14 +11,12 @@
 <div class="container">
     <!-- post -->
     <div class="row">
-        <!--                This is for up and down votes IF we plan on integrating this function.-->
         <div class="col-1"></div>
-
         <div class="col-11">
             <h3>
                 <span th:text="${singleForumPost.title}"></span>
             </h3>
-            <img th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
+            <img th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
             <p th:text="${singleForumPost.description}">Content:</p>
             <p>submitted on
                 <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
@@ -34,7 +32,7 @@
                         <i class="fa-regular fa-thumbs-up"></i>
                     </button>
                     <button class="unlike" type="submit" id="unlike" th:if="${voted}" style="all:unset; color:#3399FF; cursor:pointer;">
-                        <i class="fa-regular fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-up"></i>
                     </button>
                     <span class="votecount" th:text="${likes}">3</span><span> likes</span>
                     <input type="hidden" name="voted" th:value="${voted}" />
@@ -96,13 +94,6 @@
                          th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
                 <span class="datetime-created" th:text="${comment.getCreateDate()}"><i class="fa-regular fa-clock"></i></span>
                 <p style="min-height: 50px;" class="body" th:text="${comment.getContent()}"></p>
-                <!--                <div class="comment_details">-->
-                <!--                    <ul>-->
-                <!--                        <li><i class="fa-regular fa-clock"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
-                <!--                        <li><i class="fa-regular fa-calendar"></i><span th:text="${comment.getCreateDate()}"></span></li>-->
-                <!--                        <li><i class="fa-regular fa-pencil"></i><span th:text="${comment.getUser().getUsername()}"></span></li>-->
-                <!--                    </ul>-->
-                <!--                </div>-->
                 <a sec:authorize="isAuthenticated()" href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
                 <div class="row" sec:authorize="isAuthenticated()"
                      th:if="${#authentication.principal.id == comment.getUser().id}">
