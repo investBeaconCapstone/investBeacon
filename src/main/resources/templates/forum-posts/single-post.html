@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Single-post</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
-
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -26,6 +25,9 @@
                    class="author"
                    th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
+            <div>
+                <span class="votecount" th:text="${singleForumPost.users.size()}">3</span><span> likes</span>
+            </div>
             <div sec:authorize="isAuthenticated()">
                 <form th:action="@{/forum-posts/{id}/like-unlike (id = ${singleForumPost.getId()})}" th:method="POST">
                     <button class="like" type="submit" id="like" th:if="${!voted}" style="color:grey; all:unset; cursor:pointer;">
@@ -34,7 +36,6 @@
                     <button class="unlike" type="submit" id="unlike" th:if="${voted}" style="all:unset; color:#3399FF; cursor:pointer;">
                         <i class="fa-solid fa-thumbs-up"></i>
                     </button>
-                    <span class="votecount" th:text="${likes}">3</span><span> likes</span>
                     <input type="hidden" name="voted" th:value="${voted}" />
                 </form>
             </div>
@@ -94,7 +95,6 @@
                          th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
                 <span class="datetime-created" th:text="${comment.getCreateDate()}"><i class="fa-regular fa-clock"></i></span>
                 <p style="min-height: 50px;" class="body" th:text="${comment.getContent()}"></p>
-                <a sec:authorize="isAuthenticated()" href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
                 <div class="row" sec:authorize="isAuthenticated()"
                      th:if="${#authentication.principal.id == comment.getUser().id}">
                     <span class="col">
@@ -115,9 +115,7 @@
             </div>
         </div>
     </div>
-
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
-
 </body>
 </html>
