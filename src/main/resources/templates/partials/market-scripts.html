@@ -5,11 +5,13 @@
         const MARKETAUX_API = [[${MARKETAUX_API}]];
         const POLYGON_API = [[${POLYGON_API}]]
         // let CRYPTO_API =("https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/2020-10-14?adjusted=true&apiKey=" + POLYGON_API);
-        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=TSLA.US&offset=0&limit=2");
+        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=TSLA.US&offset=0&limit=3");
         let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
         let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
         let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH,V");
-        let CRYPTO_API =("https://eodhistoricaldata.com/api/real-time/BTC-USD.CC?api_token=" + EOD_API + "&fmt=json&s=ETH-USD.CC,USDT-USD.CC,BNB-USD.CC,USDC-USD.CC,SOL-USD.CC,AVAX-USD.CC,DOT-USD.CC")
+        let CRYPTO_API =("https://eodhistoricaldata.com/api/real-time/BTC-USD.CC?api_token=" + EOD_API + "&fmt=json&s=ETH-USD.CC,USDT-USD.CC,BNB-USD.CC,SOL-USD.CC,AVAX-USD.CC")
+        // USDC-USD.CC,DOT-USD.CC
+
 
         //websockets
         let socket = new WebSocket("wss://ws.eodhistoricaldata.com/ws/crypto?api_token=" + EOD_API);
@@ -106,7 +108,7 @@
         }
 
         getMarketNews();
-
+        //
         // let getMarketNews2 = () => {
         //     return fetch(NEWS_API_MKTAUX)
         //         .then(resp => resp.json())
@@ -119,12 +121,12 @@
         //                 //cards
         //                 $('#load-news-2').append(`
         //         <div class="col mx-auto">
-        //                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
+        //                  <div class="row card border-primary mb-3 g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" >
         //                     <div class="col p-4 d-flex flex-column position-static">
         //                         <strong class="d-inline-block mb-2 text-primary">
-        //                             <h4 class="mb-0">${property.title}</h4></strong>
+        //                             <h4 class="mb-0 card-title">${property.title}</h4></strong>
         //                             <br>
-        //                             <p class="card-text mb-auto">${property.description}</p>
+        //                             <p class="card-text mb-auto">${property.description.substr(0,50)}</p>
         //                             <a href="${property.url}" class="news2-link">Continue reading</a>
         //                         </div>
         //                          <div class="col-auto d-none d-lg-block">
