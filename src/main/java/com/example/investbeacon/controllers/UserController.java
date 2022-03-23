@@ -116,6 +116,7 @@ public class UserController {
             existingUser.setLastName(userToEdit.getLastName());
             existingUser.setEmail(userToEdit.getEmail());
             existingUser.setUsername(userToEdit.getUsername());
+            existingUser.setProfileImg(userToEdit.getProfileImg());
             userDao.save(existingUser);
         }
         return "redirect:/profile/{id}";
