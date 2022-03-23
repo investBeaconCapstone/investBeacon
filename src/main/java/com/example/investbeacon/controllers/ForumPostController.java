@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,24 @@ public class ForumPostController {
     //    VIEW ALL Forum Posts
     @GetMapping("/forum-posts")
     public String forumPosts(Model model) {
-        model.addAttribute("allPosts", forumPostDao.findAll());
+        List<ForumPost> posts = forumPostDao.findAll();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedInUser = userDao.getById(user.getId());
+//            HashMap<Long, User> userLikes = new HashMap<>();
+            for (ForumPost post : posts) {
+                List<User> userWhoLikedPost = post.getUsers();
+                System.out.println("users: " + userWhoLikedPost);
+                System.out.println("loggedin user: " + user);
+                System.out.println(userWhoLikedPost.contains(user));
+                for(User liker : userWhoLikedPost){
+                    System.out.println("list of users who liked the post " + post.getTitle() + ": " + liker);
+                }
+                model.addAttribute("users", userWhoLikedPost);
+            }
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("allPosts", posts);
         return "forum-posts/index";
     }
 
