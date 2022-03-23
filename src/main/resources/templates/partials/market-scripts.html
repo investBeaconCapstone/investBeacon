@@ -8,8 +8,10 @@
         let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=TSLA.US&offset=0&limit=2");
         let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD_API +"&s=AMZN.US&offset=0&limit=1");
         let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
+
         let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH,V");
         let CRYPTO_API =("https://eodhistoricaldata.com/api/real-time/BTC-USD.CC?api_token=" + EOD_API + "&fmt=json&s=ETH-USD.CC,USDT-USD.CC,BNB-USD.CC,USDC-USD.CC,SOL-USD.CC,AVAX-USD.CC,DOT-USD.CC")
+
 
         //websockets
         let socket = new WebSocket("wss://ws.eodhistoricaldata.com/ws/crypto?api_token=" + EOD_API);
@@ -28,6 +30,8 @@
         socket.onerror = function(error) {
             console.log(`[error] ${error.message}`);
         };
+
+
 
 
         let getStocks = () => {
@@ -146,6 +150,8 @@
                     $('#featured-post').empty();
                     let featuredPost = data;
 
+
+        getFeaturedPost();
 
                     for (let result of featuredPost) {
                         //cards

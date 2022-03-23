@@ -13,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Objects;
+
 
 @Controller
 public class UserController {
@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/welcome")
     public String welcomePage(Model model) {
         model.addAttribute("welcomeUser", new User());
-        return "users/welcome";
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
@@ -54,7 +54,7 @@ public class UserController {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
-            return "redirect:/welcome";
+            return "redirect:/login";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
             return "users/register";
@@ -167,4 +167,34 @@ public class UserController {
             return "redirect:/";
         }
     }
+
+    @GetMapping("/password/{id}/change")
+    public String changePassword(@PathVariable long id, Model model) {
+        User passwordEdit = userDao.getById(id);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (passwordEdit.getId() == loggedInUser.getId()) {
+            model.addAttribute("passwordEdit", passwordEdit);
+            return "users/password";
+        } else {
+            return "redirect:/profile";
+        }
+    }
+
+//    @PostMapping("/password/{id}/change")
+//    public String changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, @PathVariable long id) {
+//        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+//            String oldPass = userDao.getById(id).getPassword();
+//            if(passwordEncoder.matches(oldPassword, oldPass)) {
+//                passwordEncoder.encode(newPassword);
+//
+//            }
+//            userDao.save();
+//            return "redirect:/profile/{id}";
+//
+//        }   else {
+//            return "users/password";
+//
+//        }
+//
+//    }
 }
