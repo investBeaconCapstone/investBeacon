@@ -1,14 +1,9 @@
 package com.example.investbeacon.models;
-
 import lombok.Getter;
 import lombok.Setter;
-
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +15,11 @@ public class EducationPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Post must have a title")
-    @Size(min = 3, message = "A title must be at least 3 characters.")
+
     @Column(nullable = false, length = 100)
     private String title;
 
-    @NotBlank(message = "Post must have a body description")
+
     @Column(nullable = false,  length = 3500)
     private String description;
 
@@ -36,7 +30,7 @@ public class EducationPost {
     @Column(name ="content_img_url", length = 500)
     private String contentImageUrl;
 
-    @NotBlank(message = "Post must have a category")
+
     @ManyToOne
     @JoinColumn (name = "cat_id")
     private Category category;
