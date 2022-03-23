@@ -205,7 +205,7 @@ public class ForumPostController {
 
     //LIKE AND UNLIKE POST
     @PostMapping("/forum-posts/{id}/like-unlike")
-    public String upVote(@PathVariable long id, @RequestParam("voted") boolean voted) {
+    public String upVote(@PathVariable long id, @RequestParam("voted") boolean voted, @RequestParam("url") String url) {
         ForumPost likedPost = forumPostDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (voted) {
@@ -214,7 +214,7 @@ public class ForumPostController {
             likedPost.getUsers().add(user);
         }
         forumPostDao.save(likedPost);
-        return "redirect:/forum-posts/{id}";
+        return "redirect:" + url;
     }
 
 

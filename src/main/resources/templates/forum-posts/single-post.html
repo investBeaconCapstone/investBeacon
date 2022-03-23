@@ -37,6 +37,7 @@
                         <i class="fa-solid fa-thumbs-up"></i>
                     </button>
                     <input type="hidden" name="voted" th:value="${voted}" />
+                    <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
                 </form>
             </div>
         </div>
