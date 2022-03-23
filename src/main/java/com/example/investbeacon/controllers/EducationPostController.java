@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,10 @@ public class EducationPostController {
             List<EducationPostLikes> likesFromDao = likesDao.getEducationPostLikesByUser(user);
             for (EducationPostLikes like : likesFromDao){
                 userLikes.put(like.getEdPost().getId(), like);
+                System.out.println(userLikes);
+                System.out.println(userLikes.containsKey(like.getEdPost().getId()));
             }
+
             model.addAttribute("voted", hasVoted);
             model.addAttribute("loggedUser", user);
             model.addAttribute("userLikes", userLikes);
@@ -141,6 +143,7 @@ public class EducationPostController {
     //create a post for education
     @PostMapping("/education/posts/create")
     public String postCreate(@ModelAttribute EducationPost post) {
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
 
@@ -186,8 +189,8 @@ public class EducationPostController {
             post.setCreatedDate(new Date());
             postDao.save(post);
 
-        }
 
+        }
         return "redirect:/education/posts/{category}";
 
     }

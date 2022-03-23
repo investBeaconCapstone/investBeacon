@@ -1,12 +1,9 @@
 package com.example.investbeacon.models;
-
 import lombok.Getter;
 import lombok.Setter;
-
-
-
 import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +15,10 @@ public class EducationPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
     @Column(nullable = false, length = 100)
     private String title;
+
 
     @Column(nullable = false,  length = 3500)
     private String description;
@@ -30,6 +29,7 @@ public class EducationPost {
 
     @Column(name ="content_img_url", length = 500)
     private String contentImageUrl;
+
 
     @ManyToOne
     @JoinColumn (name = "cat_id")
