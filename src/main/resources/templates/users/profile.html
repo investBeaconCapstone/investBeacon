@@ -66,6 +66,8 @@
                 <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
                     <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="text-end btn btn-primary settingsButton">Edit
                         Profile</a>
+                    <br>
+                    <a th:href="@{/password/{id}/change (id=${user.id})}" id="change-password" class="btn btn-primary">Change Password</a>
                 </div>
             </div>
         </div>
