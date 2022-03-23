@@ -9,4 +9,6 @@ import java.util.List;
 public interface ForumPostRepository extends JpaRepository<ForumPost, Long> {
 
     ForumPost findPostById(long id);
+    List<ForumPost> findByUsersContains(User user);
+
 }
