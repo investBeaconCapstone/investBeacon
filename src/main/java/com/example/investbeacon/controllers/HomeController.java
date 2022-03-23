@@ -31,5 +31,10 @@ public class HomeController {
         return "about-us";
     }
 
+    @GetMapping("/features")
+    public String features(){
+        return "features";
+    }
+
 
 }

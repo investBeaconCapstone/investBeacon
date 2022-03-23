@@ -23,12 +23,12 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+<div class=" card text-center " style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
     <h1> Update Your Post</h1>
     <form class="form" th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}" style="margin: 2em auto; padding: 1em; width: 100%; ">
         <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}" th:value="${editPost.title}">
         <br>
-        <textarea placeholder="Content" id="description" th:field="*{description}"  th:value="${editPost.description}" style="width: 100%; background-color:#F2F2F2; border: none;"></textarea>
+        <textarea placeholder="Content" id="description"  name="content" type="text" th:rows="5"  th:cols="33" th:field="*{description}"  th:value="${editPost.description}" style="width: 100%; background-color:#F2F2F2; border: none;"></textarea>
         <br>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
 
