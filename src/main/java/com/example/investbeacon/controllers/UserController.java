@@ -1,6 +1,7 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.CaptchaValidator;
+import com.example.investbeacon.models.Password;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response")String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+    public String saveUser(@ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
         System.out.println(user);
         if (validator.isValid(captcha) && !bindingResult.hasErrors()) {
             String hash = passwordEncoder.encode(user.getPassword());
@@ -110,9 +111,13 @@ public class UserController {
     @PostMapping("/profile/{id}/edit")
     public String editProfile(@ModelAttribute User userToEdit, @PathVariable long id) {
         if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
-            String hash = passwordEncoder.encode(userToEdit.getPassword());
-            userToEdit.setPassword(hash);
-            userDao.save(userToEdit);
+            User existingUser = userDao.getById(userToEdit.getId());
+            existingUser.setFirstName(userToEdit.getFirstName());
+            existingUser.setLastName(userToEdit.getLastName());
+            existingUser.setEmail(userToEdit.getEmail());
+            existingUser.setUsername(userToEdit.getUsername());
+            existingUser.setProfileImg(userToEdit.getProfileImg());
+            userDao.save(existingUser);
         }
         return "redirect:/profile/{id}";
     }
@@ -169,32 +174,40 @@ public class UserController {
     }
 
     @GetMapping("/password/{id}/change")
-    public String changePassword(@PathVariable long id, Model model) {
+    public String showChangePassword(@PathVariable long id, Model model) {
         User passwordEdit = userDao.getById(id);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (passwordEdit.getId() == loggedInUser.getId()) {
-            model.addAttribute("passwordEdit", passwordEdit);
+            model.addAttribute("passwordEdit", new Password(id));
             return "users/password";
         } else {
             return "redirect:/profile";
         }
     }
 
-//    @PostMapping("/password/{id}/change")
-//    public String changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword, @PathVariable long id) {
-//        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
-//            String oldPass = userDao.getById(id).getPassword();
-//            if(passwordEncoder.matches(oldPassword, oldPass)) {
-//                passwordEncoder.encode(newPassword);
-//
-//            }
-//            userDao.save();
-//            return "redirect:/profile/{id}";
-//
-//        }   else {
-//            return "users/password";
-//
-//        }
-//
-//    }
+    @PostMapping("/password/{id}/change")
+    public String changePassword(@Valid @ModelAttribute("passwordEdit") Password password, @PathVariable long id) {
+        if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+            User user = userDao.getById(password.getId());
+            String hash = user.getPassword();
+            System.out.println(hash);
+            if (passwordEncoder.matches(password.getCurPassword(), user.getPassword())) {
+                System.out.println("current password + form password");
+                if (password.getNewPassword().equals(password.getConPassword())) {
+                    String newHash = passwordEncoder.encode(password.getNewPassword());
+                    user.setPassword(newHash);
+                    userDao.save(user);
+                    System.out.println("updated user");
+                }
+            }
+
+            return "redirect:/profile/{id}";
+
+        } else {
+            return "redirect:/password";
+        }
+
+    }
 }
+
+
