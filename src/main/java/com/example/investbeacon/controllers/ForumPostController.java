@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -38,7 +36,20 @@ public class ForumPostController {
     //    VIEW ALL Forum Posts
     @GetMapping("/forum-posts")
     public String forumPosts(Model model) {
-        model.addAttribute("allPosts", forumPostDao.findAll());
+        List<ForumPost> posts = forumPostDao.findAll();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedInUser = userDao.getById(user.getId());
+            HashMap<Long, ForumPost> postsLiked = new HashMap<>();
+            List<ForumPost> listOfPostLikedByUser = forumPostDao.findByUsersContains(user);
+            for (ForumPost postLiked : listOfPostLikedByUser) {
+                postsLiked.put(postLiked.getId(), postLiked);
+                System.out.println("HashMap" + postsLiked);
+            }
+            model.addAttribute("userLikes", postsLiked);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("allPosts", posts);
         return "forum-posts/index";
     }
 
@@ -73,9 +84,9 @@ public class ForumPostController {
                 User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 Integer postLikes = currentForumPost.getUsers().size();
                 List<User> likes = currentForumPost.getUsers();
-                if(!likes.isEmpty()){
-                    for(User like : likes){
-                        if(like.getUsername().equals(user.getUsername())){
+                if (!likes.isEmpty()) {
+                    for (User like : likes) {
+                        if (like.getUsername().equals(user.getUsername())) {
                             hasVoted = true;
                             break;
                         }
@@ -84,7 +95,7 @@ public class ForumPostController {
                 comment.setPost(currentForumPost);
                 model.addAttribute("loggedInUser", user);
                 model.addAttribute("voted", hasVoted);
-                model.addAttribute("likes", postLikes );
+                model.addAttribute("likes", postLikes);
             }
             model.addAttribute("singleForumPost", currentForumPost);
             model.addAttribute("comment", comment);
@@ -197,9 +208,9 @@ public class ForumPostController {
     public String upVote(@PathVariable long id, @RequestParam("voted") boolean voted) {
         ForumPost likedPost = forumPostDao.getById(id);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(voted){
+        if (voted) {
             likedPost.getUsers().removeIf(n -> n.getId() == user.getId());
-        }else{
+        } else {
             likedPost.getUsers().add(user);
         }
         forumPostDao.save(likedPost);

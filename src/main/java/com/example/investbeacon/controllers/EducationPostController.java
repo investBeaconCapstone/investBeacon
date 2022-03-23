@@ -71,7 +71,10 @@ public class EducationPostController {
             List<EducationPostLikes> likesFromDao = likesDao.getEducationPostLikesByUser(user);
             for (EducationPostLikes like : likesFromDao){
                 userLikes.put(like.getEdPost().getId(), like);
+                System.out.println(userLikes);
+                System.out.println(userLikes.containsKey(like.getEdPost().getId()));
             }
+
             model.addAttribute("voted", hasVoted);
             model.addAttribute("loggedUser", user);
             model.addAttribute("userLikes", userLikes);
