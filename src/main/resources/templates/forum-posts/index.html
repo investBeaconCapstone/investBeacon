@@ -43,6 +43,7 @@
                                th:value="true"/>
                         <input type="hidden" name="voted" th:if="${!#maps.containsKey(userLikes,post.id)}"
                                th:value="false"/>
+                        <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
                     </form>
                 </div>
                 <form th:action="@{/forum-posts/{id}(id=${post.id})}" th:method="get">
