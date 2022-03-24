@@ -56,10 +56,17 @@ public class ForumPostController {
     //      VIEW CREATE Forum Post
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
-        model.addAttribute("post", new ForumPost());
-        model.addAttribute("FILESTACK_API_KEY", fileStackKey);
-        model.addAttribute("categoryList", categoryDao.findAll());
-        return "forum-posts/create";
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser"){
+            model.addAttribute("post", new ForumPost());
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
+            model.addAttribute("categoryList", categoryDao.findAll());
+            return "forum-posts/create";
+
+        }else{
+            return "redirect:/login";
+        }
+
     }
 
     //    POST CREATED Forum Post
