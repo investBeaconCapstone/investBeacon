@@ -46,9 +46,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+    public String saveUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
         System.out.println(user);
-        if (validator.isValid(captcha) && !bindingResult.hasErrors()) {
+        if (validator.isValid(captcha)) {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             if (profileImg.isEmpty()) {
