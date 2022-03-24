@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Features</title>
+    <th:block th:include="partials/header.html :: styling"></th:block>
+</head>
+<body>
+<!--!&#45;&#45;POP UPS&ndash;&gt;-->
+<nav th:replace="partials/navbar :: navbar"></nav>
+
+
+
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center">
+      <div class="about-modal">
+        <a href="#crypto-box">
+          <i class="fa-brands fa-bitcoin  fa-3x"></i>
+          <h3>Cryptocurrencies</h3>
+        </a>
+      </div>
+    </div>
+    <div class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cryptocurrencies</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center">
+      <div class="about-modal">
+        <a href="#stock-box">
+         <i class="fa-solid fa-arrow-trend-up fa-3x"></i>
+          <h3>Stock</h3>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center">
+      <div class="about-modal">
+        <a href="#finance-box">
+          <i class="fa-solid fa-coins fa-3x"></i>
+          <h3>Finance</h3>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center">
+      <div class="about-modal">
+        <a href="#strategies-box">
+          <i class="fa-solid fa-chess fa-3x"></i>
+          <h3>Strategies</h3>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center">
+      <div class="about-modal">
+        <a href="#platforms-box">
+          <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
+          <h3>Platforms</h3>
+        </a>
+      </div>
+    </div>
+  </div>
+<div id="crypto-box">
+    <div id="crypto-window">
+        <a href="#" class="btn-close btn-small btn-white"></a>
+        <h1>
+            <i class="fa-brands fa-bitcoin"></i>
+        </h1>
+        <h1>!</h1>
+
+        <p>Something about crypto.</p>
+    </div>
+</div>
+
+<div id="stock-box">
+    <div id="stock-window">
+        <a href="#" class="btn-close btn-small btn-white"></a>
+        <h1>
+            <i class="fa-solid fa-arrow-trend-up"></i>
+        </h1>
+        <h1>Learn About Stocks!</h1>
+
+        <p>Something about stocks</p>
+    </div>
+</div>
+
+<div id="finance-box">
+    <div id="finance-window">
+        <a href="#" class="btn-close btn-small btn-white"></a>
+        <h1>
+            <i class="fa-solid fa-coins"></i>
+        </h1>
+        <h1>Learn About Finance!</h1>
+
+        <p>Something about finances</p>
+    </div>
+</div>
+
+<div id="strategies-box">
+    <div id="strategies-window">
+        <a href="" class="btn-close btn-small btn-white"></a>
+        <h1>
+            <i class="fa-solid fa-chess "></i>
+        </h1>
+        <h1>Strategies!</h1>
+
+        <p>Something about strategies</p>
+    </div>
+</div>
+
+<div id="platform-box">
+    <div id="platform-window">
+        <a href="" class="btn-close btn-small btn-white"></a>
+        <h1>
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+        </h1>
+        <h1>Platforms!</h1>
+        <p>Learn about the platforms</p>
+    </div>
+</div>
+
+
+
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
+</body>
+</html>
