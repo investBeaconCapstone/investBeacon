@@ -7,11 +7,11 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class="container" th:object="${welcomeUser}" style="margin: 10em auto; padding: 1em; width: 60%;">
-    <h2 style="text-align: center">Welcome, to Invest Beacon</h2>
-    <input type="submit" value="Login" onclick="window.location='login'" style="display: flex; margin: auto">
+<div class="container" style="margin: 10em auto; padding: 1em; width: 60%;">
+    <h2 class="welcome" style="text-align: center">Welcome, to Invest Beacon</h2>
 </div>
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
+<th:block th:include="partials/footer.html :: onload"></th:block>
 </body>
 </html>
