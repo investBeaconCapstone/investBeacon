@@ -18,17 +18,26 @@ public class HomeController {
     @Value("${POLYGON_API}")
     String polygonAPIKey;
 
+    @Value("623c82284fe673.62757982")
+    String eod2ApiKey;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("EOD_API", eodApiKey);
         model.addAttribute("MARKETAUX_API", marketAuxKey);
         model.addAttribute("POLYGON_API", polygonAPIKey);
+        model.addAttribute("EOD2_API", eod2ApiKey);
         return "index";
     }
 
     @GetMapping("/about-us")
     public String aboutUs(){
         return "about-us";
+    }
+
+    @GetMapping("/features")
+    public String features(){
+        return "features";
     }
 
 

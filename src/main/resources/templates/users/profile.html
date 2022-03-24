@@ -59,16 +59,16 @@
 
 
     <div class="row">
-        <div class="mx-auto card" style="width: 18rem; text-align: center; background-color: #EEEEEE;" th:object="${user}">
-            <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top avatar">
+        <div class="mx-auto mt-auto card" style="width: 18rem; text-align: center; background-color: #EEEEEE; border: none; " th:object="${user}">
+            <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top avatar"  height="200" width="200" style="border-radius:50%" >
             <div class="card-body">
                 <h5 th:text="${user.username}" class="card-title text-align"></h5>
                 <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->
                 <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
                     <a th:href="@{/profile/{id}/edit (id=${user.id})}" class="text-end btn btn-primary settingsButton">Edit
                         Profile</a>
-                    <br>
-                    <a th:href="@{/password/{id}/change (id=${user.id})}" id="change-password" class="btn btn-primary">Change Password</a>
+                    <br >
+                    <a th:href="@{/password/{id}/change (id=${user.id})}" id="change-password" class="btn btn-primary mt-1">Change Password</a>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
     <br>
     <div class="row">
         <!--DISPLAY Followers-->
-        <div class="col">
+        <div class="col text-center">
             <h5>Followers</h5>
             <div class="row" th:each="follower : ${user.getFollowers()}">
                 <span>
@@ -101,7 +101,7 @@
             </div>
         </div>
         <!--        DISPLAY Following-->
-        <div class="col">
+        <div class="col text-center">
             <h5>Following</h5>
             <div class="row" th:each="followee : ${user.getUsers()}">
                 <span>
@@ -113,17 +113,18 @@
     </div>
     <!--DISPLAY PROFILE USER'S POST-->
     <div class="container">
+        <div class="row my-2">
+            <h4> My Posts</h4>
+        </div>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col" th:each="post : ${thisUsersPosts}" th:id="'post-' + ${post.id}">
-                <div class="card">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <strong> <a class="fs-4" th:href="@{'/forum-posts/' + ${post.id}}" th:text="${post.title}"></a></strong>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <a th:href="@{'/forum-posts/' + ${post.id}}"
-                               th:text="${post.title}">
-                            </a>
-                        </h5>
                         <p class="card-text" th:text="${post.description}"></p>
-                        <p class="card-text">posted <span th:text="${post.createdDate}"></span></p>
+                        <p class="card-text" style="font-size: 11px;">posted: <span th:text="${post.createdDate}"></span></p>
                         <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
                         <div class="row" sec:authorize="isAuthenticated()"
                              th:if="${#authentication.principal.id == user.id}">
