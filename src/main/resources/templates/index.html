@@ -15,29 +15,40 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <div class="container-fluid mx-auto first-div">
     <img class="logo img-thumbnail mx-auto d-block mt-3" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
-
     <br>
 </div>
-
-<hr><div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <span  class="d-block w-100" >Equity Market</span>
+<hr>
+<div class="container-fluid row">
+    <div class="col-2 fs-5 fw-bold fst-italic text-end">Equities Markets</div>
+    <div id="carouselMarket" class="carousel slide col-3 mt-1" data-bs-ride="carousel">
+        <div class="carousel-inner ">
+            <div class="carousel-item active">
+                <span  class="d-block w-100" ></span>
+            </div>
+            <div id="load-market"></div>
         </div>
-        <div id="load-market"></div>
+    </div>
+    <div class="col-2 fs-5 fw-bold fst-italic text-end">Cryptocurrency Markets</div>
+    <div id="carouseCrypto" class="carousel slide col mt-1" data-bs-ride="carousel">
+        <div class="carousel-inner ">
+            <div class="carousel-item active">
+                <span  class="d-block w-100" ></span>
+            </div>
+            <div id="load-crypto"></div>
+        </div>
     </div>
 </div>
-<div class="container-fluid" >
-<!--    <span>Equities Markets</span>-->
-<!--    <div class="  justify-content-around"  style="background-color:#2C3333 " >-->
-<!--        <ul id="load-market" class="row" style="overflow:hidden;"></ul>-->
+<!--<div class="container-fluid" >-->
+<!--&lt;!&ndash;    <span>Equities Markets</span>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="  justify-content-around"  style="background-color:#2C3333 " >&ndash;&gt;-->
+<!--&lt;!&ndash;        <ul id="load-market" class="row" style="overflow:hidden;"></ul>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    <hr>-->
+<!--    <span>Cryptocurrency Markets</span>-->
+<!--    <div class="container-fluid mx-auto text-align-center  justify-content-between" style="background-color:#2C3333 ">-->
+<!--        <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>-->
 <!--    </div>-->
-    <hr>
-    <span>Cryptocurrency Markets</span>
-    <div class="container-fluid mx-auto text-align-center  justify-content-between" style="background-color:#2C3333 ">
-        <ul id="load-crypto" class="row" style="overflow:hidden;"></ul>
-    </div>
-</div>
+<!--</div>-->
 
 <hr>
 
