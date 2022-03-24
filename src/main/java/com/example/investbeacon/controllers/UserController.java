@@ -189,10 +189,7 @@ public class UserController {
     public String changePassword(@Valid @ModelAttribute("passwordEdit") Password password, @PathVariable long id) {
         if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
             User user = userDao.getById(password.getId());
-            String hash = user.getPassword();
-            System.out.println(hash);
             if (passwordEncoder.matches(password.getCurPassword(), user.getPassword())) {
-                System.out.println("current password + form password");
                 if (password.getNewPassword().equals(password.getConPassword())) {
                     String newHash = passwordEncoder.encode(password.getNewPassword());
                     user.setPassword(newHash);
