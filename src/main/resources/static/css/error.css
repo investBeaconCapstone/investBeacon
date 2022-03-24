@@ -16,3 +16,16 @@
     opacity: 0.7;
 }
 
+.form-group small {
+    position: absolute;
+    margin: 3px;
+    visibility: hidden;
+}
+
+.form-group.success input {
+    border: 2px solid #1da31d;
+}
+
+.form-group.error input {
+    border: 2px solid red;
+}
