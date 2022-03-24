@@ -40,7 +40,7 @@
             <br>
             <span th:each="category : ${categoryList}" class="col">
                 <input class="form-check-input" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}" style="width: 25px;">
-                 <label class="form-check-label" th:for="${category.category}" th:text="${category.category}" ></label>
+                 <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
                 <br>
             </span>
         </div>
