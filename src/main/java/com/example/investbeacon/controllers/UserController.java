@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping("/welcome")
     public String welcomePage(Model model) {
         model.addAttribute("welcomeUser", new User());
-        return "redirect:/login";
+        return "users/welcome";
     }
 
     @GetMapping("/register")
@@ -55,7 +55,7 @@ public class UserController {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
-            return "redirect:/login";
+            return "users/welcome";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
             return "users/register";
