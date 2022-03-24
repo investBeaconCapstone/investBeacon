@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult, @RequestParam("g-recaptcha-response") String captcha, Model model, @RequestParam("profileImg") String profileImg) {
         System.out.println(user);
         if (validator.isValid(captcha) && !bindingResult.hasErrors()) {
             String hash = passwordEncoder.encode(user.getPassword());
@@ -186,18 +186,14 @@ public class UserController {
     }
 
     @PostMapping("/password/{id}/change")
-    public String changePassword(@Valid @ModelAttribute("passwordEdit") Password password, @PathVariable long id) {
+    public String changePassword(@ModelAttribute("passwordEdit") Password password, @PathVariable long id) {
         if (userDao.getById(id).getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
             User user = userDao.getById(password.getId());
-            String hash = user.getPassword();
-            System.out.println(hash);
             if (passwordEncoder.matches(password.getCurPassword(), user.getPassword())) {
-                System.out.println("current password + form password");
                 if (password.getNewPassword().equals(password.getConPassword())) {
                     String newHash = passwordEncoder.encode(password.getNewPassword());
                     user.setPassword(newHash);
                     userDao.save(user);
-                    System.out.println("updated user");
                 }
             }
 
