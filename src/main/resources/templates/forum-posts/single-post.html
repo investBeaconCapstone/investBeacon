@@ -15,8 +15,8 @@
             <h3>
                 <span th:text="${singleForumPost.title}"></span>
             </h3>
-            <img th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300">
-            <p th:text="${singleForumPost.description}">Content:</p>
+            <img th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300" style="border-radius: 20px;" >
+            <p class="comment-content fs-5" th:text="${singleForumPost.description}">Content:</p>
             <p>submitted on
                 <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
                       th:text="${singleForumPost.getCreatedDate()}"></time>
@@ -72,7 +72,7 @@
             <div class="col-1 user-avatar">
                 <img class="avatar" th:src="${loggedInUser.profileImg}" alt="avatar">
             </div>
-            <div class="col-11">
+            <div class="col">
                 <form method="POST"
                       th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
                     <input type="hidden" th:field="*{post}"/>
@@ -90,21 +90,21 @@
             <div class="col-1 user-avatar">
                 <img class="avatar" th:src="${comment.getUser().profileImg}" alt="avatar">
             </div>
-            <div class="col-11">
-                <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${comment.getUser().getId()}}"
+            <div class="col">
+                <span><a class="fs-5" style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${comment.getUser().getId()}}"
                          th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
                 <span class="datetime-created" th:text="${comment.getCreateDate()}"><i class="fa-regular fa-clock"></i></span>
                 <p style="min-height: 50px;" class="body" th:text="${comment.getContent()}"></p>
                 <div class="row" sec:authorize="isAuthenticated()"
                      th:if="${#authentication.principal.id == comment.getUser().id}">
-                    <span class="col">
+                    <span class="col-1 mx-auto">
                         <form th:action="@{/forum-posts/{id}/comment/{commentId}/edit(id=${singleForumPost.id},commentId=${comment.id})}"
                               th:method="Get">
                             <button type="submit" name="id" class="btn btn-secondary edit-btn"><i
                                     class="fas fa-edit"></i></button>
                         </form>
                     </span>
-                    <span class="col">
+                    <span class="col mx-auto">
                         <form th:action="@{/forum-posts/{id}/comment/{commentId}/delete(id=${singleForumPost.id},commentId=${comment.id})}"
                               th:method="Post">
                             <button type="submit" name="id" class="btn btn-danger delete-btn"><i
