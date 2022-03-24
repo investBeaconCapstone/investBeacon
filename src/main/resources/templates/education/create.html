@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Education Post</title>
     <th:block th:include="partials/header :: styling"></th:block>
     <style>
-        textarea{
-            resize: none;
-
+        .form {
+            /*position: relative;*/
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 1000px;
+            margin: 0 auto 200px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
-        .card{
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-
     </style>
     <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -23,24 +24,16 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
+<div class=" card text-center " style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+    <h1> Create an Educational Post</h1>
+    <form class="form" th:action="@{/education/posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
 
-<div class=" card  mb-3 text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
+            <input placeholder="Title" type="text" class="form-control" id="title" th:field="*{title}" required>
 
-    <form id="create" th:action="@{/education/posts/create}" th:method="POST" th:object="${post}">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+            <br>
+            <textarea placeholder="Content" type="text" class="form-control" id="description" th:field="*{description}" rows="13" required></textarea>
 
-
-        </div>
-        <div class="form-group">
-            <label for="description">description</label>
-            <textarea type="text" class="form-control" id="description" th:field="*{description}" rows="13" ></textarea>
-
-
-        </div>
-        <div class="form-group">
-            <label for="image">Image</label>
+        <br>
             <input id="image" type="hidden" th:field="*{contentImageUrl}">
             <button type="button" id="open">Choose image to upload</button>
         </div>
@@ -49,16 +42,20 @@
                 <select multiple class="form-control" id="category" th:field="*{category}" required >
                     <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}" > </option>
 
-                </select >
-            </div>
+        <br>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button id="create" type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </div>
-<th:block th:include="partials/footer :: scripts"></th:block>
+
+
+
+
+
+
+<th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: filestack"></th:block>
 <th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
-
 </body>
 </html>

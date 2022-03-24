@@ -22,3 +22,12 @@
     <!--    FileStack API -->
     <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 </th:block>
+<!-- js for set timeout of welcome screen to login-->
+<th:block th:fragment="onload">
+    <script th:inline="javascript">
+        let login = "login";
+        setTimeout(function () {
+            window.location.replace(login);
+        }, 2000);
+    </script>
+</th:block>
