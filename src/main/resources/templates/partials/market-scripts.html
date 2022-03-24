@@ -47,11 +47,17 @@
                     for (let result of market) {
                         //cards
                         $('#load-market').append(`
-                      <li  style="list-style-type: none; color: white; display:inline-block;">
-                     <span class="mx-3"> ${result.code}</span>
-                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" style="color: white">${result.high} </span>
-                     <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" style="color: white">${result.low}</span>
-                     </li>`)
+
+
+                      <div class="carousel-item ">
+
+                     <span>${result.code}</span>
+                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" ">${result.high} </span>
+                     <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" >${result.low}</span>
+
+
+                     </div>
+                     `)
                     }
                 }).catch(err => console.error("This is your err:", err));
         }
@@ -112,7 +118,7 @@
         }
 
         getMarketNews();
-        //
+
         // let getMarketNews2 = () => {
         //     return fetch(NEWS_API_MKTAUX)
         //         .then(resp => resp.json())
