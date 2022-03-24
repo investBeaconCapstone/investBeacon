@@ -12,11 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +122,7 @@ public class EducationPostController {
     @GetMapping("/education/posts/create")
     public String viewCreate(Model model) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         if (user.isAdmin()){
             model.addAttribute("post", new EducationPost());
             model.addAttribute("FILESTACK_API_KEY", fileStackKey);
