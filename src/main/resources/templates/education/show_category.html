@@ -33,8 +33,8 @@
 
     <div class="blog-post">
         <h2 class="blog-post-title"><span th:text="${post.getTitle()}"
-                                          style="color: darkblue; text-decoration: none"></span></h2>
-        <p th:text="${post.getDescription()}"></p>
+                                          style="color: darkblue; text-decoration: none; text-align: center"></span></h2>
+        <p  th:remove="tag" th:utext="${post.getDescription()}"></p>
         <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
         <p><span th:text="${post.getUserLikes().size()}" style="color: blue"></span> Likes</p>
         <div id="voting" sec:authorize="isAuthenticated()" >
