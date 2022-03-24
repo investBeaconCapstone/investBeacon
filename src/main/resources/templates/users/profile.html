@@ -39,6 +39,7 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <br>
+
 <div class="container">
     <div class="row" sec:authorize="isAuthenticated()"
          th:if="${#authentication.principal.isAdmin == true && #authentication.principal.id != user.id}">
