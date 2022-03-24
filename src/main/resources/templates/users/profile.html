@@ -128,14 +128,14 @@
                         <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
                         <div class="row" sec:authorize="isAuthenticated()"
                              th:if="${#authentication.principal.id == user.id}">
-                            <span class="col">
+                            <span class="col-1 mx-2">
                                 <form th:action="@{/forum-posts/{id}/edit(id=${post.id})}" th:method="Get">
                                     <button type="submit" name="id" class="btn btn-secondary edit-btn float-start">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                 </form>
                             </span>
-                            <span class="col">
+                            <span class="col-1 mx- auto">
                                 <form th:action="@{/forum-posts/{id}/delete(id=${post.id})}" th:method="Post">
                                     <button type="submit" name="id" class="btn btn-danger delete-btn float-end">
                                         <i class="fas fa-trash-alt"></i>
