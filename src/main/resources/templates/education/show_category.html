@@ -37,36 +37,39 @@
         <p th:text="${post.getDescription()}"></p>
         <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
         <p><span th:text="${post.getUserLikes().size()}" style="color: #2C3E50"></span> Likes</p>
-        <div id="voting" sec:authorize="isAuthenticated()" >
-            <div id="upvote"  th:if="${!#maps.containsKey(userLikes,post.id)}">
+        <div class=" row">
+            <div class="col-6" id="voting" sec:authorize="isAuthenticated()" >
+                <div  id="upvote"  th:if="${!#maps.containsKey(userLikes,post.id)}">
 
-                <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post">
-                    <button class="liked btn btn-outline-primary" type="submit"><i class="fa-regular fa-thumbs-up"></i>
-                        upvote
-                    </button>
-                </form>
+                    <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                          th:method="post">
+                        <button class="liked btn btn-outline-primary" type="submit"><i class="fa-regular fa-thumbs-up"></i>
+                            upvote
+                        </button>
+                    </form>
 
+                </div>
+                <div id="downvote" th:if="${#maps.containsKey(userLikes,post.id)}" >
+                    <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
+                          th:method="post">
+                        <button class="liked btn btn-outline-primary"  type="submit"><i
+                                class="fa-regular fa-thumbs-down"></i> downvote
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div id="downvote" th:if="${#maps.containsKey(userLikes,post.id)}" >
-                <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
-                      th:method="post">
-                    <button class="liked btn btn-outline-primary"  type="submit"><i
-                            class="fa-regular fa-thumbs-down"></i> downvote
-                    </button>
-                </form>
+            <div class="col">
+                <div class="col d-flex flex-wrap justify-content-end" sec:authorize="isAuthenticated()"
+                     th:if="${loggedUser.isAdmin()}">
+                    <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
+                          th:method="get" style="margin-right: 1em">
+                        <button type="submit" id="edit" class="btn btn btn-info">Edit</button>
+                    </form>
+
+                </div>
             </div>
         </div>
-        <div class="container">
-            <div class="col d-flex flex-wrap justify-content-end" sec:authorize="isAuthenticated()"
-                 th:if="${loggedUser.isAdmin()}">
-                <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
-                      th:method="get" style="margin-right: 1em">
-                    <button type="submit" id="edit" class="btn btn btn-info">Edit</button>
-                </form>
 
-            </div>
-        </div>
     </div>
 
 
