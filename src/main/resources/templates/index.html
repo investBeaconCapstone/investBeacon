@@ -17,77 +17,85 @@
     <img class="logo img-thumbnail mx-auto d-block mt-3" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
     <br>
 </div>
-<div>
-
-</div>
-<hr>
-<div class="container-fluid row">
-    <div class="col-2 fs-5 fw-bold fst-italic text-end">Equities Markets</div>
-    <div id="carouselMarket" class="carousel slide col-3 mt-1" data-bs-ride="carousel">
-        <div class="carousel-inner ">
-            <div class="carousel-item active">
-                <span  class="d-block w-100" ></span>
-            </div>
-            <div id="load-market"></div>
+<div id="title" class="main-banner row bg-primary disabled container-fluid" sec:authorize="!isAuthenticated()" style="height: 350px;" >
+    <div class="title-intro col-lg-6 text-center">
+        <h1>Everything you need to know about basic finances in one place.</h1>
         </div>
-    </div>
-    <div class="col-2 fs-5 fw-bold fst-italic text-end">Cryptocurrency Markets</div>
-    <div id="carouseCrypto" class="carousel slide col mt-1" data-bs-ride="carousel">
-        <div class="carousel-inner ">
-            <div class="carousel-item active">
-                <span  class="d-block w-100" ></span>
-            </div>
-            <div id="load-crypto"></div>
-        </div>
+    <div class="col">
+        <img class="img-fluid rounded float-right" src="image/couple.jpg" alt="money" >
     </div>
 </div>
-<div class="container bg-secondary" height="200">
+<section class="thickers">
+    <hr>
+    <div class="container-fluid row ">
 
-</div>
+        <div class="col-2 fs-5 fw-bold fst-italic text-end">Equities Markets</div>
+        <div id="carouselMarket" class="carousel slide col-3 mt-1" data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                <div class="carousel-item active" data-bs-interval="2000">
+                    <span  class="d-block w-100" ></span>
+                </div>
+                <div id="load-market"></div>
+            </div>
+        </div>
+        <div class="col-2 fs-5 fw-bold fst-italic text-end">Cryptocurrency Markets</div>
+        <div id="carouseCrypto" class="carousel slide col mt-1" data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                <div class="carousel-item active" data-bs-interval="2000">
+                    <span  class="d-block w-100" ></span>
+                </div>
+                <div id="load-crypto"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container bg-secondary banner-news" height="100">
 
-<hr>
+    </div>
 
-<div class="container-fluid">
+</section>
+
+<div class="container-fluid banner-news ">
+    <hr>
     <div class="p-2  mb-3 text-white rounded " id="featured-post" style="background-color: #AAB3B4;"></div>
 
     <div class="row mb-2" id="load-news-2"></div>
 </div>
     <div class="row container-fluid">
         <div class="col-md-9">
-            <h3 class="pb-4 mb-4 fst-italic border-bottom">News Room</h3>
-            <article class="blog-post" id="load-news">
+            <h3 class="pb-4 mb-4 fs-2 fst-italic border-bottom">News Room</h3>
+            <article class="blog-post col-11 " id="load-news">
                 <hr>
             </article>
         </div>
 
         <div class="col-md-3 text-end">
         <div class="position-sticky"  >
-            <div class="p-4 mb-3 card  rounded" style="background-color: #AAB3B4; ">
+            <div class="p-4  card  rounded" sec:authorize="!isAuthenticated()" style="background-color: #E5E5E5; border:  none;">
                 <a href="/features" >
 <!--                    <h4 class="fst-italic" style="color: #FFFFFF" >About</h4>-->
-                <strong><p class="mb-0" style="color: #FFFFFF">Welcome to Invest Beacon!  </p> </strong>
-                    <p style="color: #FFFFFF">New? start here!</p>
+                <strong><p class="mb-0 fs-5 primary" style="color: #2C3D4F" >Welcome to Invest Beacon!  </p> </strong>
+                    <p class="fs-6" >New? Start here!</p>
 
                 </a>
             </div>
 
             <div class="p-4">
-                <h4 class="fst-italic">Learn</h4>
+                <h4 class="fst-italic fs-3">Learn</h4>
                 <ol class="list-unstyled mb-0">
-                    <li><a href="/education/posts/Crypto">Crypto</a></li>
-                    <li><a href="/education/posts/Stocks">Stock</a></li>
-                    <li><a href="/education/posts/Finance">Finance</a></li>
-                    <li><a href="/education/posts/Strategies">Strategies</a></li>
-                    <li><a href="/education/posts/Platforms">Platforms</a></li>
+                    <li><a class="edu-link fs-5" href="/education/posts/Crypto">Crypto</a></li>
+                    <li><a class="edu-link fs-5" href="/education/posts/Stocks">Stock</a></li>
+                    <li><a class="edu-link fs-5" href="/education/posts/Finance">Finance</a></li>
+                    <li><a class="edu-link fs-5" href="/education/posts/Strategies">Strategies</a></li>
+                    <li><a class="edu-link fs-5" href="/education/posts/Platforms">Platforms</a></li>
                 </ol>
             </div>
 
             <div class="p-4">
-                <h4 class="fst-italic">Follow Us</h4>
+                <h4 class="fst-italic fs-3">Follow Us</h4>
                 <ol class="list-unstyled">
-                    <li><a href="https://github.com/investBeaconCapstone/investBeacon">GitHub</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
+                    <li><a class="social-link fs-5" href="https://github.com/investBeaconCapstone/investBeacon">GitHub</a></li>
+                    <li><a  class="social-link fs-5" href="#">Twitter</a></li>
+                    <li><a class="social-link fs-5" href="#">Facebook</a></li>
                 </ol>
             </div>
         </div>
