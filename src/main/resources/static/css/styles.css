@@ -84,7 +84,7 @@ ul#load-crypto li {
 .button#create {
     text-transform: uppercase;
     outline: 0;
-    /*background: #4CAF50;*/
+
     width: 100%;
     border: 0;
     padding: 15px;
@@ -106,10 +106,7 @@ a:link {
 }
 #footer {
     margin-top: auto;
-    /*clear: both;*/
-    /*position: relative;*/
-    /*height: 200px;*/
-    /*margin-top: -200px;*/
+
 }
 
 
@@ -127,27 +124,6 @@ a:link {
     text-align: left;
 }
 
-/*.title-img {*/
-/*    width:35%;*/
-/*    transform: rotate(5deg);*/
-/*    position: absolute;*/
-/*    left: 820px;*/
-/*    top:230px;*/
-/*    border-color: #FFFFFF;*/
-/*    border-width: 2px;*/
-/*}*/
-
-/*@media (max-width:1089px) {*/
-/*    .title-intro {*/
-/*        text-align: center;*/
-/*    }*/
-
-/*    .title-img {*/
-/*        position: static;*/
-/*        transform: rotate(0);*/
-/*        width: 60%;*/
-/*    }*/
-/*}*/
 
 #title {
 

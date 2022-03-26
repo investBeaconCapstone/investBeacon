@@ -53,54 +53,89 @@
     </div>
 
 </section>
-
-<div class="container-fluid banner-news ">
+<section>
     <hr>
-    <div class="p-2  mb-3 text-white rounded " id="featured-post" style="background-color: #AAB3B4;"></div>
-
-    <div class="row mb-2" id="load-news-2"></div>
-</div>
     <div class="row container-fluid">
         <div class="col-md-9">
-            <h3 class="pb-4 mb-4 fs-2 fst-italic border-bottom">News Room</h3>
-            <article class="blog-post col-11 " id="load-news">
-                <hr>
-            </article>
+            <h3 class="pt-4 mb-4 fs-2 fst-italic border-bottom">News Room</h3>
+
+            <div id="carouselNews" class="carousel slide col-11" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                    <button style="background-color: #2C3E50" type="button" data-bs-target="#carouselNews" data-bs-slide-to="8" aria-label="Slide 9"></button>
+
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <span  class="d-block w-100" ></span>
+                    </div>
+                    <div  id="load-news">
+
+                    </div>
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselNews" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #2C3E50"></span>
+                    <span class="visually-hidden" style="background-color: #2C3E50">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselNews" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #2C3E50"></span>
+                    <span class="visually-hidden" style="background-color: #2C3E50">Next</span>
+                </button>
+            </div>
         </div>
 
         <div class="col-md-3 text-end">
-        <div class="position-sticky"  >
-            <div class="p-4  card  rounded" sec:authorize="!isAuthenticated()" style="background-color: #E5E5E5; border:  none;">
-                <a href="/features" >
-<!--                    <h4 class="fst-italic" style="color: #FFFFFF" >About</h4>-->
-                <strong><p class="mb-0 fs-5 primary" style="color: #2C3D4F" >Welcome to Invest Beacon!  </p> </strong>
-                    <p class="fs-6" >New? Start here!</p>
+            <div class="position-sticky"  >
+                <div class="p-4  card  rounded" sec:authorize="!isAuthenticated()" style="background-color: #E5E5E5; border:  none;">
+                    <a href="/features" >
+                        <!--                    <h4 class="fst-italic" style="color: #FFFFFF" >About</h4>-->
+                        <strong><p class="mb-0 fs-5 primary" style="color: #2C3D4F" >Welcome to Invest Beacon!  </p> </strong>
+                        <p class="fs-6" >New? Start here!</p>
 
-                </a>
-            </div>
+                    </a>
+                </div>
 
-            <div class="p-4">
-                <h4 class="fst-italic fs-3">Learn</h4>
-                <ol class="list-unstyled mb-0">
-                    <li><a class="edu-link fs-5" href="/education/posts/Crypto">Crypto</a></li>
-                    <li><a class="edu-link fs-5" href="/education/posts/Stocks">Stock</a></li>
-                    <li><a class="edu-link fs-5" href="/education/posts/Finance">Finance</a></li>
-                    <li><a class="edu-link fs-5" href="/education/posts/Strategies">Strategies</a></li>
-                    <li><a class="edu-link fs-5" href="/education/posts/Platforms">Platforms</a></li>
-                </ol>
-            </div>
+                <div class="p-4">
+                    <h4 class="fst-italic fs-3">Learn</h4>
+                    <ol class="list-unstyled mb-0">
+                        <li><a class="edu-link fs-5" href="/education/posts/Crypto">Crypto</a></li>
+                        <li><a class="edu-link fs-5" href="/education/posts/Stocks">Stock</a></li>
+                        <li><a class="edu-link fs-5" href="/education/posts/Finance">Finance</a></li>
+                        <li><a class="edu-link fs-5" href="/education/posts/Strategies">Strategies</a></li>
+                        <li><a class="edu-link fs-5" href="/education/posts/Platforms">Platforms</a></li>
+                    </ol>
+                </div>
 
-            <div class="p-4">
-                <h4 class="fst-italic fs-3">Follow Us</h4>
-                <ol class="list-unstyled">
-                    <li><a class="social-link fs-5" href="https://github.com/investBeaconCapstone/investBeacon">GitHub</a></li>
-                    <li><a  class="social-link fs-5" href="#">Twitter</a></li>
-                    <li><a class="social-link fs-5" href="#">Facebook</a></li>
-                </ol>
+                <div class="p-4">
+                    <h4 class="fst-italic fs-3">Follow Us</h4>
+                    <ol class="list-unstyled">
+                        <li><a class="social-link fs-5" href="https://github.com/investBeaconCapstone/investBeacon">GitHub</a></li>
+                        <li><a  class="social-link fs-5" href="#">Twitter</a></li>
+                        <li><a class="social-link fs-5" href="#">Facebook</a></li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
+</section>
+<!--<div class="container-fluid banner-news ">-->
+<!--    <hr>-->
+<!--    <div class="p-2  mb-3 text-white rounded " id="featured-post" style="background-color: #AAB3B4;"></div>-->
+
+<!--    <div class="row mb-2" id="load-news-2"></div>-->
+<!--</div>-->
+
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/market-scripts.html :: marketScripts"></th:block>
 

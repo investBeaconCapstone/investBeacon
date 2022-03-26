@@ -14,7 +14,7 @@
         // let CRYPTO_API =("https://eodhistoricaldata.com/api/real-time/BTC-USD.CC?api_token=" + EOD_API + "&fmt=json&s=ETH-USD.CC,USDT-USD.CC,BNB-USD.CC,SOL-USD.CC,AVAX-USD.CC")
         // // USDC-USD.CC,DOT-USD.CC
 
-        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD2_API +"&s=TSLA.US&offset=0&limit=3");
+        let NEWS_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD2_API +"&s=TSLA.US&offset=0&limit=8");
         let FEATURED_API = ("https://eodhistoricaldata.com/api/news?api_token="+ EOD2_API +"&s=AMZN.US&offset=0&limit=1");
         let NEWS_API_MKTAUX = ("https://api.marketaux.com/v1/news/all?symbols=TSLA%2CAMZN%2CMSFT&filter_entities=true&language=en&api_token=" + MARKETAUX_API);
         let MARKET_API = ("https://eodhistoricaldata.com/api/real-time/AAPL.US?api_token=" + EOD2_API + "&fmt=json&s=EUR.FOREX,MSFT,TSLA,UNH,GOOGL,AMZN,FB,UNH,V");
@@ -42,101 +42,102 @@
         };
 
 
+
+
+        let getStocks = () => {
+            return fetch(MARKET_API)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    $('#load-market').empty();
+                    let market = data;
+
+                    for (let result of market) {
+                        //cards
+                        $('#load-market').append(`
+
+
+                      <div class="carousel-item" data-bs-interval="2000">
+
+                     <span class="fw-bolder">${result.code}</span>
+                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" ">${result.high} </span>
+                     <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" >${result.low}</span>
+
+
+                     </div>
+                     `)
+                    }
+                }).catch(err => console.error("This is your err:", err));
+        }
+        getStocks();
+
+
+
+
+        // CRYPTO//
+        // fetch(CRYPTO_API)
+        //     .then(data => {
+        //         return data.json();
+        //     })
+        //     .then(data => {
+        //         console.log(data);
+        //     });
+
+        let getCrypto = () => {
+            return fetch(CRYPTO_API)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    $('#load-crypto').empty();
+                    let crypto = data;
+
+                    for (let result of crypto) {
+                        //cards
+
+                        $('#load-crypto').append(`
+
+                        <div class="carousel-item" data-bs-interval="2000">
+
+                     <span class="fw-bolder">${result.code}</span>
+                     <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" ">${result.high} </span>
+                     <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" >${result.low}</span>
+
+
+                     </div>
+                     `)
+                    }
+                }).catch(err => console.error("This is your err:", err));
+        }
+
+        getCrypto();
         //
-        //
-        // let getStocks = () => {
-        //     return fetch(MARKET_API)
-        //         .then(resp => resp.json())
-        //         .then(data => {
-        //             console.log(data);
-        //             $('#load-market').empty();
-        //             let market = data;
-        //
-        //             for (let result of market) {
-        //                 //cards
-        //                 $('#load-market').append(`
-        //
-        //
-        //               <div class="carousel-item" data-bs-interval="2000">
-        //
-        //              <span class="fw-bolder">${result.code}</span>
-        //              <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" ">${result.high} </span>
-        //              <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" >${result.low}</span>
-        //
-        //
-        //              </div>
-        //              `)
-        //             }
-        //         }).catch(err => console.error("This is your err:", err));
-        // }
-        // getStocks();
-        //
-        //
-        //
-        //
-        // // CRYPTO//
-        // // fetch(CRYPTO_API)
-        // //     .then(data => {
-        // //         return data.json();
-        // //     })
-        // //     .then(data => {
-        // //         console.log(data);
-        // //     });
-        //
-        // let getCrypto = () => {
-        //     return fetch(CRYPTO_API)
-        //         .then(resp => resp.json())
-        //         .then(data => {
-        //             console.log(data);
-        //             $('#load-crypto').empty();
-        //             let crypto = data;
-        //
-        //             for (let result of crypto) {
-        //                 //cards
-        //
-        //                 $('#load-crypto').append(`
-        //
-        //                 <div class="carousel-item" data-bs-interval="2000">
-        //
-        //              <span class="fw-bolder">${result.code}</span>
-        //              <i class="fa-solid fa-arrow-up" style="color: #2EB82E"></i><span class="mx-2" ">${result.high} </span>
-        //              <i class="fa-solid fa-arrow-down-long" style="color: red"></i><span class="mx-2" >${result.low}</span>
-        //
-        //
-        //              </div>
-        //              `)
-        //             }
-        //         }).catch(err => console.error("This is your err:", err));
-        // }
-        //
-        // getCrypto();
-        //
-        // //MARKET NEWS//
-        //
-        // let getMarketNews = () => {
-        //     return fetch(NEWS_API)
-        //         .then(resp => resp.json())
-        //         .then(data => {
-        //             console.log(data);
-        //             $('#load-news').empty();
-        //             let newsMarket = data;
-        //
-        //             for (let result of newsMarket) {
-        //                 //cards
-        //                 $('#load-news').append(`
-        //                 <div class="row card mx-auto" style="background-color: #E5E5E5; border: none;">
-        //                  <h3 class="market-new-title">${result.title}</h3>
-        //                 <p >${result.content.substr(0,500)}</p>
-        //                 <a href="${result.link}" class="news-link">Continue reading</a>
-        //                 </div>
-        //                 <hr>
-        //                  `)
-        //             }
-        //         }).catch(err => console.error("This is your err:", err));
-        // }
-        //
-        // getMarketNews();
-        //
+        //MARKET NEWS//
+
+        let getMarketNews = () => {
+            return fetch(NEWS_API)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    $('#load-news').empty();
+                    let newsMarket = data;
+
+                    for (let result of newsMarket) {
+                        //cards
+                        $('#load-news').append(`
+                     <div class="carousel-item " data-bs-interval="6000" style="height: 500px; margin-top: 20px">
+                     <div class="container-fluid mt-3" style="width: 680px; height: 400px; margin-top: 30px; ">
+                     <h3 class="market-new-title mt-5 pt-4 ">${result.title}</h3>
+                        <p class="py-3">${result.content.substr(0,750)}</p>
+                        <a href="${result.link}" class="news-link">Continue reading</a>
+                      </div>
+                      </div>
+                         `)
+                    }
+                }).catch(err => console.error("This is your err:", err));
+        }
+
+        getMarketNews();
+
         // let getMarketNews2 = () => {
         //     return fetch(NEWS_API_MKTAUX)
         //         .then(resp => resp.json())
