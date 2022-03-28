@@ -106,6 +106,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userToEdit.getId() == loggedInUser.getId()) {
             model.addAttribute("userToEdit", userToEdit);
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             return "users/edit";
         } else {
             return "redirect:/profile";
