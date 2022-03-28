@@ -171,6 +171,7 @@ public class EducationPostController {
         if (user.isAdmin()) {
             model.addAttribute("cat", catDao.findAll());
             model.addAttribute("post", editPost);
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             return "education/edit";
         } else {
             return "redirect:/login";

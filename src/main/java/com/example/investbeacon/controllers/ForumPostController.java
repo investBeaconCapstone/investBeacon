@@ -149,11 +149,12 @@ public class ForumPostController {
     public String deleteForumPosts(@PathVariable long id) {
         ForumPost forumPost = forumPostDao.findPostById(id);
         User user = userDao.findByForumPosts(forumPost);
+        long userId = user.getId();
         User currentUser = userDao.getById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
         if (currentUser.getId() == user.getId()) {
             forumPostDao.delete(forumPost);
         }
-        return "redirect:/forum-posts";
+        return "redirect:/profile/" + userId;
     }
 
     //     POST Comment
