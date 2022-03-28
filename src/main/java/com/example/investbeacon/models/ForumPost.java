@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class ForumPost {
     private long id;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "cannot be blank")
     private String title;
 
     @Column(nullable = false, length = 1000)
