@@ -9,7 +9,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 50%;
             border-radius: 8px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
@@ -35,11 +34,13 @@
         <h2 class="pb-4 mb-4 fst-italic border-bottom" style="color: #2C3E50;"><span
                 th:text="${post.getTitle()}"></span></h2>
         <p th:utext="${post.getDescription()}"></p>
-        <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
         <div class="row-auto d-flex justify-content-center" th:if="${!post.contentImageUrl.isEmpty()}">
-            <img width="500" height="350" id="post-image" th:src="${post.contentImageUrl}" alt="image">
+            <img width="700" height="350" id="post-image" th:src="${post.contentImageUrl}" alt="image">
 
         </div>
+        <br>
+        <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+
         <p><span th:text="${post.getUserLikes().size()}" style="color: #2C3E50"></span> Likes</p>
         <div class=" row">
             <div class="col-6" id="voting" sec:authorize="isAuthenticated()">
