@@ -8,117 +8,64 @@
 <body>
 
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center">
 
 
-            <div class="about-modal">
-                <a href="#crypto-box">
-                    <i class="fa-brands fa-bitcoin  fa-3x"></i>
-                    <h3>Cryptocurrencies</h3>
-                </a>
+    <section class="feature-section mx-5" id="features">
+        <div class="container-fluid">
+            <div class="row title text-center mt-5">
+                <h2>Are you a new investor?</h2>
+                <h4>We offer articles to help you understand the terminology, so you can start building your financial portafolio.</h4>
+            </div>
+
+            <div class=" container-fluid row justify-content-center">
+                <div class="card rounded col-sm-12 col-md-4 col-lg-3 d-flex justify-content-center mx-5 my-4">
+                    <div class="card-body text-center">
+                        <i class="fa-brands fa-bitcoin  fa-3x"></i>
+                        <h4 class="card-title">Cryptocurrencies</h4>
+                       <p class="card-text">What is it? And, what is the best crypto for beginners?</p>
+                    </div>
+                </div>
+                <div class="card rounded col-sm-12 col-md-4 col-lg-3 d-flex justify-content-center mx-5 my-4">
+                    <div class="card-body text-center">
+                        <i class="fa-solid fa-arrow-trend-up fa-3x"></i>
+                        <h4 class="card-title">Stocks</h4>
+                        <p class="card-text">Start investing, is easier than you think!.</p>
+                    </div>
+                </div>
+                <div class="card rounded col-sm-12 col-md-4 col-lg-3 d-flex justify-content-center mx-5 my-4">
+                    <div class="card-body text-center">
+                        <i class="fa-solid fa-coins fa-3x"></i>
+                        <h4 class="card-title">Finance</h4>
+                        <p class="card-text">Credit, banking, assets and more. Manage your money.</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center">
-            <div class="about-modal">
-                <a href="#stock-box">
-                    <i class="fa-solid fa-arrow-trend-up fa-3x"></i>
-                    <h3>Stock</h3>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center">
-            <div class="about-modal">
-                <a href="#finance-box">
-                    <i class="fa-solid fa-coins fa-3x"></i>
-                    <h3>Finance</h3>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center">
-            <div class="about-modal">
-                <a href="#strategies-box">
+        <div class="container-fluid row justify-content-center">
+            <div class="card rounded col-sm-12 col-md-4 col-lg-3 d-flex justify-content-center mx-5 my-4">
+                <div class="card-body text-center">
                     <i class="fa-solid fa-chess fa-3x"></i>
-                    <h3>Strategies</h3>
-                </a>
+                    <h4 class="card-title">Strategies</h4>
+                    <p class="card-text">Budgeting & Savings.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center">
-            <div class="about-modal">
-                <a href="#platforms-box">
+            <div class="card rounded col-sm-12 col-md-4 col-lg-3 d-flex justify-content-center mx-5 my-4">
+                <div class="card-body text-center">
                     <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
-                    <h3>Platforms</h3>
-                </a>
+                    <h4 class="card-title">Platforms</h4>
+                    <p class="card-text">What they are and how to choose one.</p>
+                </div>
             </div>
+
+
         </div>
-    </div>
-    <!--POP UPS-->
-</div>
-  <div>
-      <div id="crypto-box">
-          <div id="crypto-window">
-              <a href="#" class="btn-close btn-small btn-white"></a>
-              <h1>
-                  <i class="fa-brands fa-bitcoin"></i>
-              </h1>
-              <h1>Crypto</h1>
+        <div class="col text-center my-3">
 
-              <p>Something about crypto.</p>
-          </div>
-      </div>
+            <button type="button" class="btn btn-primary" sec:authorize="!isAuthenticated()"  ><a th:href="@{/register}" style="color: #FFFFFF;   text-decoration: none;">Register </a></button>
 
-      <div id="stock-box">
-          <div id="stock-window">
-              <a href="#" class="btn-close btn-small btn-white"></a>
-              <h1>
-                  <i class="fa-solid fa-arrow-trend-up"></i>
-              </h1>
-              <h1>Learn About Stocks!</h1>
+        </div>
 
-              <p>Something about stocks</p>
-          </div>
-      </div>
-
-      <div id="finance-box">
-          <div id="finance-window">
-              <a href="#" class="btn-close btn-small btn-white"></a>
-              <h1>
-                  <i class="fa-solid fa-coins"></i>
-              </h1>
-              <h1>Learn About Finance!</h1>
-
-              <p>Something about finances</p>
-          </div>
-      </div>
-
-      <div id="strategies-box">
-          <div id="strategies-window">
-              <a href="" class="btn-close btn-small btn-white"></a>
-              <h1>
-                  <i class="fa-solid fa-chess "></i>
-              </h1>
-              <h1>Strategies!</h1>
-
-              <p>Something about strategies</p>
-          </div>
-      </div>
-
-      <div id="platform-box">
-          <div id="platform-window">
-              <a href="" class="btn-close btn-small btn-white"></a>
-              <h1>
-                  <i class="fa-solid fa-hand-holding-dollar"></i>
-              </h1>
-              <h1>Platforms!</h1>
-              <p>Learn about the platforms</p>
-          </div>
-      </div>
-  </div>
-
-
-
-
+    </section>
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
