@@ -10,6 +10,11 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
+    </style>
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea' })</script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -23,7 +28,7 @@
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp"
-                   th:value="${post.getTitle()}">
+                   th:value="${post.getTitle()}" required>
         </div>
 
         <div class="form-group">
@@ -39,7 +44,7 @@
         </div>
         <div class="form-group">
             <label for="category">Select Category</label>
-            <select multiple class="form-control" id="category" th:field="*{category}">
+            <select multiple class="form-control" id="category" th:field="*{category}" required>
                 <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}"
                         th:selected="${post.getCategory().getCategory()}"></option>
 

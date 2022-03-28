@@ -57,7 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/forum-posts/{id}/comment/{commentId}/edit", //only authenticated users can edit comments
                         "/forum-posts/{id}/comment/{commentId}/delete", //only authenticated users can delete comments
                         "/forum-posts/{id}/like-unlike", //only authenticated users can vote
-                        "/profile/{id}/edit" // only authenticated users can edit profile
+                        "/profile/{id}/edit", // only authenticated users can edit profile
+                        "/education/posts/{category}/{id}/edit" //only authenticated users can edit
+
 
 
                 )
