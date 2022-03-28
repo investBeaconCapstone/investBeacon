@@ -56,11 +56,36 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
-              th:method="post" onclick="return confirm('Are you sure you want to delete this post?');"
-              style="text-align: left">
-            <button type="submit" id="delete" class="btn btn btn-danger">Delete Post</button>
-        </form>
+        <div style="text-align: left">
+            <!-- Button trigger modal -->
+            <button type="button" id="delete" class="btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Post</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete this post?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
+                      th:method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+            </div>
+        </div>
     </div>
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
