@@ -24,34 +24,31 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-
-<div class=" card text-center " style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
-    <h1> Create A New Post</h1>
-    <form class="form" th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
-        <input id="title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
-        <br>
-        <textarea id="description" placeholder="Content" name="content" type="text" th:rows="5"  th:cols="33" th:field="*{description}" style="width: 100%; background-color:#F2F2F2; border: none;"></textarea>
-
-       <br>
+<div class="card text-center" style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+    <h1>Create A New Post</h1>
+    <form class="form" th:action="@{/forum-posts/create}" th:method="POST" th:object="${post}"
+          style= "z-index: 1; background:#FFFFFF; text-align: center; box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); margin: 2em auto; padding: 1em; width: 100%; ">
+        <div class="form-group">
+            <label for="post-title"></label>
+            <input class="form-control" id="post-title" placeholder="Title" name="title" type="text" th:field="*{title}"/>
+        </div>
+        <div class="form-group">
+            <textarea id="description" class="form-control" placeholder="Content" name="content" type="text" th:rows="13" th:field="*{description}" style="width: 100%; background-color:#F2F2F2; border: none; resize: none;"></textarea>
+        </div>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
         <button class="my-3" type="button" id="open">Choose image to upload</button>
-        <br>
         <div class="row my-5">
             <br>
             <span th:each="category : ${categoryList}" class="col">
-                <input class="form-check-input" type="checkbox" th:id="${category.category}" name="categories" th:value="${category.id}" style="width: 25px;">
-                 <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
+                <input class="form-check-input" type="checkbox" th:id="${category.category}" name="categories"
+                       th:value="${category.id}" style="width: 25px; margin:0 0 15px; padding:15px; font-size: 14px">
+                <label class="form-check-label" th:for="${category.category}" th:text="${category.category}"></label>
                 <br>
             </span>
         </div>
-
-       <br>
-
         <button id="create" type="submit" class="btn btn-primary">Submit</button>
     </form>
-
 </div>
-
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: filestack"></th:block>
