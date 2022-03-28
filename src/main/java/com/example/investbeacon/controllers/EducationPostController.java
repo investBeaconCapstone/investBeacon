@@ -37,6 +37,21 @@ public class EducationPostController {
         this.likesDao = likesDao;
     }
 
+    private String redirectCat(String post) {
+        switch (post) {
+            case "Crypto":
+                return "redirect:/education/posts/Crypto";
+            case "Stocks":
+                return "redirect:/education/posts/Stocks";
+            case "Finance":
+                return "redirect:/education/posts/Finance";
+            case "Strategies":
+                return "redirect:/education/posts/Strategies";
+            default:
+                return "redirect:/education/posts/Platforms";
+        }
+    }
+
     //Shows posts for specific category
     @GetMapping("/education/posts/{category}")
     public String postCatId(@PathVariable String category, Model model) {
@@ -147,18 +162,7 @@ public class EducationPostController {
         post.setCreatedDate(new Date());
         postDao.save(post);
 
-        switch (post.getCategory().getCategory()) {
-            case "Crypto":
-                return "redirect:/education/posts/Crypto";
-            case "Stocks":
-                return "redirect:/education/posts/Stocks";
-            case "Finance":
-                return "redirect:/education/posts/Finance";
-            case "Strategies":
-                return "redirect:/education/posts/Strategies";
-            default:
-                return "redirect:/education/posts/Platforms";
-        }
+        return redirectCat(post.getCategory().getCategory());
 
     }
 
@@ -185,12 +189,12 @@ public class EducationPostController {
             post.setUser(user);
             post.setCreatedDate(new Date());
             postDao.save(post);
-
-
         }
-        return "redirect:/education/posts/{category}";
+        return redirectCat(post.getCategory().getCategory());
 
     }
+
+
 
     //delete post
     @PostMapping("/education/posts/{category}/{id}/delete")
@@ -200,18 +204,7 @@ public class EducationPostController {
         if (user.isAdmin()) {
             postDao.deleteById(id);
         }
-        switch (postCat) {
-            case "Crypto":
-                return "redirect:/education/posts/Crypto";
-            case "Stocks":
-                return "redirect:/education/posts/Stocks";
-            case "Finance":
-                return "redirect:/education/posts/Finance";
-            case "Strategies":
-                return "redirect:/education/posts/Strategies";
-            default:
-                return "redirect:/education/posts/Platforms";
-        }
+        return redirectCat(postCat);
     }
 
 

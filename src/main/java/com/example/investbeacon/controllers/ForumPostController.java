@@ -2,6 +2,7 @@ package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.models.*;
 import com.example.investbeacon.repositories.*;
+import com.example.investbeacon.services.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,17 +20,19 @@ public class ForumPostController {
     private final UserRepository userDao;
     private final CategoryRepository categoryDao;
     private final CommentRepository commentDao;
+    private final EmailService emailService;
 
 
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
 
-    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao) {
+    public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao, EmailService emailService) {
         this.forumPostDao = forumPostDao;
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.commentDao = commentDao;
+        this.emailService = emailService;
 
     }
 
@@ -166,6 +169,7 @@ public class ForumPostController {
         newComment.setCreateDate(new Date());
         newComment.setContent(comment.getContent());
         commentDao.save(newComment);
+        emailService.prepareAndSendForumPost(forumPostDao.findPostById(id));
         return "redirect:/forum-posts/" + id;
     }
 

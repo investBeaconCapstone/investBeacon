@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Education Post</title>
+    <title>Invest Beacon | Create Education Post</title>
     <th:block th:include="partials/header :: styling"></th:block>
     <style>
         .form {
@@ -28,10 +28,10 @@
     <h1> Create an Educational Post</h1>
     <form class="form" th:action="@{/education/posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
 
-            <input placeholder="Title" type="text" class="form-control" id="title" th:field="*{title}" required>
+            <input placeholder="Title" type="text" class="form-control" id="ed_title" th:field="*{title}" required>
 
             <br>
-            <textarea placeholder="Content" type="text" class="form-control" id="description" th:field="*{description}" rows="13" ></textarea>
+            <textarea placeholder="Content" type="text" class="form-control" id="ed_description" th:field="*{description}" rows="13" ></textarea>
 
         <br>
             <input id="image" type="hidden" th:field="*{contentImageUrl}">
