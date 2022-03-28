@@ -4,6 +4,7 @@ import com.example.investbeacon.CaptchaValidator;
 import com.example.investbeacon.models.Password;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
+import com.example.investbeacon.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 public class UserController {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Autowired
     private CaptchaValidator validator;
@@ -27,9 +29,10 @@ public class UserController {
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @GetMapping("/welcome")
@@ -55,6 +58,7 @@ public class UserController {
                 user.setProfileImg("/image/avatar.jpeg");
             }
             userDao.save(user);
+            emailService.prepareAndSendUserWelcome(user);
             return "users/welcome";
         } else {
             model.addAttribute("message", "Please Validate CAPTCHA");
@@ -102,6 +106,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userToEdit.getId() == loggedInUser.getId()) {
             model.addAttribute("userToEdit", userToEdit);
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             return "users/edit";
         } else {
             return "redirect:/profile";
@@ -203,6 +208,16 @@ public class UserController {
             return "redirect:/password";
         }
 
+    }
+
+    @GetMapping("/terms-and-conditions")
+    public String termsConditions(){
+        return "users/termsconditions";
+    }
+
+    @GetMapping("/privacy-policy")
+    public String privacy(){
+        return "users/privacy";
     }
 }
 

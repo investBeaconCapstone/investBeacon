@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Education Post</title>
+    <title>Invest Beacon | Edit Education Post</title>
     <th:block th:include="partials/header :: styling"></th:block>
     <style>
 
@@ -11,51 +11,82 @@
         }
     </style>
     </style>
-    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: 'textarea' })</script>
+            selector: 'textarea'
+        })</script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
+<div class="container text-center" style="margin-top: 5em; margin-bottom: 5em" >
+    <h1>Edit Post</h1>
+    <div class=" card mb-3 text-center "
+         style="margin: 0 auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 
-<div class=" card mb-3 text-center "
-     style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
-    <form th:action="@{/education/posts/{category}/{id}/edit (category=${post.getCategory().getCategory()},id = ${post.getId()})}"
-          th:method="post" th:object="${post}">
-        <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="titleHelp"
-                   th:value="${post.getTitle()}" required>
-        </div>
+        <form th:action="@{/education/posts/{category}/{id}/edit (category=${post.getCategory().getCategory()},id = ${post.getId()})}"
+              th:method="post" th:object="${post}">
 
-        <div class="form-group">
-            <label for="Body">Body</label>
-            <textarea type="text" class="form-control" id="Body" th:field="*{description}"
-                      th:value="${post.getDescription()}" rows="12"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <img th:src="${post.getContentImageUrl()}" alt="content-image" class="col-4 ">
-            <input id="image" type="hidden" th:field="*{contentImageUrl}" th:value="${post.getContentImageUrl()}">
-            <button type="button" id="open">Choose image to upload</button>
-        </div>
-        <div class="form-group">
-            <label for="category">Select Category</label>
-            <select multiple class="form-control" id="category" th:field="*{category}" required>
-                <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}"
-                        th:selected="${post.getCategory().getCategory()}"></option>
+            <div class="form-group">
+                <label for="ed_edit_title">Title</label>
+                <input type="text" class="form-control" id="ed_edit_title" th:field="*{title}"
+                       aria-describedby="titleHelp"
+                       th:value="${post.getTitle()}" required>
+            </div>
 
-            </select>
+            <div class="form-group">
+                <label for="ed_edit_Body">Body</label>
+                <textarea type="text" class="form-control" id="ed_edit_Body" th:field="*{description}"
+                          th:value="${post.getDescription()}" rows="12"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input id="image" type="hidden" th:field="*{contentImageUrl}" th:value="${post.getContentImageUrl()}">
+                <button type="button" id="open">Choose image to upload</button>
+            </div>
+            <div class="form-group">
+                <label for="category">Select Category</label>
+                <select multiple class="form-control" id="category" th:field="*{category}" required>
+                    <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}"
+                            th:selected="${post.getCategory().getCategory()}"></option>
+
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div style="text-align: left">
+            <!-- Button trigger modal -->
+            <button type="button" id="delete" class="btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete Post</button>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
-          th:method="post" onclick="return confirm('Are you sure you want to delete this post?');" style="text-align: left">
-        <button type="submit" id="delete" class="btn btn btn-danger" >Delete Post</button>
-    </form>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete this post?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form th:action="@{/education/posts/{category}/{id}/delete (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
+                      th:method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: filestack"></th:block>

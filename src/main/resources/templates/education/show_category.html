@@ -2,21 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${posts.get(0).getCategory().getCategory()}"></title>
+    <title Invest Beacon | th:text="${posts.get(0).getCategory().getCategory()}"></title>
     <th:block th:include="partials/header :: styling"></th:block>
     <style>
-
-/*        h1, h2, h3, h4, h5, h6 {*/
-/*            font-family: "Playfair Display", Georgia, "Times New Roman", serif;*/
-/*        }*/
+        #post-image{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
 
         .blog-post {
             margin-bottom: 4rem;
-        }
-        .blog-post-title {
-            margin-bottom: .25rem;
-            font-size: 2.5rem;
-
         }
 
         .card {
@@ -33,26 +31,34 @@
      style="margin: 2em auto; padding: 1em; width: 60%; display: flex; justify-content: center">
 
     <div class="blog-post">
-        <h2 class="pb-4 mb-4 fst-italic border-bottom" style="color: #2C3E50;"><span th:text="${post.getTitle()}"></span></h2>
-        <p  th:utext="${post.getDescription()}"></p>
+        <h2 class="pb-4 mb-4 fst-italic border-bottom" style="color: #2C3E50;"><span
+                th:text="${post.getTitle()}"></span></h2>
+        <p th:utext="${post.getDescription()}"></p>
+        <div class="row-auto d-flex justify-content-center" th:if="${!post.contentImageUrl.isEmpty()}">
+            <img width="700" height="350" id="post-image" th:src="${post.contentImageUrl}" alt="image">
+
+        </div>
+        <br>
         <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+
         <p><span th:text="${post.getUserLikes().size()}" style="color: #2C3E50"></span> Likes</p>
         <div class=" row">
-            <div class="col-6" id="voting" sec:authorize="isAuthenticated()" >
-                <div  id="upvote"  th:if="${!#maps.containsKey(userLikes,post.id)}">
+            <div class="col-6" id="voting" sec:authorize="isAuthenticated()">
+                <div id="upvote" th:if="${!#maps.containsKey(userLikes,post.id)}">
 
                     <form th:action="@{/education/posts/{category}/{id}/upvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
                           th:method="post">
-                        <button class="liked btn btn-outline-primary" type="submit"><i class="fa-regular fa-thumbs-up"></i>
+                        <button class="liked btn btn-outline-primary" type="submit"><i
+                                class="fa-regular fa-thumbs-up"></i>
                             upvote
                         </button>
                     </form>
 
                 </div>
-                <div id="downvote" th:if="${#maps.containsKey(userLikes,post.id)}" >
+                <div id="downvote" th:if="${#maps.containsKey(userLikes,post.id)}">
                     <form th:action="@{/education/posts/{category}/{id}/downvote (id=${post.getId()}, category=${post.getCategory().getCategory()})}"
                           th:method="post">
-                        <button class="liked btn btn-outline-primary"  type="submit"><i
+                        <button class="liked btn btn-outline-primary" type="submit"><i
                                 class="fa-regular fa-thumbs-down"></i> downvote
                         </button>
                     </form>
