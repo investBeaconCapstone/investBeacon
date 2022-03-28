@@ -84,7 +84,7 @@ ul#load-crypto li {
 .button#create {
     text-transform: uppercase;
     outline: 0;
-    /*background: #4CAF50;*/
+
     width: 100%;
     border: 0;
     padding: 15px;
@@ -106,10 +106,7 @@ a:link {
 }
 #footer {
     margin-top: auto;
-    /*clear: both;*/
-    /*position: relative;*/
-    /*height: 200px;*/
-    /*margin-top: -200px;*/
+
 }
 
 
@@ -118,5 +115,37 @@ a:link {
 .img-fluid {
     max-width: 100%;
     height: auto;
-    border-radius: 25%;
+    border-radius: 5%;
 }
+
+.title-intro {
+    padding-top: 3rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+
+#title {
+
+    color: white;
+
+}
+#title .container-fluid {
+    padding: 3% 15% 7%;
+}
+
+.thickers {
+    background-color: #EEEEEE;
+    position: relative;
+    height: 70px;
+}
+
+.banner-news{
+    background-color: #EEEEEE;
+}
+
+
+/*Features Section*/
+
+
+
