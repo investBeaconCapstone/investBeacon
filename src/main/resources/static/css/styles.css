@@ -143,9 +143,21 @@ a:link {
 .banner-news{
     background-color: #EEEEEE;
 }
+@media only screen and (max-width: 320px) {
+    .main-banner{
+max-height:850px;
+    }
+   .title-intro{
+       margin-bottom: -100px;
+    }
+   .img-fluid{
+       margin-top: -50px;
+       position: relative;
 
+}
+}
 
-@media screen and (min-width:576px)and (max-width:767px) {
+@media screen and (min-width:576px)and (max-width:768px) {
 
 .cardj {
     padding-bottom: 5px;
@@ -158,7 +170,7 @@ a:link {
 }
 
 
-@media screen and (min-width:768px) and (max-width:991px){
+@media screen and (min-width:768px) and (max-width:992px){
 
     .cardj{
         padding-bottom: 10px;
@@ -166,11 +178,14 @@ a:link {
     .j-content{
         padding-bottom: 9px;
     }
+    .cardg{
+        padding-bottom: -10px;
+    }
 
 }
 
 
-@media screen and (min-width:992px) and (max-width:1200px)  {
+@media screen and (min-width:992px) and (max-width:1400px)  {
 
     .cardj{
         padding-bottom: 25px;
