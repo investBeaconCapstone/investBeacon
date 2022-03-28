@@ -47,7 +47,7 @@ This Full Stack project was created with the goal to create an active online com
 - A visitor can view/access all links in navbar
 - A visitor can view/access all links in footer
 - A visitor can view all News section
-- A visitor can view all Market and Crypto thickers
+- A visitor can view all Market and Crypto tickers
 - A visitor can see all the posts in the forum without registering
 - A visitor can see registered user profiles
 - A visitor can register to become a registered user
