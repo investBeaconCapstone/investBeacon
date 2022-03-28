@@ -209,6 +209,11 @@ public class UserController {
     public String termsConditions(){
         return "users/termsconditions";
     }
+
+    @GetMapping("/privacy-policy")
+    public String privacy(){
+        return "users/privacy";
+    }
 }
 
 
