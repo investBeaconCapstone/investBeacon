@@ -204,6 +204,11 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("/terms-and-conditions")
+    public String termsConditions(){
+        return "users/termsconditions";
+    }
 }
 
 
