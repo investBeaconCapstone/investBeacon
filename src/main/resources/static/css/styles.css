@@ -143,9 +143,62 @@ a:link {
 .banner-news{
     background-color: #EEEEEE;
 }
+@media only screen and (max-width: 320px) {
+    .main-banner{
+max-height:850px;
+    }
+   .title-intro{
+       margin-bottom: -100px;
+    }
+   .img-fluid{
+       margin-top: -50px;
+       position: relative;
+
+}
+}
+
+@media screen and (min-width:576px)and (max-width:768px) {
+
+.cardj {
+    padding-bottom: 5px;
+}
+
+.j-content{
+    padding-bottom: 5px;
+}
+
+}
 
 
-/*Features Section*/
+@media screen and (min-width:768px) and (max-width:992px){
+
+    .cardj{
+        padding-bottom: 10px;
+    }
+    .j-content{
+        padding-bottom: 9px;
+    }
+    .cardg{
+        padding-bottom: -10px;
+    }
+
+}
 
 
+@media screen and (min-width:992px) and (max-width:1400px)  {
+
+    .cardj{
+        padding-bottom: 25px;
+    }
+    .cardg{
+        padding-bottom: 25px;
+    }
+    .j-content{
+        padding-bottom: 34px;
+    }
+    .mediag{
+        margin-top:-12px;
+    }
+
+}
 
