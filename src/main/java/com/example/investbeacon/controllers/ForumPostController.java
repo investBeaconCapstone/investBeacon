@@ -217,6 +217,7 @@ public class ForumPostController {
     //  DELETE Comment
     @PostMapping("/forum-posts/{id}/comment/{commentId}/delete")
     public String deleteComment(@PathVariable long commentId, @PathVariable long id) {
+        System.out.println("comment id: " + commentId);
         Comment comment = commentDao.getById(commentId);
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (comment.getUser().getId() == loggedInUser.getId()) {

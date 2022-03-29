@@ -19,6 +19,11 @@
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
     </style>
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea' })
+    </script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
