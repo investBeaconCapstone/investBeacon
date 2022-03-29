@@ -14,28 +14,28 @@
 <form id="registerForm" class="form" th:action="@{/register}" method="POST" th:object="${user}">
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</span>
+        <small>Error Message</small>
         <input id="firstName" type="text" placeholder="Enter First Name" name="firstName" th:field="*{firstName}"/>
-<!--        <small>Error Message</small>-->
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</span>
+        <small>Error Message</small>
         <input id="lastName" placeholder="Enter Last Name" name="lastName" th:field="*{lastName}"/>
-<!--        <small>Error Message</small>-->
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email name error</span>
-        <input id="email" type="email" placeholder="Enter Email" name="email" th:field="*{email}"/>
-<!--        <small>Error Message</small>-->
+        <small>Error Message</small>
+        <input id="email" placeholder="Enter Email" name="email" th:field="*{email}"/>
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
+        <small>Error Message</small>
         <input id="username" placeholder="Create Username" name="username" th:field="*{username}"/>
-<!--        <small>Error Message</small>-->
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+        <small>Error Message</small>
         <input id="password" type="password" placeholder="Create Password" name="password" th:field="*{password}"/>
-<!--        <small>Error Message</small>-->
     </div>
     <div class="form-group">
         <label for="image">Profile Picture</label>
@@ -58,9 +58,78 @@
 </form>
 </div>
 
+    <script>
+        const regFirstName = document.getElementById("firstName")
+        const regLastName = document.getElementById("lastName")
+        const regEmail = document.getElementById("email")
+        const regUsername = document.getElementById("username")
+        const regPassword = document.getElementById("password")
+        const regForm = document.querySelector("form")
+
+        regForm.addEventListener("submit", (e) =>{
+            e.preventDefault();
+            validateInput();
+        });
+
+        function validateInput() {
+            if (regFirstName.value.trim() === '') {
+                onError(regFirstName, "First name cannot be empty");
+            } else {
+                onSuccess(regFirstName)
+            }
+            if (regEmail.value.trim() === '') {
+                onError(regEmail, "Email name cannot be empty");
+            } else {
+                if (!isValidEmail(regEmail.value.trim())) {
+                    onError(regEmail, "Email is not valid");
+                } else {
+                    onSuccess(regEmail);
+                }
+            }
+            if (regLastName.value.trim() === '') {
+                onError(regLastName, "Last name cannot be empty");
+            } else {
+                onSuccess(regLastName)
+            }
+            if (regUsername.value.trim() === '') {
+                onError(regUsername, "Username cannot be empty");
+            } else {
+                onSuccess(regUsername)
+            }
+            if (regPassword.value.trim() === '') {
+                onError(regPassword, "Password cannot be empty");
+            } else if (regPassword.value.trim().length < 6) {
+                onError(regPassword, "Password needs to be minimum 6 characters")
+            }else {
+                onSuccess(regPassword)
+            }
+        }
+
+        function onSuccess(input) {
+            let parent = input.parentElement;
+            let messageEle = parent.querySelector("small");
+            messageEle.style.visibility = "hidden";
+            messageEle.innerText = "";
+            parent.classList.remove("error");
+            parent.classList.add("success");
+        }
+        function onError(input, message) {
+            let parent = input.parentElement;
+            let messageEle = parent.querySelector("small");
+            messageEle.style.visibility = "visible";
+            messageEle.innerText = message;
+            parent.classList.add("error");
+            parent.classList.remove("success");
+        }
+        function isValidEmail(email) {
+            const regex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(String(email).toLowerCase());
+
+        }
+    </script>
+
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: popover"></th:block>
-<!--<th:block th:include="partials/passwordErrors.html :: registerScript"></th:block>-->
 <th:block th:include="partials/footer.html :: filestack"></th:block>
 <th:block th:include="partials/fileStack.html :: fileStackScript"></th:block>
 
