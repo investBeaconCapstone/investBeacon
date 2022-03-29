@@ -15,44 +15,54 @@
             text-align: center;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
+        .valid{
+            color: red;
+        }
     </style>
-    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: 'textarea' })</script>
+            selector: 'textarea'
+        })</script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div class=" card text-center " style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+<div class=" card text-center "
+     style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
     <h1> Create an Educational Post</h1>
-    <form class="form" th:action="@{/education/posts/create}" th:method="POST" th:object="${post}" style="margin: 2em auto; padding: 1em; width: 100%; ">
+    <form class="form" th:action="@{/education/posts/create}" th:method="POST" th:object="${post}"
+          style="margin: 2em auto; padding: 1em; width: 100%; ">
 
-            <input placeholder="Title" type="text" class="form-control" id="ed_title" th:field="*{title}" required>
+        <p class="valid" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"  />
+        <input placeholder="Title" type="text" class="form-control" id="ed_title" name="title" th:field="*{title}" >
 
-            <br>
-            <textarea placeholder="Content" type="text" class="form-control" id="ed_description" th:field="*{description}" rows="13" ></textarea>
 
         <br>
-            <input id="image" type="hidden" th:field="*{contentImageUrl}">
-            <button type="button" id="open">Choose image to upload</button>
+        <p class="valid"  th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
+        <textarea placeholder="Content" type="text" class="form-control" id="ed_description" name="description" th:field="*{description}"
+                  rows="13"></textarea>
 
-            <div class="form-group">
-                <label for="category">Select Category</label>
-                <select multiple class="form-control" id="category" th:field="*{category}" required >
-                    <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}" > </option>
-                </select>
-            </div>
+        <br>
+        <input id="image" type="hidden" th:field="*{contentImageUrl}">
+        <button type="button" id="open">Choose image to upload</button>
+        <br>
+        <br>
+
+        <div class="form-group">
+            <label for="category">Select Category</label>
+            <select multiple class="form-control" id="category" name="category" th:field="*{category}">
+                <option th:each="cat : ${cat}" th:value="${cat.getId()}" th:text="${cat.getCategory()}"></option>
+            </select>
+            <p class="valid" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"/>
+        </div>
         <br>
 
         <button id="create" type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </div>
-
-
-
-
 
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
