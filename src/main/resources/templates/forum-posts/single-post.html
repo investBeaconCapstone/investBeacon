@@ -75,12 +75,13 @@
             </div>
             <div class="col">
                 <form method="POST"
-                      th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
+                      th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}" onsubmit="return validateForm()">
+                    <p class="error mb-0" id="contentError"></p>
                     <input type="hidden" th:field="*{post}"/>
                     <div class="form-group">
                         <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
                         <span class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</span>
-                        <textarea class="form-control" id="comment" rows="3" style="resize: none;"
+                        <textarea class="form-control" id="commentContent" rows="3" style="resize: none;"
                                   th:field="*{content}"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Comment</button>
@@ -119,6 +120,16 @@
         </div>
     </div>
 </div>
+<script>
+    function validateForm() {
+        let content = document.getElementById("commentContent").value;
+        if (content.length === 0) {
+            content = "Comment must have content";
+            document.getElementById("contentError").innerHTML = content;
+            return false;
+        }
+    }
+</script>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
