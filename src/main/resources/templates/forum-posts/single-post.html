@@ -78,6 +78,8 @@
                       th:action="@{/forum-posts/{id}/comment (id=${singleForumPost.id})}" th:object="${comment}">
                     <input type="hidden" th:field="*{post}"/>
                     <div class="form-group">
+                        <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
+                        <span class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</span>
                         <textarea class="form-control" id="comment" rows="3" style="resize: none;"
                                   th:field="*{content}"></textarea>
                     </div>

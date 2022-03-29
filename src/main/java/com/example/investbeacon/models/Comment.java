@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 
@@ -21,6 +22,7 @@ public class Comment {
 
     @Lob
     @Column(name="content", length=512)
+    @NotBlank(message = "Comment must have content")
     private String content;
 
     @ManyToOne
