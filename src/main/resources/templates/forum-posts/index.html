@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <title>All the forum posts</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+    <style>
+        #post-image{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .blog-post {
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+
+    </style>
+
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -11,7 +32,7 @@
     <h3>Forums</h3>
 </div>
 <div class=" container-fluid">
-    <div th:each="post : ${page}" class="col mx-auto">
+    <div th:each="post : ${page}" class="card bg-light mb-3" style="margin: 2em auto; padding: 1em; width: 95%; display: flex; justify-content: center">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col-auto d-none d-lg-block" th:if="${!post.contentImageUrl.isEmpty()}">
                 <img width="300" height="250" th:src="${post.contentImageUrl}" alt="image">

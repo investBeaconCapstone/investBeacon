@@ -10,7 +10,7 @@
     opacity: 0.5;
 }
 
-#error {
+#error #rCaptcha {
     color: red;
     font-style: italic;
     opacity: 0.7;
