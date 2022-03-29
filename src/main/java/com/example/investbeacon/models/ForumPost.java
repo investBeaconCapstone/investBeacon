@@ -6,8 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class ForumPost {
     @NotBlank(message = "Post must have a title")
     @Size(min = 3, message = "A title must be at least 3 characters.")
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "cannot be blank")
     private String title;
 
     @NotBlank(message = "Post must have a description")

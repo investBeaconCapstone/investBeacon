@@ -31,3 +31,45 @@
         }, 2000);
     </script>
 </th:block>
+
+<th:block th:fragment="popover">
+    <script th:inline="javascript">
+        $(function (){
+            $("#firstName")
+            .popover({content: "First name is required", placement: "right"})
+            .blur(function () {
+                $(this).popover('hide');
+            });
+        });
+
+        $(function (){
+            $("#lastName")
+             .popover({content: "Last name is required", placement: "right"})
+             .blur(function () {
+                 $(this).popover('hide');
+             });
+        });
+        $(function (){
+            $("#email")
+                .popover({content: "Email is required", placement: "right"})
+                .blur(function () {
+                    $(this).popover('hide');
+                });
+        });
+        $(function (){
+            $("#username")
+                .popover({content: "Username is required", placement: "right"})
+                .blur(function () {
+                    $(this).popover('hide');
+                });
+        });
+        $(function (){
+            $("#password")
+                .popover({content: "Password min of 6 characters", placement: "right"})
+                .blur(function () {
+                    $(this).popover('hide');
+                });
+        });
+
+    </script>
+</th:block>
