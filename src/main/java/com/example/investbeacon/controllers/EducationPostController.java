@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -154,17 +157,27 @@ public class EducationPostController {
 
     //create a post for education
     @PostMapping("/education/posts/create")
-    public String postCreate(@ModelAttribute EducationPost post) {
+    public String postCreate(@Valid @ModelAttribute(value = "post") EducationPost post, Errors validate, Model model) {
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setUser(user);
+        if (validate.hasErrors()){
 
-        post.setCreatedDate(new Date());
-        postDao.save(post);
+            model.addAttribute("errors", validate);
+            model.addAttribute("cat", catDao.findAll());
 
-        return redirectCat(post.getCategory().getCategory());
+            return "education/create";
+        }else{
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            post.setUser(user);
+
+            post.setCreatedDate(new Date());
+            postDao.save(post);
+
+            return redirectCat(post.getCategory().getCategory());
+        }
+
 
     }
+
 
     //view edit form
     @GetMapping("/education/posts/{category}/{id}/edit")
