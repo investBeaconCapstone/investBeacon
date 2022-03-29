@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -74,12 +76,18 @@ public class ForumPostController {
 
     //    POST CREATED Forum Post
     @PostMapping("/forum-posts/create")
-    public String createForumPost(@ModelAttribute ForumPost post) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setUser(user);
-        post.setCreatedDate(new Date());
-        forumPostDao.save(post);
-        return "redirect:/forum-posts";
+    public String createForumPost(@Valid @ModelAttribute(value="post") ForumPost post, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
+            model.addAttribute("categoryList", categoryDao.findAll());
+            return "forum-posts/create";
+        }else{
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            post.setUser(user);
+            post.setCreatedDate(new Date());
+            forumPostDao.save(post);
+            return "redirect:/forum-posts";
+        }
     }
 
     //    VIEW SINGLE Forum Post
@@ -162,16 +170,18 @@ public class ForumPostController {
 
     //     POST Comment
     @PostMapping("/forum-posts/{id}/comment")
-    public String comment(@ModelAttribute Comment comment, @PathVariable long id, @ModelAttribute ForumPost post) {
-        Comment newComment = new Comment();
-        User currentUser = userDao.getById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
-        newComment.setPost(forumPostDao.getById(id));
-        newComment.setUser(currentUser);
-        newComment.setCreateDate(new Date());
-        newComment.setContent(comment.getContent());
-        commentDao.save(newComment);
-        emailService.prepareAndSendForumPost(forumPostDao.findPostById(id));
-        return "redirect:/forum-posts/" + id;
+    public String comment(@Valid @ModelAttribute(value = "comment") Comment comment, BindingResult result, @PathVariable long id, @ModelAttribute(value = "post") ForumPost post, @RequestParam("url") String url) {
+        if (!result.hasErrors()) {
+            Comment newComment = new Comment();
+            User currentUser = userDao.getById(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+            newComment.setPost(forumPostDao.getById(id));
+            newComment.setUser(currentUser);
+            newComment.setCreateDate(new Date());
+            newComment.setContent(comment.getContent());
+            commentDao.save(newComment);
+            emailService.prepareAndSendForumPost(forumPostDao.findPostById(id));
+        }
+        return "redirect:" + url;
     }
 
     //    VIEW Edit Comment Form
