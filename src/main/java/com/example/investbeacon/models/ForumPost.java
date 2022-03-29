@@ -6,6 +6,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +20,12 @@ public class ForumPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Post must have a title")
+    @Size(min = 3, message = "A title must be at least 3 characters.")
     @Column(nullable = false, length = 100)
     private String title;
 
+    @NotBlank(message = "Post must have a description")
     @Column(nullable = false, length = 1000)
     private String description;
 
@@ -30,11 +35,6 @@ public class ForumPost {
 
     @Column(name ="content_img_url", length = 500)
     private String contentImageUrl;
-
-    //forum likes
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forumPost")
-//    private List<ForumPostLike> userLikes;
-
 
     @ManyToOne
     @JoinColumn (name = "user_id", nullable = false)
@@ -80,5 +80,13 @@ public class ForumPost {
         user = copy.user;
         categories = copy.categories;
         users = copy.users;
+    }
+
+    @Override
+    public String toString(){
+        return "ForumPost{" +
+                "title='" + title + '\'' +
+                "description='" + description + '\'' +
+                '}';
     }
 }
