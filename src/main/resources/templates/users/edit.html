@@ -30,12 +30,13 @@
     <div class="form-group">
         <label for="image">Upload Your Image</label>
         <input id="image" type="hidden" th:field="*{profileImg}"/>
-        <button type="button" id="open">Choose image to upload</button>
+        <button class="btn btn-primary" type="button" id="open">Choose image to upload</button>
     </div>
     <hr>
-    <button class="button btn-primary" type="submit" >Submit Changes</button>
-</form>
+    <button class="btn btn btn-primary" type="submit" >Submit Changes</button>
+    <hr>
     <button type="button" id="profile-delete" class="btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: auto">Delete Profile</button>
+</form>
 <!--    Modal-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

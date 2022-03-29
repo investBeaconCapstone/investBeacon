@@ -75,7 +75,7 @@
     </div>
     <!--    FOLLOW AND UNFOLLOW BUTTON SHOWN ONLY IF LOGGED IN AND NOT THE USER OF THE PROFILE-->
     <div class="row" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
-        <div class="col">
+        <div class="col" style="display: flex; justify-content: center; margin-left: 10px">
             <form th:action="@{/users/follow/{id}(id=${user.id})}" th:method="Post">
                 <button id="unfollow-button"
                         name="unfollow" th:if="${following}">Following
