@@ -41,11 +41,12 @@
         <label for="image">Profile Picture</label>
         <input id="image" type="hidden" th:field="*{profileImg}" />
         <br>
-        <button class="btn-info" type="button" id="open">Choose image to upload</button>
+        <button class="btn btn-primary" type="button" id="open">Choose image to upload</button>
     </div>
     <hr>
 
-        <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
+        <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7" data-callback="verifyCaptcha"></div>
+        <span id="rCaptcha"></span>
 
     <div>
         <span class="error" th:text="${message}"></span>
@@ -53,7 +54,7 @@
     <p class="message">By signing up you agree to the <a href="/terms-and-conditions">Terms and Conditions</a> and <a
             href="/privacy-policy">Privacy Policy</a> of this site.</p>
     <br>
-    <button class="button btn-primary" type="submit">Sign me up!</button>
+    <button class="btn btn btn-primary" type="submit">Sign me up!</button>
     <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
 </form>
 </div>
@@ -74,35 +75,57 @@
         function validateInput() {
             if (regFirstName.value.trim() === '') {
                 onError(regFirstName, "First name cannot be empty");
+                return false;
             } else {
                 onSuccess(regFirstName)
             }
-            if (regEmail.value.trim() === '') {
-                onError(regEmail, "Email name cannot be empty");
-            } else {
-                if (!isValidEmail(regEmail.value.trim())) {
-                    onError(regEmail, "Email is not valid");
-                } else {
-                    onSuccess(regEmail);
-                }
-            }
             if (regLastName.value.trim() === '') {
                 onError(regLastName, "Last name cannot be empty");
+                return false;
             } else {
                 onSuccess(regLastName)
             }
+            if (regEmail.value.trim() === '') {
+                onError(regEmail, "Email name cannot be empty");
+                return false;
+            } else {
+                if (!isValidEmail(regEmail.value.trim())) {
+                    onError(regEmail, "Email is not valid");
+                    return false;
+                } else {
+                    console.log('email is valid');
+                    onSuccess(regEmail);
+                }
+            }
             if (regUsername.value.trim() === '') {
                 onError(regUsername, "Username cannot be empty");
+                return false;
             } else {
                 onSuccess(regUsername)
             }
             if (regPassword.value.trim() === '') {
                 onError(regPassword, "Password cannot be empty");
+                return false;
             } else if (regPassword.value.trim().length < 6) {
                 onError(regPassword, "Password needs to be minimum 6 characters")
+                return false;
             }else {
                 onSuccess(regPassword)
             }
+            let recaptcha_response = grecaptcha.getResponse();
+            console.log(recaptcha_response.length);
+            if(recaptcha_response.length === 0) {
+                document.getElementById('rCaptcha').innerHTML="You must verify CAPTCHA";
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function verifyCaptcha() {
+            console.log('verified');
+            document.getElementById('rCaptcha').innerHTML = '';
         }
 
         function onSuccess(input) {
@@ -124,7 +147,6 @@
         function isValidEmail(email) {
             const regex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return regex.test(String(email).toLowerCase());
-
         }
     </script>
 
