@@ -10,7 +10,7 @@
 <body>
 
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class=" card text-center " style="margin: 10em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+<div class=" card text-center " style="margin-top: 20px; border: none; background-color: #EEEEEE;">
 <h1>Login</h1>
 <div class="alert alert-danger" role="alert" th:if="${param.error}">
     Invalid Username and/or Password.
@@ -24,7 +24,7 @@
     <br>
     <input id="password" placeholder="Enter Password" name="password" type="password" />
     <br>
-    <button class="button btn-primary" type="submit">Log In</button>
+    <button class="btn btn btn-primary" type="submit">Log In</button>
     <p class="message">Not registered? <a th:href="@{/register}">Create an account</a></p>
 </form>
 
