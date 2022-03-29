@@ -3,7 +3,10 @@ package com.example.investbeacon.controllers;
 import com.example.investbeacon.models.*;
 import com.example.investbeacon.repositories.*;
 import com.example.investbeacon.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +29,7 @@ public class ForumPostController {
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
-
+    @Autowired
     public ForumPostController(ForumPostRepository forumPostDao, UserRepository userDao, CategoryRepository categoryDao, CommentRepository commentDao, EmailService emailService) {
         this.forumPostDao = forumPostDao;
         this.userDao = userDao;
@@ -38,7 +41,7 @@ public class ForumPostController {
 
     //    VIEW ALL Forum Posts
     @GetMapping("/forum-posts")
-    public String forumPosts(Model model) {
+    public String forumPosts(Model model, @PageableDefault(value=8) Pageable pageable) {
         List<ForumPost> posts = forumPostDao.findAll();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -53,6 +56,7 @@ public class ForumPostController {
             model.addAttribute("user", user);
         }
         model.addAttribute("allPosts", posts);
+        model.addAttribute("page", forumPostDao.findAll(pageable));
         return "forum-posts/index";
     }
 
