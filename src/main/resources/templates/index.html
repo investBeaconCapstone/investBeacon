@@ -17,7 +17,7 @@
     <img class="logo img-thumbnail mx-auto d-block mt-3" sec:authorize="!isAuthenticated()" src="/image/logo.png" alt="InvestBeacon">
     <br>
 </div>
-<div id="title-banner" class="main-banner row bg-primary disabled container-fluid col" sec:authorize="!isAuthenticated()" style="height: 350px;" >
+<div id="title-banner" class="main-banner row bg-primary disabled container-fluid col  align-items-center"  style="height: 350px;" >
     <br>
     <div class="title-intro col-lg-6 text-center">
         <h1 class="pt-3">Everything you need to know about basic finances in one place.</h1>
@@ -28,7 +28,7 @@
 </div>
 <section class="thickers" style="background-color: #EEEEEE;">
     <hr>
-    <div class="container-fluid row ">
+    <div class="container-fluid row mt-4 ">
 
         <div class="col-3 fs-5 fw-bold fst-italic text-end">Equities Markets</div>
         <div id="carouselMarket" class="carousel slide col-3 mt-1" data-bs-ride="carousel">
@@ -39,7 +39,7 @@
                 <div id="load-market"></div>
             </div>
         </div>
-        <div class="col-3 fs-5 fw-bold fst-italic text-end">Cryptocurrency Markets</div>
+        <div class="col-2 fs-5 fw-bold fst-italic text-end">Cryptocurrency Markets</div>
         <div id="carouseCrypto" class="carousel slide col mt-1" data-bs-ride="carousel">
             <div class="carousel-inner ">
                 <div class="carousel-item active" data-bs-interval="2000">
@@ -97,11 +97,11 @@
 
         <div class="col-md-3 text-end">
             <div class="position-sticky"  >
-                <div class="p-4  card  rounded" sec:authorize="!isAuthenticated()" style="background-color: #E5E5E5; border:  none;">
+                <div class="p-4  card  rounded text-white bg-primary"  >
                     <a href="/features" >
                         <!--                    <h4 class="fst-italic" style="color: #FFFFFF" >About</h4>-->
-                        <strong><p class="mb-0 fs-5 primary" style="color: #2C3D4F" >Welcome to Invest Beacon!  </p> </strong>
-                        <p class="fs-6" >New? Start here!</p>
+                        <strong><p class="mb-0 fs-5 primary"  style="color: #FFFFFF" >Welcome to Invest Beacon!  </p> </strong>
+                        <p class="fs-6" style="color: #FFFFFF">New? Start here!</p>
 
                     </a>
                 </div>
