@@ -123,7 +123,7 @@
                         <strong> <a class="fs-4" th:href="@{'/forum-posts/' + ${post.id}}" th:text="${post.title}"></a></strong>
                     </div>
                     <div class="card-body">
-                        <p class="card-text" th:text="${post.description}"></p>
+                        <p class="card-text" th:utext="${post.description}"></p>
                         <p class="card-text" style="font-size: 11px;">posted: <span th:text="${post.createdDate}"></span></p>
                         <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
                         <div class="row d-grid gap-2 d-md-flex justify-content-md-start" sec:authorize="isAuthenticated()"

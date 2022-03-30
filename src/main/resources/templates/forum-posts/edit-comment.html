@@ -19,17 +19,59 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<div class="card text-center" style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
+<div class="card text-center"
+     style="margin: 3em auto; padding: 1em; width: 60%; display: flex; justify-content: center; border: none; background-color: #EEEEEE;">
     <h1>Edit Comment</h1>
-    <form class="form" th:action="@{/forum-posts/{id}/comment/{commentId}/edit (id=${comment.getPost().getId()},commentId = ${comment.getId()})}" th:method="POST" th:object="${comment}"
-          style= "z-index: 1; background:#FFFFFF; text-align: center; box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); margin: 2em auto; padding: 1em; width: 100%; ">
+    <form class="form"
+          th:action="@{/forum-posts/{id}/comment/{commentId}/edit (id=${comment.getPost().getId()},commentId = ${comment.getId()})}"
+          th:method="POST" th:object="${comment}" onsubmit="return validateForm()"
+          style="z-index: 1; background:#FFFFFF; text-align: center; box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); margin: 2em auto; padding: 1em; width: 100%; ">
         <div class="form-group">
+            <p class="error mb-0" id="contentError"></p>
+            <span class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Title error</span>
             <input type="hidden" th:value="${comment.getId()}" th:field="*{id}">
-            <textarea id="content" class="form-control" placeholder="Content" name="content" type="text" th:rows="13" th:value="${comment.getContent()}" th:field="*{content}" style="width: 100%; background-color:#F2F2F2; border: none; resize: none;"></textarea>
+            <textarea id="commentContent" class="form-control" placeholder="Content" name="content" type="text" th:rows="13"
+                      th:value="${comment.getContent()}" th:field="*{content}"
+                      style="width: 100%; background-color:#F2F2F2; border: none; resize: none;"></textarea>
         </div>
-        <button id="create" type="submit" class="btn btn-primary">Save Edit</button>
+        <button id="create" type="submit" class="btn btn-primary float-start">Save Edit</button>
+        <!-- Button trigger modal -->
+        <button type="button" name="id" id="delete" class="btn btn-danger btn-danger float-end" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>
+        </button>
     </form>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Are you sure you want to delete this comment?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form th:action="@{/forum-posts/{id}/comment/{commentId}/delete(id=${comment.getPost().getId()},commentId=${comment.id})}"
+                          th:method="Post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    function validateForm() {
+        let content = document.getElementById("commentContent").value;
+        if (content.length === 0) {
+            content = "Comment must have content";
+            document.getElementById("contentError").innerHTML = content;
+            return false;
+        }
+    }
+</script>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
 </html>
