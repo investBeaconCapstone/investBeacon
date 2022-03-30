@@ -60,7 +60,7 @@
 
     <div class="row">
         <div class="mx-auto mt-auto card" style="width: 18rem; text-align: center; background-color: #EEEEEE; border: none; " th:object="${user}">
-            <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top avatar"  height="200" width="200" style="border-radius:50%" >
+            <img th:src="${user.profileImg}" alt="profile-avatar" class="card-img-top img-fluid"  height="200" width="200" style="border-radius:50%" >
             <div class="card-body">
                 <h5 th:text="${user.username}" class="card-title text-align"></h5>
                 <!--    EDIT PROFILE BUTTON SHOWN ONLY IF LOGGED IN AS THE USER OF THE PROFILE-->

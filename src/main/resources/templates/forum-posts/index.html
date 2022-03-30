@@ -28,7 +28,7 @@
                 <div>Created by: <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${post.user.id}}"
                                          th:text="${post.user.username}"><i class="far fa-user"></i></a></span>
                 </div>
-                <div>
+<!--                <div>-->
                     <div class="row">
                         <div style="width: 15px;" sec:authorize="isAuthenticated()">
                             <form th:action="@{/forum-posts/{id}/like-unlike (id = ${post.getId()})}" th:method="POST">
@@ -51,7 +51,7 @@
                             <span class="votecount" th:text="${post.users.size()}">3</span><span> likes</span>
                         </div>
                     </div>
-                </div>
+<!--                </div>-->
                 <form th:action="@{/forum-posts/{id}(id=${post.id})}" th:method="get">
                     <button style="all: unset; cursor: pointer;">
                         <a style="all: unset; cursor: pointer" class="comments"
