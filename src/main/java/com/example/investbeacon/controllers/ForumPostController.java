@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class ForumPostController {
 
     //    VIEW ALL Forum Posts
     @GetMapping("/forum-posts")
-    public String forumPosts(Model model, @PageableDefault(value=8) Pageable pageable) {
+    public String forumPosts(Model model, @PageableDefault(value = 8) Pageable pageable) {
         List<ForumPost> posts = forumPostDao.findAll();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,13 +67,13 @@ public class ForumPostController {
     @GetMapping("/forum-posts/create")
     public String createForumPostForm(Model model) {
 
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser"){
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             model.addAttribute("post", new ForumPost());
             model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("categoryList", categoryDao.findAll());
             return "forum-posts/create";
 
-        }else{
+        } else {
             return "redirect:/login";
         }
 
@@ -80,12 +81,12 @@ public class ForumPostController {
 
     //    POST CREATED Forum Post
     @PostMapping("/forum-posts/create")
-    public String createForumPost(@Valid @ModelAttribute(value="post") ForumPost post, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+    public String createForumPost(@Valid @ModelAttribute(value = "post") ForumPost post, Errors validate, Model model) {
+        if (validate.hasErrors()) {
             model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("categoryList", categoryDao.findAll());
             return "forum-posts/create";
-        }else{
+        } else {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             post.setUser(user);
             post.setCreatedDate(new Date());
@@ -144,9 +145,15 @@ public class ForumPostController {
 
     //    POST EDITED Forum Post
     @PostMapping("/forum-posts/{id}/edit")
-    public String editForumPosts(@ModelAttribute ForumPost editPost, @PathVariable long id) {
-        if (forumPostDao.getById(id).getUser().getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+    public String editForumPosts(@Valid @ModelAttribute(value="editPost") ForumPost editPost, Errors validate, @PathVariable long id, Model model) {
+        if(validate.hasErrors()){
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
+            model.addAttribute("categoryList", categoryDao.findAll());
+            model.addAttribute("editPost", editPost);
+            return "forum-posts/edit";
+        }else if (forumPostDao.getById(id).getUser().getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
             editPost.setCreatedDate(forumPostDao.getById(id).getCreatedDate());
+            System.out.println("Description: " + editPost.getDescription());
             if (editPost.getContentImageUrl() == null) {
                 editPost.setContentImageUrl(forumPostDao.getById(id).getContentImageUrl());
             }
@@ -203,19 +210,21 @@ public class ForumPostController {
 
     //    POST EDITED Comment
     @PostMapping("/forum-posts/{id}/comment/{commentId}/edit")
-    public String editComment(@ModelAttribute Comment comment, @PathVariable long commentId, @PathVariable long id) {
-        Comment oldComment = commentDao.getById(commentId);
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (oldComment.getUser().getId() == loggedInUser.getId()) {
-//            comment.setId(oldComment.getId());
-            comment.setUser(loggedInUser);
-            comment.setPost(oldComment.getPost());
-            comment.setCreateDate(new Date());
-            commentDao.save(comment);
-            return "redirect:/forum-posts/" + id;
-        } else {
-            return "redirect:/forum-posts";
+    public String editComment(@Valid @ModelAttribute(value = "comment") Comment comment, Errors validate, @PathVariable long commentId, @PathVariable long id) {
+        if (!validate.hasErrors()) {
+            Comment oldComment = commentDao.getById(commentId);
+            User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (oldComment.getUser().getId() == loggedInUser.getId()) {
+                comment.setUser(loggedInUser);
+                comment.setPost(oldComment.getPost());
+                comment.setCreateDate(new Date());
+                commentDao.save(comment);
+                return "redirect:/forum-posts/" + id;
+            } else {
+                return "redirect:/forum-posts";
+            }
         }
+        return "redirect:/forum-posts/" + id + "/comment/" + commentId + "/edit";
     }
 
     //  DELETE Comment

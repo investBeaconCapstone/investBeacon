@@ -64,12 +64,17 @@
         console.log(description.length);
         let titleText;
         let title2Text;
+        let descriptionText;
         if (title.length === 0) {
             titleText = "Post must have a title";
             document.getElementById("titleError1").innerHTML = titleText;
             if (title.length < 3) {
-                title2Text = "\nA title must be at least 3 characters.";
+                title2Text = "\nA title must be at least 3 characters";
                 document.getElementById("titleError2").innerHTML = title2Text;
+            }
+            if(description.length === 0) {
+                descriptionText = "Post must have a description";
+                document.getElementById("descriptionError").innerHTML = descriptionText;
             }
             return false;
         }

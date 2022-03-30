@@ -160,7 +160,7 @@ public class EducationPostController {
     public String postCreate(@Valid @ModelAttribute(value = "post") EducationPost post, Errors validate, Model model) {
 
         if (validate.hasErrors()){
-
+            model.addAttribute("FILESTACK_API_KEY", fileStackKey);
             model.addAttribute("errors", validate);
             model.addAttribute("cat", catDao.findAll());
 

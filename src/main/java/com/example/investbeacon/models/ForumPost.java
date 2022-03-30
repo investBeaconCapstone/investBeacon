@@ -22,11 +22,10 @@ public class ForumPost {
     @NotBlank(message = "Post must have a title")
     @Size(min = 3, message = "A title must be at least 3 characters.")
     @Column(nullable = false, length = 100)
-    @NotBlank(message = "cannot be blank")
     private String title;
 
     @NotBlank(message = "Post must have a description")
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 3500)
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
