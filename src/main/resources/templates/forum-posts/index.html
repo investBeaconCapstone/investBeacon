@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <title>All the forum posts</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
+    <style>
+        #post-image{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .blog-post {
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+
+    </style>
+
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -11,7 +32,7 @@
     <h3>Forums</h3>
 </div>
 <div class=" container-fluid">
-    <div th:each="post : ${allPosts}" class="col mx-auto">
+    <div th:each="post : ${page}" class="card bg-light mb-3" style="margin: 2em auto; padding: 1em; width: 95%; display: flex; justify-content: center">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col-auto d-none d-lg-block" th:if="${!post.contentImageUrl.isEmpty()}">
                 <img width="300" height="250" th:src="${post.contentImageUrl}" alt="image">
@@ -57,6 +78,38 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <nav class="col">
+            <ul class="pagination d-flex justify-content-center" style="margin: auto; width: 30%; padding: 10px;">
+                <li th:class="${page.isFirst()}? 'disabled' : ''">
+                    <span class="page-link bg-primary rounded" th:if='${page.isFirst()}'>← First</span>
+                    <a class="page-link bg-primary" th:if='${not page.isFirst()}' th:href="'?page=0'">
+                        ← First
+                    </a>
+                </li>
+                <li th:class="${page.hasPrevious()}? '' : 'disabled'">
+                    <span class="page-link bg-primary"th:if='${not page.hasPrevious()}'>«</span>
+                    <a class="page-link bg-primary" th:if='${page.hasPrevious()}' th:href="'?page=' + ${page.getNumber() - 1}" title='Go to previous page'>«</a>
+                </li>
+                <!--            <&#45;&#45; Show a link to each page &ndash;&gt;-->
+                <li class="page-item active" th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+                    <span th:if='${(i - 1) == param.page}' th:text='${i}'> 1 </span>
+                    <a class="page-link bg-primary" th:if='${not ((i - 1) == param.page)}' th:href="'?page=' + ${(i -1)}">
+                        <span th:text='${i}'>1</span>
+                    </a>
+                </li>
+                <li th:class="${page.hasNext()} ? '' : 'disabled'">
+                    <span class="page-link bg-primary" th:if='${not page.hasNext()}'>»</span>
+                    <a class="page-link bg-primary" th:if='${page.hasNext()}' th:href="'?page=' + ${page.getNumber() + 1}" title='Go to next page'>»</a>
+                </li>
+                <li th:class="${page.isLast()}? 'disabled' : ''">
+                    <span class="page-link bg-primary" th:if='${page.isLast()}'>Last →</span>
+                    <a class="page-link bg-primary rounded" th:if='${not page.isLast()}' th:href="'?page=' + ${page.getTotalPages() - 1}"> Last →</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
 </div>
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 </body>
