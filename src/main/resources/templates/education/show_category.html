@@ -32,14 +32,14 @@
 
     <div class="blog-post">
         <h2 class="pb-4 mb-4 fst-italic border-bottom" style="color: #2C3E50;"><span
-                th:text="${post.getTitle()}"></span></h2>
+                th:text="${post.getTitle()}"></span></h2>"
         <p th:utext="${post.getDescription()}"></p>
         <div class="row-auto d-flex justify-content-center" th:if="${!post.contentImageUrl.isEmpty()}">
             <img width="700" height="350" id="post-image" th:src="${post.contentImageUrl}" alt="image">
 
         </div>
         <br>
-        <p style="text-align: right">created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
+        <p style="text-align: right">Created by: <span th:text=" ${post.getUser().getUsername()}"></span></p>
 
         <p><span th:text="${post.getUserLikes().size()}" style="color: #2C3E50"></span> Likes</p>
         <div class=" row">

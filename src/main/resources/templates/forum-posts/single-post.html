@@ -15,7 +15,7 @@
             <h3>
                 <span th:text="${singleForumPost.title}"></span>
             </h3>
-            <img th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300" style="border-radius: 20px;" >
+            <img class="img-fluid" th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300" style="border-radius: 20px;" >
             <p class="comment-content fs-5" th:utext="${singleForumPost.description}">Content:</p>
             <p>Submitted on
                 <span id="dateText" th:text="${formattedDate}"></span>
@@ -88,9 +88,9 @@
         </div>
         <hr>
         <!-- single comment -->
-        <div class="row" th:each="comment : ${singleForumPost.getComments()}">
+        <div class="row container-fluid" th:each="comment : ${singleForumPost.getComments()}">
             <div class="col-1 user-avatar">
-                <img class="avatar" th:src="${comment.getUser().profileImg}" alt="avatar">
+                <img class="avatar img-fluid" th:src="${comment.getUser().profileImg}" alt="avatar">
             </div>
             <div class="col">
                 <span><a class="fs-5" style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${comment.getUser().getId()}}"
