@@ -19,6 +19,11 @@
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
     </style>
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea' })
+    </script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -27,13 +32,17 @@
     <form class="form" th:action="@{/forum-posts/{id}/edit (id = ${editPost.getId()})}" th:method="POST" th:object="${editPost}"
           style= "z-index: 1; background:#FFFFFF; text-align: center; box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); margin: 2em auto; padding: 1em; width: 100%; ">
         <div class="form-group">
-            <label for="post-title">Title</label>
+            <label for="post-title"></label>
+            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</span>
             <input type="text" class="form-control" id="post-title" th:field="*{title}"
-                   th:value="${editPost.title}" placeholder="Title" required>
+                   th:value="${editPost.title}" placeholder="Title">
         </div>
         <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" placeholder="Content" th:field="*{description}" th:value="${description}" rows="13" required></textarea>
+            <label for="description"></label>
+                <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</span>
+                <textarea class="form-control" id="description" placeholder="Content" th:field="*{description}" th:value="${description}" rows="13"></textarea>
+
+
         </div>
         <div class="form-group">
             <input id="image" type="hidden" th:field="*{contentImageUrl}">
@@ -51,6 +60,28 @@
         <button id="create" type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<script>
+    function validateForm() {
+        // let title = document.getElementById("post-title").value;
+        let description = document.getElementById("description").value;
+        console.log(description.length);
+        if(description.length <= 0) {
+            alert("description is empty!")
+        }
+        // let titleText;
+        // let title2Text;
+        // if (title.length === 0 || title.length < 3) {
+        //     if(title.length === 0){
+        //         titleText = "Post must have a title";
+        //         document.getElementById("titleError1").innerHTML = titleText;
+        //     }else if (title.length < 3) {
+        //         title2Text = "\nA title must be at least 3 characters";
+        //         document.getElementById("titleError2").innerHTML = title2Text;
+        //     }
+        //     return false;
+        // }
+    }
+</script>
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: filestack"></th:block>
