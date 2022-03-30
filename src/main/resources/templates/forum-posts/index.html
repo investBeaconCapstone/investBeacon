@@ -5,23 +5,9 @@
     <title>All the forum posts</title>
     <th:block th:include="partials/header.html :: styling"></th:block>
     <style>
-        #post-image{
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        .blog-post {
-            margin-bottom: 4rem;
-        }
-
         .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
-
-
     </style>
 
 
@@ -39,28 +25,32 @@
                     <h2 th:text="${post.title}">Title:</h2></strong>
                 <br>
                 <p th:utext="${post.description}">Content:</p>
-                <div>Create by: <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${post.user.id}}"
+                <div>Created by: <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${post.user.id}}"
                                          th:text="${post.user.username}"><i class="far fa-user"></i></a></span>
                 </div>
                 <div>
-                    <span class="votecount" th:text="${post.users.size()}">3</span><span> likes</span>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <form th:action="@{/forum-posts/{id}/like-unlike (id = ${post.getId()})}" th:method="POST">
-                        <button class="like" type="submit" id="like" th:if="${!#maps.containsKey(userLikes,post.id)}"
-                                style="color:grey; all:unset; cursor:pointer;">
-                            <i class="fa-regular fa-thumbs-up"></i>
-                        </button>
-                        <button class="unlike" type="submit" id="unlike" th:if="${#maps.containsKey(userLikes,post.id)}"
-                                style="all:unset; color:#3399FF; cursor:pointer;">
-                            <i class="fa-solid fa-thumbs-up"></i>
-                        </button>
-                        <input type="hidden" name="voted" th:if="${#maps.containsKey(userLikes,post.id)}"
-                               th:value="true"/>
-                        <input type="hidden" name="voted" th:if="${!#maps.containsKey(userLikes,post.id)}"
-                               th:value="false"/>
-                        <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
-                    </form>
+                    <div class="row">
+                        <div style="width: 15px;" sec:authorize="isAuthenticated()">
+                            <form th:action="@{/forum-posts/{id}/like-unlike (id = ${post.getId()})}" th:method="POST">
+                                <button class="like" type="submit" id="a" th:if="${!#maps.containsKey(userLikes,post.id)}"
+                                        style="color:grey; all:unset; cursor:pointer;">
+                                    <i class="fa-regular fa-thumbs-up"></i>
+                                </button>
+                                <button class="unlike" type="submit" id="b" th:if="${#maps.containsKey(userLikes,post.id)}"
+                                        style="all:unset; color:#3399FF; cursor:pointer;">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </button>
+                                <input type="hidden" name="voted" th:if="${#maps.containsKey(userLikes,post.id)}"
+                                       th:value="true"/>
+                                <input type="hidden" name="voted" th:if="${!#maps.containsKey(userLikes,post.id)}"
+                                       th:value="false"/>
+                                <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
+                            </form>
+                        </div>
+                        <div class="col mx-auto">
+                            <span class="votecount" th:text="${post.users.size()}">3</span><span> likes</span>
+                        </div>
+                    </div>
                 </div>
                 <form th:action="@{/forum-posts/{id}(id=${post.id})}" th:method="get">
                     <button style="all: unset; cursor: pointer;">
