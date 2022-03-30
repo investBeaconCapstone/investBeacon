@@ -44,7 +44,7 @@
             <textarea id="description" class="form-control" placeholder="Content" name="content" th:rows="13" th:field="*{description}" style="width: 100%; background-color:#F2F2F2; border: none; resize: none;"></textarea>
         </div>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
-        <button class="my-3" type="button" id="open">Choose image to upload</button>
+        <button class="my-3 btn btn-primary" type="button" id="open">Choose image to upload</button>
         <div class="row my-5">
             <br>
             <span th:each="category : ${categoryList}" class="col">

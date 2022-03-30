@@ -14,38 +14,39 @@
 <form id="registerForm" class="form" th:action="@{/register}" method="POST" th:object="${user}">
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</span>
-        <small>Error Message</small>
-        <input id="firstName" type="text" placeholder="Enter First Name" name="firstName" th:field="*{firstName}"/>
+<!--        <small>Error Message</small>-->
+        <input id="firstName" type="text" placeholder="Enter First Name" name="firstName" th:field="*{firstName}" required oninvalid="this.setCustomValidity('Please enter first name')" oninput="this.setCustomValidity('')"/>
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</span>
-        <small>Error Message</small>
-        <input id="lastName" placeholder="Enter Last Name" name="lastName" th:field="*{lastName}"/>
+<!--        <small>Error Message</small>-->
+        <input id="lastName" placeholder="Enter Last Name" name="lastName" th:field="*{lastName}" required oninvalid="this.setCustomValidity('Please enter last name')" oninput="this.setCustomValidity('')"/>
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email name error</span>
-        <small>Error Message</small>
-        <input id="email" placeholder="Enter Email" name="email" th:field="*{email}"/>
+<!--        <small>Error Message</small>-->
+        <input id="email" type="email" placeholder="Enter Email" name="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Please enter valid email address')" oninput="this.setCustomValidity('')"/>
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
-        <small>Error Message</small>
-        <input id="username" placeholder="Create Username" name="username" th:field="*{username}"/>
+<!--        <small>Error Message</small>-->
+        <input id="username" placeholder="Create Username" name="username" th:field="*{username}" required oninvalid="this.setCustomValidity('Please enter username')" oninput="this.setCustomValidity('')"/>
     </div>
     <div class="form-group">
         <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
-        <small>Error Message</small>
-        <input id="password" type="password" placeholder="Create Password" name="password" th:field="*{password}"/>
+<!--        <small>Error Message</small>-->
+        <input id="password" type="password" placeholder="Create Password" name="password" th:field="*{password}" required oninvalid="this.setCustomValidity('Please enter password')" oninput="this.setCustomValidity('')"/>
     </div>
     <div class="form-group">
         <label for="image">Profile Picture</label>
         <input id="image" type="hidden" th:field="*{profileImg}" />
         <br>
-        <button class="btn-info" type="button" id="open">Choose image to upload</button>
+        <button class="btn btn-primary" type="button" id="open">Choose image to upload</button>
     </div>
     <hr>
 
-        <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7"></div>
+        <div id="captcha" class="g-recaptcha" data-sitekey="6Lf2PuIeAAAAAJiAk2rjgL00RIn5U-I1SkkhmMf7" data-callback="verifyCaptcha"></div>
+<!--        <span id="rCaptcha"></span>-->
 
     <div>
         <span class="error" th:text="${message}"></span>
@@ -53,80 +54,101 @@
     <p class="message">By signing up you agree to the <a href="/terms-and-conditions">Terms and Conditions</a> and <a
             href="/privacy-policy">Privacy Policy</a> of this site.</p>
     <br>
-    <button class="button btn-primary" type="submit">Sign me up!</button>
+    <button class="btn btn btn-primary" type="submit">Sign me up!</button>
     <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
 </form>
 </div>
 
-    <script>
-        const regFirstName = document.getElementById("firstName")
-        const regLastName = document.getElementById("lastName")
-        const regEmail = document.getElementById("email")
-        const regUsername = document.getElementById("username")
-        const regPassword = document.getElementById("password")
-        const regForm = document.querySelector("form")
+<!--    <script>-->
+<!--        const regFirstName = document.getElementById("firstName")-->
+<!--        const regLastName = document.getElementById("lastName")-->
+<!--        const regEmail = document.getElementById("email")-->
+<!--        const regUsername = document.getElementById("username")-->
+<!--        const regPassword = document.getElementById("password")-->
+<!--        const regForm = document.querySelector("form")-->
 
-        regForm.addEventListener("submit", (e) =>{
-            e.preventDefault();
-            validateInput();
-        });
+<!--        regForm.addEventListener("submit", (e) =>{-->
+<!--            e.preventDefault();-->
+<!--            validateInput();-->
+<!--        });-->
 
-        function validateInput() {
-            if (regFirstName.value.trim() === '') {
-                onError(regFirstName, "First name cannot be empty");
-            } else {
-                onSuccess(regFirstName)
-            }
-            if (regEmail.value.trim() === '') {
-                onError(regEmail, "Email name cannot be empty");
-            } else {
-                if (!isValidEmail(regEmail.value.trim())) {
-                    onError(regEmail, "Email is not valid");
-                } else {
-                    onSuccess(regEmail);
-                }
-            }
-            if (regLastName.value.trim() === '') {
-                onError(regLastName, "Last name cannot be empty");
-            } else {
-                onSuccess(regLastName)
-            }
-            if (regUsername.value.trim() === '') {
-                onError(regUsername, "Username cannot be empty");
-            } else {
-                onSuccess(regUsername)
-            }
-            if (regPassword.value.trim() === '') {
-                onError(regPassword, "Password cannot be empty");
-            } else if (regPassword.value.trim().length < 6) {
-                onError(regPassword, "Password needs to be minimum 6 characters")
-            }else {
-                onSuccess(regPassword)
-            }
-        }
+<!--        function validateInput() {-->
+<!--            if (regFirstName.value.trim() === '') {-->
+<!--                onError(regFirstName, "First name cannot be empty");-->
+<!--                return false;-->
+<!--            } else {-->
+<!--                onSuccess(regFirstName)-->
+<!--            }-->
+<!--            if (regLastName.value.trim() === '') {-->
+<!--                onError(regLastName, "Last name cannot be empty");-->
+<!--                return false;-->
+<!--            } else {-->
+<!--                onSuccess(regLastName)-->
+<!--            }-->
+<!--            if (regEmail.value.trim() === '') {-->
+<!--                onError(regEmail, "Email name cannot be empty");-->
+<!--                return false;-->
+<!--            } else {-->
+<!--                if (!isValidEmail(regEmail.value.trim())) {-->
+<!--                    onError(regEmail, "Email is not valid");-->
+<!--                    return false;-->
+<!--                } else {-->
+<!--                    console.log('email is valid');-->
+<!--                    onSuccess(regEmail);-->
+<!--                }-->
+<!--            }-->
+<!--            if (regUsername.value.trim() === '') {-->
+<!--                onError(regUsername, "Username cannot be empty");-->
+<!--                return false;-->
+<!--            } else {-->
+<!--                onSuccess(regUsername)-->
+<!--            }-->
+<!--            if (regPassword.value.trim() === '') {-->
+<!--                onError(regPassword, "Password cannot be empty");-->
+<!--                return false;-->
+<!--            } else if (regPassword.value.trim().length < 6) {-->
+<!--                onError(regPassword, "Password needs to be minimum 6 characters")-->
+<!--                return false;-->
+<!--            }else {-->
+<!--                onSuccess(regPassword)-->
+<!--            }-->
+<!--            let recaptcha_response = grecaptcha.getResponse();-->
+<!--            console.log(recaptcha_response.length);-->
+<!--            if(recaptcha_response.length === 0) {-->
+<!--                document.getElementById('rCaptcha').innerHTML="You must verify CAPTCHA";-->
+<!--                return false;-->
+<!--            }-->
+<!--            else {-->
+<!--                return true;-->
+<!--            }-->
+<!--        }-->
 
-        function onSuccess(input) {
-            let parent = input.parentElement;
-            let messageEle = parent.querySelector("small");
-            messageEle.style.visibility = "hidden";
-            messageEle.innerText = "";
-            parent.classList.remove("error");
-            parent.classList.add("success");
-        }
-        function onError(input, message) {
-            let parent = input.parentElement;
-            let messageEle = parent.querySelector("small");
-            messageEle.style.visibility = "visible";
-            messageEle.innerText = message;
-            parent.classList.add("error");
-            parent.classList.remove("success");
-        }
-        function isValidEmail(email) {
-            const regex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return regex.test(String(email).toLowerCase());
+<!--        function verifyCaptcha() {-->
+<!--            console.log('verified');-->
+<!--            document.getElementById('rCaptcha').innerHTML = '';-->
+<!--        }-->
 
-        }
-    </script>
+<!--        function onSuccess(input) {-->
+<!--            let parent = input.parentElement;-->
+<!--            let messageEle = parent.querySelector("small");-->
+<!--            messageEle.style.visibility = "hidden";-->
+<!--            messageEle.innerText = "";-->
+<!--            parent.classList.remove("error");-->
+<!--            parent.classList.add("success");-->
+<!--        }-->
+<!--        function onError(input, message) {-->
+<!--            let parent = input.parentElement;-->
+<!--            let messageEle = parent.querySelector("small");-->
+<!--            messageEle.style.visibility = "visible";-->
+<!--            messageEle.innerText = message;-->
+<!--            parent.classList.add("error");-->
+<!--            parent.classList.remove("success");-->
+<!--        }-->
+<!--        function isValidEmail(email) {-->
+<!--            const regex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;-->
+<!--            return regex.test(String(email).toLowerCase());-->
+<!--        }-->
+<!--    </script>-->
 
 <th:block th:include="partials/footer.html :: scripts"></th:block>
 <th:block th:include="partials/footer.html :: popover"></th:block>
