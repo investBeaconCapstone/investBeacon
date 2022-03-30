@@ -6,12 +6,12 @@
     <th:block th:include="partials/header.html :: styling"></th:block>
     <style>
         #follow-button {
-            color: #3399FF;
+            color: #27bd9d;
             font-family: "Helvetica";
             font-size: 10pt;
             background-color: #ffffff;
             border: 1px solid;
-            border-color: #3399FF;
+            border-color: #27bd9d;
             border-radius: 3px;
             width: 85px;
             height: 30px;
@@ -24,9 +24,9 @@
             color: #fff;
             font-family: "Helvetica";
             font-size: 10pt;
-            background-color: #2EB82E;
+            background-color: #27bd9d;
             border: 1px solid;
-            border-color: #2EB82E;
+            border-color: #27bd9d;
             border-radius: 3px;
             width: 85px;
             height: 30px;
@@ -51,7 +51,7 @@
                 <input type="hidden" name="profileUserIsAdmin" th:value="${profileUserIsAdmin}">
             </form>
             <form th:action="@{/users/admin/{id}(id=${user.id})}" th:method="Post">
-                <button id="removeAdmin-button" name="removeAdmin" th:if="${profileUserIsAdmin}">Remove Admin</button>
+                <button id="removeAdmin-button" name="removeAdmin" class="btn btn-primary" th:if="${profileUserIsAdmin}">Remove Admin</button>
                 <input type="hidden" name="profileUserIsAdmin" th:value="${profileUserIsAdmin}">
             </form>
         </div>
