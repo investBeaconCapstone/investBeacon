@@ -90,7 +90,7 @@
         <!-- single comment -->
         <div class="row container-fluid" th:each="comment : ${singleForumPost.getComments()}">
             <div class="col-1 user-avatar">
-                <img class="avatar img-fluid" th:src="${comment.getUser().profileImg}" alt="avatar">
+                <img class="img-fluid" th:src="${comment.getUser().profileImg}" alt="avatar">
             </div>
             <div class="col">
                 <span><a class="fs-5" style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${comment.getUser().getId()}}"
