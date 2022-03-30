@@ -20,7 +20,11 @@
 
     </style>
 
-
+    <script src="https://cdn.tiny.cloud/1/hno0xcz2mjn7zz10tw6ljef0vntz97jm8ngaxniz1fpphay0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea' })
+    </script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -40,7 +44,7 @@
             <textarea id="description" class="form-control" placeholder="Content" name="content" th:rows="13" th:field="*{description}" style="width: 100%; background-color:#F2F2F2; border: none; resize: none;"></textarea>
         </div>
         <input id="image" type="hidden" placeholder="image" name="image" th:field="*{contentImageUrl}">
-        <button class="my-3" type="button" id="open">Choose image to upload</button>
+        <button class="my-3 btn btn-primary" type="button" id="open">Choose image to upload</button>
         <div class="row my-5">
             <br>
             <span th:each="category : ${categoryList}" class="col">
@@ -57,6 +61,7 @@
     function validateForm() {
         let title = document.getElementById("post-title").value;
         let description = document.getElementById("description").value;
+        console.log(description.length);
         let titleText;
         let title2Text;
         let descriptionText;
@@ -64,12 +69,12 @@
             titleText = "Post must have a title";
             document.getElementById("titleError1").innerHTML = titleText;
             if (title.length < 3) {
-                title2Text = "\nA title must be at least 3 characters.";
+                title2Text = "\nA title must be at least 3 characters";
                 document.getElementById("titleError2").innerHTML = title2Text;
-                if (description.length < 1) {
-                    descriptionText = "Post must have a description";
-                    document.getElementById("descriptionError").innerHTML = descriptionText;
-                }
+            }
+            if(description.length === 0) {
+                descriptionText = "Post must have a description";
+                document.getElementById("descriptionError").innerHTML = descriptionText;
             }
             return false;
         }
