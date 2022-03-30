@@ -69,7 +69,7 @@
                      th:if="${loggedUser.isAdmin()}">
                     <form th:action="@{/education/posts/{category}/{id}/edit (id= ${post.getId()}, category= ${post.getCategory().getCategory()})}"
                           th:method="get" style="margin-right: 1em">
-                        <button type="submit" id="edit" class="btn btn btn-info">Edit</button>
+                        <button type="submit" id="edit" class="btn btn btn-primary">Edit</button>
                     </form>
 
                 </div>
