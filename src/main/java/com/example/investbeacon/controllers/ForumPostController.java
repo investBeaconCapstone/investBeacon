@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -102,6 +105,11 @@ public class ForumPostController {
         boolean hasVoted = false;
         Optional<ForumPost> forumPost = forumPostDao.findById(id);
         ForumPost currentForumPost = forumPost.get();
+        String formattedDate = forumPostDao.getById(id).getCreatedDate().toLocaleString().substring(0, 12);
+//        Date mdy = forumPostDao.getById(id).getCreatedDate();
+//        SimpleDateFormat mdyFormat = new SimpleDateFormat("MM-dd-yyyy");
+//        String date = mdyFormat.format(mdy);
+//        System.out.println("DATE: " + date);
         if (forumPost.isPresent()) {
             Comment comment = new Comment();
             if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
@@ -121,6 +129,7 @@ public class ForumPostController {
                 model.addAttribute("voted", hasVoted);
                 model.addAttribute("likes", postLikes);
             }
+            model.addAttribute("formattedDate", formattedDate);
             model.addAttribute("singleForumPost", currentForumPost);
             model.addAttribute("comment", comment);
             return "forum-posts/single-post";

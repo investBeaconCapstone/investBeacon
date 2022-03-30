@@ -30,7 +30,7 @@ public class Comment {
     private ForumPost post;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "create_date")
     private Date createDate;
 
