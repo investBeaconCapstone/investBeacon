@@ -21,8 +21,10 @@
     <div th:each="post : ${page}" class="card bg-light mb-3" style="margin: 2em auto; padding: 1em; width: 95%; display: flex; justify-content: center">
         <div class="row g-0  rounded overflow-hidden flex-md-row mb-4  h-md-250 position-relative">
               <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary border-bottom">
-                    <h2 th:text="${post.title}">Title:</h2></strong>
+                    <a th:href="@{/forum-posts/{id}(id=${post.id})}" class="border-bottom">
+                        <strong class="d-inline-block mb-2 text-primary">
+                        <h2 th:text="${post.title}">Title:</h2></strong>
+                    </a>
                 <br>
                 <p th:utext="${post.description}">Content:</p>
                 <div>Created by: <span><a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${post.user.id}}"
