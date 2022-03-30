@@ -17,9 +17,8 @@
             </h3>
             <img class="img-fluid" th:if="${!singleForumPost.contentImageUrl.isEmpty()}" th:src="${singleForumPost.contentImageUrl}" alt="image" height="300" width="300" style="border-radius: 20px;" >
             <p class="comment-content fs-5" th:utext="${singleForumPost.description}">Content:</p>
-            <p>submitted on
-                <time th:title="${singleForumPost.getCreatedDate()}" th:datetime="${singleForumPost.getCreatedDate()}"
-                      th:text="${singleForumPost.getCreatedDate()}"></time>
+            <p>Submitted on
+                <span id="dateText" th:text="${formattedDate}"></span>
                 by
                 <a style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${singleForumPost.getUser().getId()}}"
                    class="author"
@@ -91,12 +90,13 @@
         <!-- single comment -->
         <div class="row container-fluid" th:each="comment : ${singleForumPost.getComments()}">
             <div class="col-1 user-avatar">
-                <img class="avatar img-fluid" th:src="${comment.getUser().profileImg}" alt="avatar">
+                <img class="img-fluid" th:src="${comment.getUser().profileImg}" alt="avatar">
             </div>
             <div class="col">
                 <span><a class="fs-5" style="all: unset; cursor: pointer" th:href="@{'/profile/' + ${comment.getUser().getId()}}"
                          th:text="${comment.getUser().getUsername()}"><i class="far fa-user"></i></a></span>
-                <span class="datetime-created" th:text="${comment.getCreateDate()}"><i class="fa-regular fa-clock"></i></span>
+
+                <span class="datetime-created" th:text="${comment.getCreateDate().toLocaleString().substring(0, 12)}"><i class="fa-regular fa-clock"></i></span>
                 <p style="min-height: 50px;" class="body" th:text="${comment.getContent()}"></p>
                 <div class="row" sec:authorize="isAuthenticated()"
                      th:if="${#authentication.principal.id == comment.getUser().id}">
