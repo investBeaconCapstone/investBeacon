@@ -41,11 +41,14 @@
                 <textarea placeholder="Title" type="text" class="form-control" id="ed_edit_Body" th:field="*{description}"
                           th:value="${post.getDescription()}" rows="12"></textarea>
             </div>
+            <br>
             <div class="form-group">
-                <label for="image">Image</label>
+
                 <input id="image" type="hidden" th:field="*{contentImageUrl}" th:value="${post.getContentImageUrl()}">
                 <button type="button" id="open" class="btn btn-primary">Choose image to upload</button>
             </div>
+            <br>
+            <br>
             <div class="form-group">
                 <label for="category">Select Category</label>
                 <select multiple class="form-control" id="category" th:field="*{category}" required>
