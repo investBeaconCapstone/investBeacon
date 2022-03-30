@@ -24,20 +24,24 @@
                    class="author"
                    th:text="${singleForumPost.getUser().getUsername()}"></a>
             </p>
-            <div>
-                <span class="votecount" th:text="${singleForumPost.users.size()}">3</span><span> likes</span>
-            </div>
-            <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/forum-posts/{id}/like-unlike (id = ${singleForumPost.getId()})}" th:method="POST">
-                    <button class="like" type="submit" id="like" th:if="${!voted}" style="color:grey; all:unset; cursor:pointer;">
-                        <i class="fa-regular fa-thumbs-up"></i>
-                    </button>
-                    <button class="unlike" type="submit" id="unlike" th:if="${voted}" style="all:unset; color:#3399FF; cursor:pointer;">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                    </button>
-                    <input type="hidden" name="voted" th:value="${voted}" />
-                    <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
-                </form>
+            <div class="row">
+                <div style="width: 15px;" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/forum-posts/{id}/like-unlike (id = ${singleForumPost.getId()})}" th:method="POST">
+                        <button class="like" type="submit" id="a" th:if="${!voted}"
+                                style="color:grey; all:unset; cursor:pointer;">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                        </button>
+                        <button class="unlike" type="submit" id="b" th:if="${voted}"
+                                style="all:unset; color:#3399FF; cursor:pointer;">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                        </button>
+                        <input type="hidden" name="voted" th:value="${voted}" />
+                        <input type="hidden" name="url" th:value="${#httpServletRequest.requestURI}"/>
+                    </form>
+                </div>
+                <div class="col mx-auto">
+                    <span class="votecount" th:text="${singleForumPost.users.size()}">3</span><span> likes</span>
+                </div>
             </div>
         </div>
     </div>
