@@ -124,8 +124,9 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text" th:utext="${post.description}"></p>
-                        <p class="card-text" style="font-size: 11px;">posted: <span th:text="${post.createdDate}"></span></p>
+                        <p class="card-text" style="font-size: 11px;">posted: <span th:text="${post.createdDate.toLocaleString().substring(0, 12)}"></span></p>
                         <!-- DISPLAY EDIT AND DELETE BUTTON ONLY IF LOGGED IN USER IS THE USER OF THE PROFILE -->
+
                         <div class="row d-grid gap-2 d-md-flex justify-content-md-start" sec:authorize="isAuthenticated()"
                              th:if="${#authentication.principal.id == user.id}">
                             <div class="col-1 mx-2">
