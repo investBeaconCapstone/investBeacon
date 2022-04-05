@@ -210,11 +210,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/forgot-password")
-    public String forgotPassword(){
-        return "users/forgotpassword";
-    }
-
     @GetMapping("/terms-and-conditions")
     public String termsConditions(){
         return "users/termsconditions";
