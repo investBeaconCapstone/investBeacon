@@ -232,7 +232,7 @@ public class UserController {
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm(Model model) {
         model.addAttribute("forgotPassword", new User());
-        return "users/forgotpassword";
+        return "users/forgot-password";
     }
 
     @PostMapping("/forgot-password")
@@ -252,7 +252,12 @@ public class UserController {
         } catch (MessagingException | UnsupportedEncodingException e){
             model.addAttribute("error", "Error while sending email");
         }
-        return "users/forgotpassword";
+        return "users/forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm() {
+        return null;
     }
 }
 
