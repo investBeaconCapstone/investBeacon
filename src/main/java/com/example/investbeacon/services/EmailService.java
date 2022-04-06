@@ -50,6 +50,22 @@ public class EmailService {
         }
     }
 
+    public void prepareAndSendResetPassword(User user) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(user.getEmail());
+        msg.setSubject("Invest Beacon - reset password");
+        msg.setText("Provided is a link to reset your password. If you did not request this, please ignore this email.\n" + pas);
+
+        try{
+            this.emailSender.send(msg);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+        }
+    }
+
 
 
 }

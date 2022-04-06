@@ -1,6 +1,7 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.CaptchaValidator;
+import com.example.investbeacon.Utility;
 import com.example.investbeacon.models.Password;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
@@ -240,6 +241,8 @@ public class UserController {
         System.out.println("token:" + token);
         try {
             forgotPasswordService.updateResetPasswordToken(token, email);
+            String resetPasswordLink = Utility.getSiteURL(request) + "/reset-password?token=" + token;
+            System.out.println(resetPasswordLink);
         } catch (UserNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             e.printStackTrace();
