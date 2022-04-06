@@ -245,6 +245,7 @@ public class UserController {
             forgotPasswordService.updateResetPasswordToken(token, email);
             String resetPasswordLink = Utility.getSiteURL(request) + "/reset-password?token=" + token;
             emailService.prepareAndSendResetPassword(email, resetPasswordLink);
+            model.addAttribute("message", "We have sent a reset password link to the email provided");
             System.out.println(resetPasswordLink);
         } catch (UserNotFoundException e) {
             model.addAttribute("error", e.getMessage());
