@@ -1,4 +1,4 @@
-package com.example.investbeacon.controllers;
+package com.example.investbeacon.services;
 
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
@@ -6,15 +6,13 @@ import com.example.investbeacon.services.EmailService;
 import com.example.investbeacon.services.UserNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-public class ForgotPasswordController {
+public class ForgotPasswordService {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public ForgotPasswordController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public ForgotPasswordService(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -40,14 +38,5 @@ public class ForgotPasswordController {
         user.setPassword(encodePassword);
         user.setResetPasswordToken(null);
         userDao.save(user);
-    }
-
-
-
-
-    @GetMapping("/forgot-password")
-    public String showForgotPasswordForm(Model model){
-        model.addAttribute("forgotPassword", "Forgot Password");
-        return "redirect:/forgotpassword";
     }
 }

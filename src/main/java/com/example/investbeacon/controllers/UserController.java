@@ -219,6 +219,12 @@ public class UserController {
     public String privacy(){
         return "users/privacy";
     }
+
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm(Model model){
+        model.addAttribute("forgotPassword", new User());
+        return "users/forgotpassword";
+    }
 }
 
 
