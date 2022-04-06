@@ -5,6 +5,9 @@ import com.example.investbeacon.models.Password;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import com.example.investbeacon.services.EmailService;
+import com.example.investbeacon.services.ForgotPasswordService;
+import com.example.investbeacon.services.UserNotFoundException;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -22,6 +26,7 @@ public class UserController {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final ForgotPasswordService forgotPasswordService;
 
     @Autowired
     private CaptchaValidator validator;
@@ -29,10 +34,11 @@ public class UserController {
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService, ForgotPasswordService forgotPasswordService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.forgotPasswordService = forgotPasswordService;
     }
 
     @GetMapping("/welcome")
@@ -223,6 +229,21 @@ public class UserController {
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm(Model model){
         model.addAttribute("forgotPassword", new User());
+        return "users/forgotpassword";
+    }
+
+    @PostMapping("/forgot-password")
+    public String sendForgotPasswordForm(HttpServletRequest request, Model model) {
+        String email = request.getParameter("email");
+        String token = RandomString.make(50);
+        System.out.println("email: " + email);
+        System.out.println("token:" + token);
+        try {
+            forgotPasswordService.updateResetPasswordToken(token, email);
+        } catch (UserNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            e.printStackTrace();
+        }
         return "users/forgotpassword";
     }
 }

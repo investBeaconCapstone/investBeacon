@@ -6,7 +6,9 @@ import com.example.investbeacon.services.EmailService;
 import com.example.investbeacon.services.UserNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ForgotPasswordService {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
@@ -18,7 +20,7 @@ public class ForgotPasswordService {
         this.emailService = emailService;
     }
 
-    public void updateResetPassword(String token, String email) throws UserNotFoundException{
+    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException{
         User user = userDao.findByEmail(email);
         if (user != null) {
             user.setResetPasswordToken(token);
