@@ -9,7 +9,12 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 
 @Service("mailService")
 public class EmailService {
@@ -50,13 +55,19 @@ public class EmailService {
         }
     }
 
-    public void prepareAndSendResetPassword(User user) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom(from);
-        msg.setTo(user.getEmail());
-        msg.setSubject("Invest Beacon - reset password");
-        msg.setText("Provided is a link to reset your password. If you did not request this, please ignore this email.\n" + pas);
-
+    public void prepareAndSendResetPassword(String email, String resetPasswordLink) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage msg = emailSender.createMimeMessage();
+        MimeMessageHelper hlp = new MimeMessageHelper(msg);
+        hlp.setFrom(from);
+        hlp.setTo(email);
+        hlp.setSubject("Invest Beacon - reset password");
+//        msg.setText("Provided is a link to reset your password. If you did not request this, please ignore this email.\n");
+        String content = "<p>Hello,</p>"
+                + "<p>You have requested to reset your password</p>"
+                + "<p>Click the link below to change your password:</p>"
+                + "<p><b><a href=\"" + resetPasswordLink + "\">reset password</a></b></p>"
+                + "<p>Ignore this email if you have not requested a reset password link</p>";
+        hlp.setText(content, true);
         try{
             this.emailSender.send(msg);
         }

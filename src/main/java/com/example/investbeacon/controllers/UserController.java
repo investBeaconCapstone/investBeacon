@@ -18,8 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 
 @Controller
@@ -218,17 +220,17 @@ public class UserController {
     }
 
     @GetMapping("/terms-and-conditions")
-    public String termsConditions(){
+    public String termsConditions() {
         return "users/termsconditions";
     }
 
     @GetMapping("/privacy-policy")
-    public String privacy(){
+    public String privacy() {
         return "users/privacy";
     }
 
     @GetMapping("/forgot-password")
-    public String showForgotPasswordForm(Model model){
+    public String showForgotPasswordForm(Model model) {
         model.addAttribute("forgotPassword", new User());
         return "users/forgotpassword";
     }
@@ -242,10 +244,12 @@ public class UserController {
         try {
             forgotPasswordService.updateResetPasswordToken(token, email);
             String resetPasswordLink = Utility.getSiteURL(request) + "/reset-password?token=" + token;
+            emailService.prepareAndSendResetPassword(email, resetPasswordLink);
             System.out.println(resetPasswordLink);
         } catch (UserNotFoundException e) {
             model.addAttribute("error", e.getMessage());
-            e.printStackTrace();
+        } catch (MessagingException | UnsupportedEncodingException e){
+            model.addAttribute("error", "Error while sending email");
         }
         return "users/forgotpassword";
     }
