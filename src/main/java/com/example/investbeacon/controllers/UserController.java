@@ -266,7 +266,7 @@ public class UserController {
             return "message";
         }
         model.addAttribute("token", token);
-        return "/users/reset-password";
+        return "users/reset-password";
     }
 
     @PostMapping("/reset-password")
