@@ -1,12 +1,17 @@
 package com.example.investbeacon.controllers;
 
 import com.example.investbeacon.CaptchaValidator;
+import com.example.investbeacon.Utility;
 import com.example.investbeacon.models.Password;
 import com.example.investbeacon.models.User;
 import com.example.investbeacon.repositories.UserRepository;
 import com.example.investbeacon.services.EmailService;
+import com.example.investbeacon.services.ForgotPasswordService;
+import com.example.investbeacon.services.UserNotFoundException;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,7 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 
 @Controller
@@ -22,6 +30,7 @@ public class UserController {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final ForgotPasswordService forgotPasswordService;
 
     @Autowired
     private CaptchaValidator validator;
@@ -29,10 +38,11 @@ public class UserController {
     @Value("${FILESTACK_API_KEY}")
     String fileStackKey;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService, ForgotPasswordService forgotPasswordService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.forgotPasswordService = forgotPasswordService;
     }
 
     @GetMapping("/welcome")
@@ -211,13 +221,69 @@ public class UserController {
     }
 
     @GetMapping("/terms-and-conditions")
-    public String termsConditions(){
+    public String termsConditions() {
         return "users/termsconditions";
     }
 
     @GetMapping("/privacy-policy")
-    public String privacy(){
+    public String privacy() {
         return "users/privacy";
+    }
+
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm(Model model) {
+        model.addAttribute("forgotPassword", new User());
+        return "users/forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String sendForgotPasswordForm(HttpServletRequest request, Model model) {
+        String email = request.getParameter("email");
+        String token = RandomString.make(50);
+        System.out.println("email: " + email);
+        System.out.println("token:" + token);
+        try {
+            forgotPasswordService.updateResetPasswordToken(token, email);
+            String resetPasswordLink = Utility.getSiteURL(request) + "/reset-password?token=" + token;
+            emailService.prepareAndSendResetPassword(email, resetPasswordLink);
+            model.addAttribute("message", "We have sent a reset password link to the email provided");
+            System.out.println(resetPasswordLink);
+        } catch (UserNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+        } catch (MessagingException | UnsupportedEncodingException e){
+            model.addAttribute("error", "Error while sending email");
+        }
+        return "users/forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
+        User user = forgotPasswordService.get(token);
+
+        if(user == null) {
+            model.addAttribute("title", "Reset your password");
+            model.addAttribute("message", "Invalid token");
+            return "message";
+        }
+        model.addAttribute("token", token);
+        return "/users/reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String submitResetPasswordForm(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        User user = forgotPasswordService.get(token);
+        if(user == null) {
+            model.addAttribute("title", "Reset your password");
+            model.addAttribute("message", "Invalid token");
+
+        } else {
+            forgotPasswordService.updatePassword(user, password);
+            model.addAttribute("message", "You have successfully changed your password, proceed to login page");
+        }
+        return "message";
     }
 }
 

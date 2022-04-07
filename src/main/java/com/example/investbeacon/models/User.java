@@ -45,6 +45,9 @@ public class User {
     @Size(min = 6, message = "")
     private String password;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @Column(name = "photo")
     private String profileImg;
 
