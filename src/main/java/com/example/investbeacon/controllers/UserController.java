@@ -263,9 +263,16 @@ public class UserController {
         if(user == null) {
             model.addAttribute("title", "Reset your password");
             model.addAttribute("message", "Invalid token");
+            return "message";
         }
         model.addAttribute("token", token);
         return "/users/reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String submitResetPasswordForm(HttpServletRequest request, Model model) {
+        Strink token =
+        return null;
     }
 }
 
