@@ -11,6 +11,7 @@ import com.example.investbeacon.services.UserNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -256,8 +257,16 @@ public class UserController {
     }
 
     @GetMapping("/reset-password")
-    public String showResetPasswordForm() {
-        return null;
+    public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
+        User user = forgotPasswordService.get(token);
+
+        if(user == null) {
+            model.addAttribute("title", "Reset your password");
+            model.addAttribute("message", "Invalid token");
+            return "message";
+        }
+        model.addAttribute("token", token);
+        return "/users/reset-password";
     }
 }
 

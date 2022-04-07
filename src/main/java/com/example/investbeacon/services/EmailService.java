@@ -65,8 +65,8 @@ public class EmailService {
         String content = "<p>Hello,</p>"
                 + "<p>You have requested to reset your password</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<p><b><a href=\"" + resetPasswordLink + "\">reset password</a></b></p>"
-                + "<p>Ignore this email if you have not requested a reset password link</p>";
+                + "<p><b><a href=\"" + resetPasswordLink + "\">Click to reset password</a></b></p>"
+                + "<p>If you did not request this link, disregard this email, no changes will be made to your account</p>";
         hlp.setText(content, true);
         try{
             this.emailSender.send(msg);
