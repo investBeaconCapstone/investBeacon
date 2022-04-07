@@ -271,8 +271,19 @@ public class UserController {
 
     @PostMapping("/reset-password")
     public String submitResetPasswordForm(HttpServletRequest request, Model model) {
-        Strink token =
-        return null;
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        User user = forgotPasswordService.get(token);
+        if(user == null) {
+            model.addAttribute("title", "Reset your password");
+            model.addAttribute("message", "Invalid token");
+
+        } else {
+            forgotPasswordService.updatePassword(user, password);
+            model.addAttribute("message", "You have successfully changed your password, proceed to login page");
+        }
+        return "message";
     }
 }
 
